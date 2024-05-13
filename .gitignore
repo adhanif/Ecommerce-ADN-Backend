@@ -5,7 +5,8 @@ appsettings.json
 appsettings.*.json
 obj/
 bin/
-
+ERD/
+http/
 # Visual Studio 2015/2017 cache/options directory
 .vs/
 .vscode/
