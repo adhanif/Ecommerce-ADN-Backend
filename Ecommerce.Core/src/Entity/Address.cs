@@ -13,11 +13,9 @@ namespace Ecommerce.Core.src.Entity
         public string Country { get; set; }
         [ZipCodeValidation]
         public string ZipCode { get; set; }
-        public string HouseNumber { get; set; }
         [Phone]
         public string PhoneNumber { get; set; }
         public Guid UserId { get; set; }
-
         public User User { get; set; }
     }
 }
