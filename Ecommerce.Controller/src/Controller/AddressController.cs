@@ -29,7 +29,7 @@ namespace Ecommerce.Controller.src.Controller
         public async Task<ActionResult<AddressReadDto>> CreateAddressAsync([FromBody] AddressCreateDto addressCreateDto)
         {
             var createdAddress = await _addressService.CreateAddressAsync(addressCreateDto);
-            return createdAddress;
+            return Ok(createdAddress);
         }
 
         [Authorize]

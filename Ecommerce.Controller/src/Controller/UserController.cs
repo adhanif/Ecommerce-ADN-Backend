@@ -23,31 +23,34 @@ namespace Ecommerce.Controller.src.Controller
 
         [Authorize(Roles = "Admin")]
         [HttpGet] // endpoint: /users
-        public async Task<IEnumerable<UserReadDto>> GetAllUsersAsync([FromQuery] UserQueryOptions userQueryOptions)
+        public async Task<ActionResult<IEnumerable<UserReadDto>>> GetAllUsersAsync([FromQuery] UserQueryOptions userQueryOptions)
         {
-            return await _userService.GetAllUsersAsync(userQueryOptions);
+            var users = await _userService.GetAllUsersAsync(userQueryOptions);
+            return Ok(users);
         }
 
         [Authorize(Roles = "Admin")]
         [HttpGet("{userId}")] // endpoint: /users/:user_id
-        public async Task<UserReadDto> GetUserByIdAsync([FromRoute] Guid userId)
+        public async Task<ActionResult<UserReadDto>> GetUserByIdAsync([FromRoute] Guid userId)
         {
-            return await _userService.GetUserByIdAsync(userId);
+            var foundUser = await _userService.GetUserByIdAsync(userId);
+            return Ok(foundUser);
         }
 
         [AllowAnonymous]
         [HttpPost()] // endpoint: /users
                      // public async Task<UserReadDto> CreateUserAsync([FromBody] UserCreateDto userCreateDto)
-        public async Task<UserReadDto> CreateUserAsync([FromBody] UserCreateDto userCreateDto)
+        public async Task<ActionResult<UserReadDto>> CreateUserAsync([FromBody] UserCreateDto userCreateDto)
         {
-            return await _userService.CreateUserAsync(userCreateDto);
+            var createdUser = await _userService.CreateUserAsync(userCreateDto);
+            return Ok(createdUser);
         }
 
         // only user itself can update the user info
         // resource-based authorization : data need to retrived from data resource to be verified
         [Authorize(/* Policy = "ResourceOwner" */)]
         [HttpPut("{userId}")] // endpoint: /users/:user_id
-        public async Task<UserReadDto> UpdateUserByIdAsync([FromRoute] Guid userId, [FromBody] UserUpdateDto userUpdateDto)
+        public async Task<ActionResult<UserReadDto>> UpdateUserByIdAsync([FromRoute] Guid userId, [FromBody] UserUpdateDto userUpdateDto)
         {
             var user = await _userService.GetUserByIdAsync(userId);
             var authResult = await _authorizationService.AuthorizeAsync(HttpContext.User, user, "ResourceOwner");
@@ -55,14 +58,16 @@ namespace Ecommerce.Controller.src.Controller
             {
                 throw AppException.Unauthorized("No permission.");
             }
-            return await _userService.UpdateUserByIdAsync(userId, userUpdateDto);
+            var updatedUser = await _userService.UpdateUserByIdAsync(userId, userUpdateDto);
+            return Ok(updatedUser);
         }
 
         [Authorize(Roles = "Admin")]
         [HttpDelete("{userId}")] // endpoint: /users/:user_id
-        public async Task<bool> DeleteUserByIdAsync([FromRoute] Guid userId)
+        public async Task<ActionResult<bool>> DeleteUserByIdAsync([FromRoute] Guid userId)
         {
-            return await _userService.DeleteUserByIdAsync(userId);
+            await _userService.DeleteUserByIdAsync(userId);
+            return Ok(true);
         }
 
 
@@ -72,7 +77,8 @@ namespace Ecommerce.Controller.src.Controller
         {
             var authenticatedClaims = HttpContext.User;
             var userId = authenticatedClaims.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
-            return await _userService.GetUserByIdAsync(Guid.Parse(userId));
+            var foundUserProfile = await _userService.GetUserByIdAsync(Guid.Parse(userId));
+            return Ok(foundUserProfile);
         }
     }
 }
