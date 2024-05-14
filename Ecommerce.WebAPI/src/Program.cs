@@ -60,6 +60,8 @@ builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
+builder.Services.AddScoped<IAddressService, AddressService>();
+builder.Services.AddScoped<IAddressRepo, AddressRepo>();
 builder.Services.AddScoped<ExceptionHandlerMiddleware>(serviceProvider =>
 {
   var logger = serviceProvider.GetRequiredService<ILogger<ExceptionHandlerMiddleware>>();

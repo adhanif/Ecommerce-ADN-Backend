@@ -78,20 +78,24 @@ namespace Ecommerce.WebAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "orders",
+                name: "addresses",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
+                    street = table.Column<string>(type: "varchar", maxLength: 255, nullable: false),
+                    city = table.Column<string>(type: "varchar", maxLength: 255, nullable: false),
+                    country = table.Column<string>(type: "text", nullable: false),
+                    zip_code = table.Column<string>(type: "varchar", nullable: false),
+                    phone_number = table.Column<string>(type: "varchar", maxLength: 255, nullable: false),
                     user_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    status = table.Column<OrderStatus>(type: "order_status", nullable: false),
                     created_date = table.Column<DateOnly>(type: "date", nullable: true, defaultValueSql: "CURRENT_TIMESTAMP"),
                     updated_date = table.Column<DateOnly>(type: "date", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("pk_orders", x => x.id);
+                    table.PrimaryKey("pk_addresses", x => x.id);
                     table.ForeignKey(
-                        name: "fk_orders_users_user_id",
+                        name: "fk_addresses_users_user_id",
                         column: x => x.user_id,
                         principalTable: "users",
                         principalColumn: "id",
@@ -149,6 +153,34 @@ namespace Ecommerce.WebAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "orders",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    address_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    status = table.Column<OrderStatus>(type: "order_status", nullable: false),
+                    created_date = table.Column<DateOnly>(type: "date", nullable: true, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    updated_date = table.Column<DateOnly>(type: "date", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_orders", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_orders_addresses_address_id",
+                        column: x => x.address_id,
+                        principalTable: "addresses",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.SetNull);
+                    table.ForeignKey(
+                        name: "fk_orders_users_user_id",
+                        column: x => x.user_id,
+                        principalTable: "users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "order_products",
                 columns: table => new
                 {
@@ -178,12 +210,12 @@ namespace Ecommerce.WebAPI.Migrations
                 columns: new[] { "id", "image", "name", "updated_date" },
                 values: new object[,]
                 {
-                    { new Guid("052e4e70-080e-496a-9d52-a7f7e7033ba9"), "https://picsum.photos/200/?random=5", "Sports", null },
-                    { new Guid("3029c3ac-6439-4a68-81be-a8fae54b3a16"), "https://picsum.photos/200/?random=1", "Clothing", null },
-                    { new Guid("3ed84354-cb1e-4519-b853-548b16bb874b"), "https://picsum.photos/200/?random=2", "Books", null },
-                    { new Guid("8b0392cb-8b34-4e85-89cb-c3bf5e78053b"), "https://picsum.photos/200/?random=5", "Furniture", null },
-                    { new Guid("a1091241-f7ff-4e57-8fec-4c96e6b2a75d"), "https://picsum.photos/200/?random=6", "Toys", null },
-                    { new Guid("c5ccbb3f-6322-4bd0-892e-2812130e7efc"), "https://picsum.photos/200/?random=2", "Electronic", null }
+                    { new Guid("0c28da19-31dd-4eef-9f2f-1e93fcf8e77b"), "https://picsum.photos/200/?random=2", "Toys", null },
+                    { new Guid("502436c6-4f21-4f57-a87c-296aa4b5db05"), "https://picsum.photos/200/?random=7", "Clothing", null },
+                    { new Guid("6ccb83ea-d5cc-4ade-9dea-010d2ec65206"), "https://picsum.photos/200/?random=8", "Books", null },
+                    { new Guid("7d2c5831-6ed0-437b-83a1-f353b895434b"), "https://picsum.photos/200/?random=1", "Furniture", null },
+                    { new Guid("c67e5ba5-9616-4254-a1ec-6f011df2f140"), "https://picsum.photos/200/?random=3", "Electronic", null },
+                    { new Guid("e07d7d47-80d7-47e0-b6f4-15d60de5142b"), "https://picsum.photos/200/?random=8", "Sports", null }
                 });
 
             migrationBuilder.InsertData(
@@ -191,12 +223,23 @@ namespace Ecommerce.WebAPI.Migrations
                 columns: new[] { "id", "avatar", "email", "name", "password", "salt", "updated_date", "user_role" },
                 values: new object[,]
                 {
-                    { new Guid("8228a9c7-e68f-4532-ad71-f74fd45b0555"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", "customer1@customer.com", "Customer1", "P1leiiBdgTvsoowsAmFZIcYUtJ5PgJddqYR9u4PLCPo=", new byte[] { 159, 180, 130, 176, 184, 163, 10, 29, 91, 182, 166, 70, 10, 201, 179, 233 }, null, UserRole.Admin },
-                    { new Guid("898d0ad0-7ab6-4204-a037-7b1310a46e00"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", "yuanke@admin.com", "Yuanke", "z8kCI8OplfAfOYYeO31KQSJtrTgDqg3jtrEZePxvrVU=", new byte[] { 62, 1, 224, 210, 236, 209, 217, 81, 165, 33, 217, 91, 128, 36, 160, 83 }, null, UserRole.Admin },
-                    { new Guid("8b9a5025-299c-4452-8498-5f69f9f2a6f4"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", "binh@admin.com", "Binh", "sKgxDDdmpFTPyDzDEC3Iu+T5mMY9xEFbVc1KCsCbweA=", new byte[] { 32, 179, 217, 105, 120, 44, 249, 139, 182, 169, 7, 88, 209, 240, 68, 1 }, null, UserRole.Admin },
-                    { new Guid("a46161b4-cf6f-4d86-9714-c619dfeb792e"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", "adnan@admin.com", "Adnan", "7dKW1SbWwFBfZ3e/8Mc2n/7ZNp9vC8Bno5yv3ir4W6Q=", new byte[] { 159, 30, 102, 36, 188, 7, 74, 35, 144, 2, 41, 185, 162, 4, 155, 203 }, null, UserRole.Admin },
-                    { new Guid("e8dc6bfa-f9c1-4049-9471-94e4818f0f1f"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", "john@example.com", "Admin1", "SbHYgcGoopXCfjVR3WAHdZAlcBROJA2nJ6iBAcR4cBI=", new byte[] { 95, 190, 139, 46, 103, 64, 221, 11, 157, 234, 110, 144, 137, 6, 132, 11 }, null, UserRole.Admin }
+                    { new Guid("04cfef1b-a78c-4b3a-bd19-20cd779bf20a"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", "adnan@admin.com", "Adnan", "vaw0sCJDV4B4nZQeDdyDI9ateQX2G+TdLODtTdhGHCI=", new byte[] { 11, 198, 51, 61, 51, 115, 183, 9, 22, 50, 67, 126, 120, 46, 162, 93 }, null, UserRole.Admin },
+                    { new Guid("59c2ba90-3ca7-4c19-8c58-db8b6998b169"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", "yuanke@admin.com", "Yuanke", "jNPvxc0kTNSI+HehNqrBa+DSx/GFYotyIJ2p0OwQu7s=", new byte[] { 8, 57, 125, 91, 65, 18, 46, 89, 121, 198, 251, 238, 147, 0, 72, 68 }, null, UserRole.Admin },
+                    { new Guid("97664198-3d6c-4991-8671-a043526a743a"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", "binh@admin.com", "Binh", "Ch0nl9NeaWMKnuUph5EsCC3NN4/87k4/f2Hi2zkGaEo=", new byte[] { 27, 254, 59, 116, 10, 120, 29, 61, 234, 197, 81, 94, 65, 225, 89, 106 }, null, UserRole.Admin },
+                    { new Guid("98a89923-daca-472d-bc4e-d13240291835"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", "john@example.com", "Admin1", "C9FdLx/9YDyKdPpwspwCUbAJReK7OYpg3cLxP/1vWdc=", new byte[] { 76, 197, 78, 176, 83, 174, 92, 255, 28, 31, 254, 128, 139, 60, 146, 183 }, null, UserRole.Admin },
+                    { new Guid("e105ecbf-7282-4e67-906b-85816e9b8f77"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", "customer1@customer.com", "Customer1", "ttv5UpAMy+L0LDc3nGdfoXOIodVhbS+/QH0Kh3gigSY=", new byte[] { 4, 194, 172, 53, 154, 203, 166, 239, 218, 7, 188, 49, 105, 85, 235, 235 }, null, UserRole.Admin }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "city",
+                table: "addresses",
+                column: "phone_number",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "ix_addresses_user_id",
+                table: "addresses",
+                column: "user_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_images_product_id",
@@ -207,6 +250,11 @@ namespace Ecommerce.WebAPI.Migrations
                 name: "ix_order_products_product_id",
                 table: "order_products",
                 column: "product_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_orders_address_id",
+                table: "orders",
+                column: "address_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_orders_user_id",
@@ -265,10 +313,13 @@ namespace Ecommerce.WebAPI.Migrations
                 name: "products");
 
             migrationBuilder.DropTable(
-                name: "users");
+                name: "addresses");
 
             migrationBuilder.DropTable(
                 name: "categories");
+
+            migrationBuilder.DropTable(
+                name: "users");
         }
     }
 }
