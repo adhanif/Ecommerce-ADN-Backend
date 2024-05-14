@@ -4,9 +4,10 @@ namespace Ecommerce.Core.src.RepoAbstract
 {
     public interface IAddressRepo
     {
-        Task<Address> GetAddressByIdAsync(Guid id);
+        Task<Address> GetAddressByIdAsync(Guid addressId);
         Task<Address> CreateAddressAsync(Address newAddress);
         Task<Address> UpdateAddressAsync(Address address);
-        Task DeleteAddressAsync(Guid id);
+        Task<bool> DeleteAddressAsync(Guid id);
+        Task<IEnumerable<Address>> GetAllAddressesOfUserByIdAsync(Guid userId);
     }
 }

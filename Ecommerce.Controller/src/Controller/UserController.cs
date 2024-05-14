@@ -55,7 +55,7 @@ namespace Ecommerce.Controller.src.Controller
             {
                 throw AppException.Unauthorized("No permission.");
             }
-             return await _userService.UpdateUserByIdAsync(userId, userUpdateDto);
+            return await _userService.UpdateUserByIdAsync(userId, userUpdateDto);
         }
 
         [Authorize(Roles = "Admin")]
@@ -65,14 +65,14 @@ namespace Ecommerce.Controller.src.Controller
             return await _userService.DeleteUserByIdAsync(userId);
         }
 
-        // Sample endpoint I found good to apply from Alia's code, please modify ^_^
+
         [Authorize]
         [HttpGet("profile")]
-        public async Task<UserReadDto> GetUserProfileAsync()
+        public async Task<ActionResult<UserReadDto>> GetUserProfileAsync()
         {
-            var claims = HttpContext.User;
-            var userId = Guid.Parse(claims.FindFirst(ClaimTypes.NameIdentifier).Value);
-            return await _userService.GetUserByIdAsync(userId);
+            var authenticatedClaims = HttpContext.User;
+            var userId = authenticatedClaims.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
+            return await _userService.GetUserByIdAsync(Guid.Parse(userId));
         }
     }
 }

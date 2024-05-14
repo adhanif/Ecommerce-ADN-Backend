@@ -14,6 +14,15 @@ namespace Ecommerce.Service.src.Shared
             CreateMap<UserUpdateDto, User>();
             // #endregion
 
+            // Address mappings
+            CreateMap<Address, AddressReadDto>()
+                .ForMember(dest => dest.AddressId, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.User, opt => opt.Ignore()); // Ignore User to prevent circular reference
+            CreateMap<AddressCreateDto, Address>()
+                .ForMember(dest => dest.Id, opt => opt.Ignore()); // Ignore Id, as it will be generated
+            CreateMap<AddressUpdateDto, Address>()
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.AddressId));
+
             #region User Mapper:
             CreateMap<UserCreateDto, User>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.UserName))
@@ -21,14 +30,17 @@ namespace Ecommerce.Service.src.Shared
                 .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.UserPassword))
                 .ForMember(dest => dest.Avatar, opt => opt.MapFrom(src => src.UserAvatar))
                 .ForMember(dest => dest.UserRole, opt => opt.MapFrom(src => src.UserRole))
-                 .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => src.CreatedDate));
+                 .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => src.CreatedDate))
+                 .ForMember(dest => dest.Addresses, opt => opt.MapFrom(src => src.Addresses));
 
             CreateMap<User, UserReadDto>()
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Name))
                 .ForMember(dest => dest.UserEmail, opt => opt.MapFrom(src => src.Email))
                 .ForMember(dest => dest.UserAvatar, opt => opt.MapFrom(src => src.Avatar))
-                .ForMember(dest => dest.UserRole, opt => opt.MapFrom(src => src.UserRole));
+                .ForMember(dest => dest.UserRole, opt => opt.MapFrom(src => src.UserRole))
+                .ForMember(dest => dest.Addresses, opt => opt.MapFrom(src => src.Addresses));
+
 
             CreateMap<UserUpdateDto, User>()
                 .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.UserName))

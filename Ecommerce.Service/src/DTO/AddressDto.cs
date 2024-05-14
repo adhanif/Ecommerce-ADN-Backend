@@ -23,6 +23,7 @@ namespace Ecommerce.Service.src.DTO
                 Country = address.Country;
                 ZipCode = address.ZipCode;
                 PhoneNumber = address.PhoneNumber;
+                UserId = address.UserId;
             }
         }
     }

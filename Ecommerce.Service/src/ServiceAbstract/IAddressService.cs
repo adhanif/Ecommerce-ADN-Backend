@@ -5,9 +5,10 @@ namespace Ecommerce.Service.src.ServiceAbstract
 {
     public interface IAddressService
     {
-        Task<AddressReadDto> GetAddressByIdAsync(Guid id);
+        Task<AddressReadDto> GetAddressByIdAsync(Guid addressId);
         Task<AddressReadDto> CreateAddressAsync(AddressCreateDto addressCreateDto);
         Task<AddressReadDto> UpdateAddressAsync(Address address);
-        Task DeleteAddressAsync(Guid id);
+        Task<bool> DeleteAddressAsync(Guid addressId);
+        Task<IEnumerable<AddressReadDto>> GetAllAddressesOfUserByIdAsync(Guid userID);
     }
 }

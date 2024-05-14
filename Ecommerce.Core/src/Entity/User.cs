@@ -16,6 +16,8 @@ namespace Ecommerce.Core.src.Entity
         public byte[] Salt { get; set; }
         public string? Avatar { get; set; }
         public UserRole UserRole { get; set; }
+        public IEnumerable<Address> Addresses { get; set; }
+
 
         override public string ToString()
         {

@@ -1,4 +1,5 @@
 using Ecommerce.Core.src.Common;
+using Ecommerce.Service.src.DTO;
 
 namespace Ecommerce.Service.src.ServiceAbstract
 {
@@ -6,5 +7,6 @@ namespace Ecommerce.Service.src.ServiceAbstract
     {
         Task<string> LoginAsync(UserCredential userCredential);
         Task<string> LogoutAsync();
+        Task<UserReadDto> GetCurrentProfileAsync(Guid id);
     }
 }

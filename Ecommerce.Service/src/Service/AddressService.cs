@@ -16,26 +16,88 @@ namespace Ecommerce.Service.src.Service
 
         public async Task<AddressReadDto> CreateAddressAsync(AddressCreateDto addressCreateDto)
         {
-            var newAddress = addressCreateDto.CreateAddress();
-            var createdAddress = await _addressRepo.CreateAddressAsync(newAddress);
-            var addressReadDto = new AddressReadDto();
-            addressReadDto.Transform(createdAddress);
-            return addressReadDto;
+            try
+            {
+                var newAddress = addressCreateDto.CreateAddress();
+                var createdAddress = await _addressRepo.CreateAddressAsync(newAddress);
+                var addressReadDto = new AddressReadDto();
+                addressReadDto.Transform(createdAddress);
+                return addressReadDto;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
         }
 
-        public Task DeleteAddressAsync(Guid id)
+        public async Task<IEnumerable<AddressReadDto>> GetAllAddressesOfUserByIdAsync(Guid userId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var foundAddresses = await _addressRepo.GetAllAddressesOfUserByIdAsync(userId);
+                var addressReadDtos = new List<AddressReadDto>();
+
+                foreach (var address in foundAddresses)
+                {
+                    var addressReadDto = new AddressReadDto();
+                    addressReadDto.Transform(address);
+                    addressReadDtos.Add(addressReadDto);
+                }
+
+                return addressReadDtos;
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
 
-        public Task<AddressReadDto> GetAddressByIdAsync(Guid id)
+        public async Task<AddressReadDto> GetAddressByIdAsync(Guid addressId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                var address = await _addressRepo.GetAddressByIdAsync(addressId);
+                var addressReadDto = new AddressReadDto();
+                addressReadDto.Transform(address);
+                return addressReadDto;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
 
-        public Task<AddressReadDto> UpdateAddressAsync(Address address)
+
+        public async Task<bool> DeleteAddressAsync(Guid addressId)
         {
-            throw new NotImplementedException();
+            try
+            {
+                await _addressRepo.DeleteAddressAsync(addressId);
+                return true;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
+
+        public async Task<AddressReadDto> UpdateAddressAsync(Address address)
+        {
+            try
+            {
+                var updatedAddress = await _addressRepo.UpdateAddressAsync(address);
+                var addressReadDto = new AddressReadDto();
+                addressReadDto.Transform(updatedAddress);
+                return addressReadDto;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
         }
     }
 }

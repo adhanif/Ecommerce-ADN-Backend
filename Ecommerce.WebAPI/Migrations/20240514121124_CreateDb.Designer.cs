@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Ecommerce.WebAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240514094438_CreateDb")]
+    [Migration("20240514121124_CreateDb")]
     partial class CreateDb
     {
         /// <inheritdoc />
@@ -47,10 +47,8 @@ namespace Ecommerce.WebAPI.Migrations
                         .HasColumnName("country");
 
                     b.Property<DateOnly?>("CreatedDate")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("date")
-                        .HasColumnName("created_date")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnName("created_date");
 
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
@@ -80,10 +78,6 @@ namespace Ecommerce.WebAPI.Migrations
                     b.HasKey("Id")
                         .HasName("pk_addresses");
 
-                    b.HasIndex("PhoneNumber")
-                        .IsUnique()
-                        .HasDatabaseName("city");
-
                     b.HasIndex("UserId")
                         .HasDatabaseName("ix_addresses_user_id");
 
@@ -98,10 +92,8 @@ namespace Ecommerce.WebAPI.Migrations
                         .HasColumnName("id");
 
                     b.Property<DateOnly?>("CreatedDate")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("date")
-                        .HasColumnName("created_date")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnName("created_date");
 
                     b.Property<string>("Image")
                         .IsRequired()
@@ -125,37 +117,37 @@ namespace Ecommerce.WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c67e5ba5-9616-4254-a1ec-6f011df2f140"),
-                            Image = "https://picsum.photos/200/?random=3",
+                            Id = new Guid("e090bbf5-ad1d-45a0-8ed4-85898483d9cb"),
+                            Image = "https://picsum.photos/200/?random=7",
                             Name = "Electronic"
                         },
                         new
                         {
-                            Id = new Guid("502436c6-4f21-4f57-a87c-296aa4b5db05"),
-                            Image = "https://picsum.photos/200/?random=7",
+                            Id = new Guid("05fcad00-d3e1-4783-a257-11a69f37e06f"),
+                            Image = "https://picsum.photos/200/?random=6",
                             Name = "Clothing"
                         },
                         new
                         {
-                            Id = new Guid("7d2c5831-6ed0-437b-83a1-f353b895434b"),
-                            Image = "https://picsum.photos/200/?random=1",
+                            Id = new Guid("b90d5d0f-e803-4238-b444-2a26de6b4ccf"),
+                            Image = "https://picsum.photos/200/?random=10",
                             Name = "Furniture"
                         },
                         new
                         {
-                            Id = new Guid("6ccb83ea-d5cc-4ade-9dea-010d2ec65206"),
-                            Image = "https://picsum.photos/200/?random=8",
+                            Id = new Guid("34d1408a-12d8-4ae5-8003-68b156b93a02"),
+                            Image = "https://picsum.photos/200/?random=5",
                             Name = "Books"
                         },
                         new
                         {
-                            Id = new Guid("0c28da19-31dd-4eef-9f2f-1e93fcf8e77b"),
-                            Image = "https://picsum.photos/200/?random=2",
+                            Id = new Guid("6c491835-b99f-45ed-bba9-c874f48a3c05"),
+                            Image = "https://picsum.photos/200/?random=5",
                             Name = "Toys"
                         },
                         new
                         {
-                            Id = new Guid("e07d7d47-80d7-47e0-b6f4-15d60de5142b"),
+                            Id = new Guid("22187ad3-543f-41c6-b504-0c09e152b85d"),
                             Image = "https://picsum.photos/200/?random=8",
                             Name = "Sports"
                         });
@@ -173,10 +165,8 @@ namespace Ecommerce.WebAPI.Migrations
                         .HasColumnName("address_id");
 
                     b.Property<DateOnly?>("CreatedDate")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("date")
-                        .HasColumnName("created_date")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnName("created_date");
 
                     b.Property<OrderStatus>("Status")
                         .HasColumnType("order_status")
@@ -192,9 +182,6 @@ namespace Ecommerce.WebAPI.Migrations
 
                     b.HasKey("Id")
                         .HasName("pk_orders");
-
-                    b.HasIndex("AddressId")
-                        .HasDatabaseName("ix_orders_address_id");
 
                     b.HasIndex("UserId")
                         .HasDatabaseName("ix_orders_user_id");
@@ -237,10 +224,8 @@ namespace Ecommerce.WebAPI.Migrations
                         .HasColumnName("category_id");
 
                     b.Property<DateOnly?>("CreatedDate")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("date")
-                        .HasColumnName("created_date")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnName("created_date");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -294,10 +279,8 @@ namespace Ecommerce.WebAPI.Migrations
                         .HasColumnName("id");
 
                     b.Property<DateOnly?>("CreatedDate")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("date")
-                        .HasColumnName("created_date")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnName("created_date");
 
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uuid")
@@ -333,10 +316,8 @@ namespace Ecommerce.WebAPI.Migrations
                         .HasColumnName("content");
 
                     b.Property<DateOnly?>("CreatedDate")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("date")
-                        .HasColumnName("created_date")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnName("created_date");
 
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uuid")
@@ -378,10 +359,8 @@ namespace Ecommerce.WebAPI.Migrations
                         .HasColumnName("avatar");
 
                     b.Property<DateOnly?>("CreatedDate")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("date")
-                        .HasColumnName("created_date")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
+                        .HasColumnName("created_date");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -425,52 +404,52 @@ namespace Ecommerce.WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("98a89923-daca-472d-bc4e-d13240291835"),
+                            Id = new Guid("b7bfc0ef-8408-47c8-9cef-28a179ea7f0b"),
                             Avatar = "https://picsum.photos/200/?random=System.Func`1[System.Int32]",
                             Email = "john@example.com",
                             Name = "Admin1",
-                            Password = "C9FdLx/9YDyKdPpwspwCUbAJReK7OYpg3cLxP/1vWdc=",
-                            Salt = new byte[] { 76, 197, 78, 176, 83, 174, 92, 255, 28, 31, 254, 128, 139, 60, 146, 183 },
+                            Password = "QggVSqhvFgPmAfAjIOb+QK47D9Rxemu8M2TnD1oTetI=",
+                            Salt = new byte[] { 41, 51, 6, 99, 230, 167, 207, 93, 43, 193, 75, 149, 238, 90, 207, 167 },
                             UserRole = UserRole.Admin
                         },
                         new
                         {
-                            Id = new Guid("97664198-3d6c-4991-8671-a043526a743a"),
+                            Id = new Guid("3de2d260-b0dd-4c0c-bb2d-bec7b18e0274"),
                             Avatar = "https://picsum.photos/200/?random=System.Func`1[System.Int32]",
                             Email = "binh@admin.com",
                             Name = "Binh",
-                            Password = "Ch0nl9NeaWMKnuUph5EsCC3NN4/87k4/f2Hi2zkGaEo=",
-                            Salt = new byte[] { 27, 254, 59, 116, 10, 120, 29, 61, 234, 197, 81, 94, 65, 225, 89, 106 },
+                            Password = "uigVcGbHUmg0dFsTLYcAMlPXwJWSDAto3ZC89KBS0xU=",
+                            Salt = new byte[] { 71, 19, 112, 119, 48, 72, 219, 240, 248, 127, 21, 248, 58, 106, 182, 38 },
                             UserRole = UserRole.Admin
                         },
                         new
                         {
-                            Id = new Guid("04cfef1b-a78c-4b3a-bd19-20cd779bf20a"),
+                            Id = new Guid("293c72c3-b5e6-453f-a160-a0680440ad59"),
                             Avatar = "https://picsum.photos/200/?random=System.Func`1[System.Int32]",
                             Email = "adnan@admin.com",
                             Name = "Adnan",
-                            Password = "vaw0sCJDV4B4nZQeDdyDI9ateQX2G+TdLODtTdhGHCI=",
-                            Salt = new byte[] { 11, 198, 51, 61, 51, 115, 183, 9, 22, 50, 67, 126, 120, 46, 162, 93 },
+                            Password = "op0gm36oatu+I6dib5uAd75hf11IQLZyCJoLdHedKP0=",
+                            Salt = new byte[] { 53, 84, 177, 137, 18, 191, 18, 84, 55, 100, 87, 234, 224, 213, 6, 53 },
                             UserRole = UserRole.Admin
                         },
                         new
                         {
-                            Id = new Guid("59c2ba90-3ca7-4c19-8c58-db8b6998b169"),
+                            Id = new Guid("4e204c78-83db-4151-99f5-b54b2e133cca"),
                             Avatar = "https://picsum.photos/200/?random=System.Func`1[System.Int32]",
                             Email = "yuanke@admin.com",
                             Name = "Yuanke",
-                            Password = "jNPvxc0kTNSI+HehNqrBa+DSx/GFYotyIJ2p0OwQu7s=",
-                            Salt = new byte[] { 8, 57, 125, 91, 65, 18, 46, 89, 121, 198, 251, 238, 147, 0, 72, 68 },
+                            Password = "VD98kz7mcCpqW04z7qr0kw0HZ4ZXZrWDjnpSCVewnvo=",
+                            Salt = new byte[] { 243, 151, 212, 36, 176, 8, 19, 0, 225, 151, 252, 172, 84, 198, 31, 11 },
                             UserRole = UserRole.Admin
                         },
                         new
                         {
-                            Id = new Guid("e105ecbf-7282-4e67-906b-85816e9b8f77"),
+                            Id = new Guid("5c43d75e-c005-4a30-b241-d2c95fbb319f"),
                             Avatar = "https://picsum.photos/200/?random=System.Func`1[System.Int32]",
                             Email = "customer1@customer.com",
                             Name = "Customer1",
-                            Password = "ttv5UpAMy+L0LDc3nGdfoXOIodVhbS+/QH0Kh3gigSY=",
-                            Salt = new byte[] { 4, 194, 172, 53, 154, 203, 166, 239, 218, 7, 188, 49, 105, 85, 235, 235 },
+                            Password = "rioQzeVg5zjjGTSxdPAPjydGPsG/V30i0Lt+5Pyko1Q=",
+                            Salt = new byte[] { 219, 110, 19, 221, 253, 57, 20, 20, 33, 116, 157, 210, 107, 12, 63, 192 },
                             UserRole = UserRole.Admin
                         });
                 });
@@ -478,7 +457,7 @@ namespace Ecommerce.WebAPI.Migrations
             modelBuilder.Entity("Ecommerce.Core.src.Entity.Address", b =>
                 {
                     b.HasOne("Ecommerce.Core.src.Entity.User", "User")
-                        .WithMany()
+                        .WithMany("Addresses")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired()
@@ -489,13 +468,6 @@ namespace Ecommerce.WebAPI.Migrations
 
             modelBuilder.Entity("Ecommerce.Core.src.Entity.Order", b =>
                 {
-                    b.HasOne("Ecommerce.Core.src.Entity.Address", null)
-                        .WithMany()
-                        .HasForeignKey("AddressId")
-                        .OnDelete(DeleteBehavior.SetNull)
-                        .IsRequired()
-                        .HasConstraintName("fk_orders_addresses_address_id");
-
                     b.HasOne("Ecommerce.Core.src.Entity.User", "User")
                         .WithMany()
                         .HasForeignKey("UserId")
@@ -574,6 +546,11 @@ namespace Ecommerce.WebAPI.Migrations
             modelBuilder.Entity("Ecommerce.Core.src.Entity.Product", b =>
                 {
                     b.Navigation("ProductImages");
+                });
+
+            modelBuilder.Entity("Ecommerce.Core.src.Entity.User", b =>
+                {
+                    b.Navigation("Addresses");
                 });
 #pragma warning restore 612, 618
         }

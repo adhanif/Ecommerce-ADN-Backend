@@ -1,5 +1,6 @@
 using Ecommerce.Core.src.Common;
 using Ecommerce.Core.src.RepoAbstract;
+using Ecommerce.Service.src.DTO;
 using Ecommerce.Service.src.ServiceAbstract;
 
 namespace Ecommerce.Service.src.Service
@@ -34,7 +35,29 @@ namespace Ecommerce.Service.src.Service
         public async Task<string> LogoutAsync()
         {
 
-           return await _tokenService.InvalidateTokenAsync();
+            return await _tokenService.InvalidateTokenAsync();
+
+        }
+
+        public async Task<UserReadDto> GetCurrentProfileAsync(Guid id)
+        {
+            try
+            {
+                var foundUser = await _userRepo.GetUserByIdAsync(id);
+                if (foundUser is null)
+                {
+                    throw AppException.NotFound("Email is not registered");
+                }
+                var userReadDto = new UserReadDto();
+                userReadDto.Transform(foundUser);
+                return userReadDto;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
 
         }
     }

@@ -45,7 +45,8 @@ namespace Ecommerce.WebAPI.src.Repo
 
             }
 
-
+            // Include addresses
+            query = query.Include(u => u.Addresses);
             // Execute the query
             var users = await query.ToListAsync();
             return users;
@@ -53,13 +54,13 @@ namespace Ecommerce.WebAPI.src.Repo
 
         public async Task<User> GetUserByIdAsync(Guid userId)
         {
-            var foundUser = await _users.FindAsync(userId) ?? throw AppException.NotFound("User not found");
+            var foundUser = await _users.Include(u => u.Addresses).FirstOrDefaultAsync(u => u.Id == userId) ?? throw AppException.NotFound("User not found");
             return foundUser;
         }
 
         public async Task<User> GetUserByEmailAsync(string email)
         {
-            var foundUser = await _users.FirstOrDefaultAsync(u => u.Email == email);
+            var foundUser = await _users.Include(u => u.Addresses).FirstOrDefaultAsync(u => u.Email == email) ?? throw AppException.NotFound("User not found"); ;
             return foundUser;
         }
 

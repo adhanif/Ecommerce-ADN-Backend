@@ -66,10 +66,6 @@ namespace Ecommerce.WebAPI.src.Database
             // Relationship
             modelBuilder.Entity<OrderProduct>()
                 .HasKey(op => new { op.OrderId, op.ProductId });
-            modelBuilder.Entity<Order>(order =>
-                        {
-                            order.HasOne<Address>().WithMany().HasForeignKey(o => o.AddressId).OnDelete(DeleteBehavior.SetNull);
-                        });
             modelBuilder.Entity<Order>(entity => entity.Property(o => o.Status).HasColumnType("order_status"));
             modelBuilder.Entity<Order>()
                 .HasMany(o => o.OrderProducts)
@@ -84,27 +80,27 @@ namespace Ecommerce.WebAPI.src.Database
                 .IsUnique();
 
             // Automatically set CreatedDate when creating data
-            modelBuilder.Entity<User>()
-                .Property(u => u.CreatedDate)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
-            modelBuilder.Entity<Product>()
-                .Property(p => p.CreatedDate)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
-            modelBuilder.Entity<Category>()
-                .Property(c => c.CreatedDate)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
-            modelBuilder.Entity<ProductImage>()
-                .Property(i => i.CreatedDate)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
-            modelBuilder.Entity<Order>()
-                .Property(o => o.CreatedDate)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
-            modelBuilder.Entity<Review>()
-                .Property(r => r.CreatedDate)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
-            modelBuilder.Entity<Address>()
-            .Property(a => a.CreatedDate)
-            .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            // modelBuilder.Entity<User>()
+            //     .Property(u => u.CreatedDate)
+            //     .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            // modelBuilder.Entity<Product>()
+            //     .Property(p => p.CreatedDate)
+            //     .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            // modelBuilder.Entity<Category>()
+            //     .Property(c => c.CreatedDate)
+            //     .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            // modelBuilder.Entity<ProductImage>()
+            //     .Property(i => i.CreatedDate)
+            //     .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            // modelBuilder.Entity<Order>()
+            //     .Property(o => o.CreatedDate)
+            //     .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            // modelBuilder.Entity<Review>()
+            //     .Property(r => r.CreatedDate)
+            //     .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            // modelBuilder.Entity<Address>()
+            // .Property(a => a.CreatedDate)
+            // .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             // Setting column type
             modelBuilder.Entity<User>(u => u.Property(u => u.Name).HasColumnType("varchar(20)"));
@@ -142,16 +138,16 @@ namespace Ecommerce.WebAPI.src.Database
             // Relationship, column type and constraint of Address
             modelBuilder.Entity<Address>(address =>
             {
-                address.HasOne(a => a.User)
-                    .WithMany()
-                    .HasForeignKey(a => a.UserId)
-                    .OnDelete(DeleteBehavior.Cascade);
+                // address.HasOne(a => a.User)
+                
+                //     .WithMany()
+                //     .HasForeignKey(a => a.UserId)
+                //     .OnDelete(DeleteBehavior.Cascade);
 
                 // Configure column type and constraint of Product
                 address.Property(a => a.Street).IsRequired().HasColumnType("varchar").HasMaxLength(255);
                 address.Property(a => a.City).IsRequired().HasColumnType("varchar").HasMaxLength(255);
                 address.Property(a => a.ZipCode).IsRequired().HasColumnType("varchar");
-                address.HasIndex(a => a.PhoneNumber).IsUnique().HasDatabaseName("city");
                 address.Property(a => a.PhoneNumber).IsRequired().HasColumnType("varchar").HasMaxLength(255);
 
             });

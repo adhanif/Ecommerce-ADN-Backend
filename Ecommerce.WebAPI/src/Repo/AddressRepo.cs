@@ -1,3 +1,4 @@
+using Ecommerce.Core.src.Common;
 using Ecommerce.Core.src.Entity;
 using Ecommerce.Core.src.RepoAbstract;
 using Ecommerce.WebAPI.src.Database;
@@ -22,19 +23,40 @@ namespace Ecommerce.WebAPI.src.Repo
             return newAddress;
         }
 
-        public Task DeleteAddressAsync(Guid id)
+        public async Task<IEnumerable<Address>> GetAllAddressesOfUserByIdAsync(Guid userId)
         {
-            throw new NotImplementedException();
+            var addresses = await _address.Where(a => a.UserId == userId).Include(a => a.User).ToListAsync();
+            Console.WriteLine(addresses[0].User);
+            return addresses;
         }
 
-        public Task<Address> GetAddressByIdAsync(Guid id)
+        public async Task<bool> DeleteAddressAsync(Guid addressId)
         {
-            throw new NotImplementedException();
+            var foundAddress = await _address.FirstOrDefaultAsync(a => a.Id == addressId) ?? throw AppException.NotFound("Address not found");
+            _address.Remove(foundAddress);
+            await _context.SaveChangesAsync();
+            return true;
         }
 
-        public Task<Address> UpdateAddressAsync(Address address)
+        public async Task<Address> GetAddressByIdAsync(Guid addressId)
         {
-            throw new NotImplementedException();
+            var foudAddress = await _address.FirstOrDefaultAsync(a => a.Id == addressId) ?? throw AppException.NotFound("Address not found");
+            return foudAddress;
+        }
+
+
+
+        public async Task<Address> UpdateAddressAsync(Address address)
+        {
+            var existingAddress = await _address.FirstOrDefaultAsync(a => a.Id == address.Id) ?? throw AppException.NotFound("Address not found");
+            existingAddress.Street = address.Street;
+            existingAddress.City = address.City;
+            existingAddress.Country = address.Country;
+            existingAddress.ZipCode = address.ZipCode;
+            existingAddress.PhoneNumber = address.PhoneNumber;
+            _context.Update(existingAddress);
+            await _context.SaveChangesAsync();
+            return existingAddress;
         }
     }
 }
