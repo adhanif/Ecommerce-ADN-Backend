@@ -11,6 +11,7 @@ namespace Ecommerce.Service.src.DTO
         public string UserEmail { get; set; }
         public string? UserAvatar { get; set; }
         public UserRole UserRole { get; set; }
+        public IEnumerable<AddressReadDto>? Addresses { get; set; }
 
         public void Transform(User user)
         {
@@ -21,18 +22,24 @@ namespace Ecommerce.Service.src.DTO
             UserRole = user.UserRole;
             CreatedDate = user.CreatedDate;
             UpdatedDate = user.UpdatedDate;
+            // Transform Addresses
+            Addresses = user.Addresses?.Select(a =>
+            {
+                var addressReadDto = new AddressReadDto();
+                addressReadDto.Transform(a);
+                return addressReadDto;
+            }).ToList();
         }
     }
 
-    public class UserCreateDto
+    public class UserCreateDto : BaseEntity
     {
         public string UserName { get; set; }
         public string UserEmail { get; set; }
         public string UserPassword { get; set; }
         public string? UserAvatar { get; set; }
         public UserRole UserRole { get; set; }
-        public DateOnly? CreatedDate { get; set; }
-        public DateOnly? UpdatedDate { get; set; }
+        public IEnumerable<AddressCreateDto>? Addresses { get; set; } = new List<AddressCreateDto>();
 
 
         public User CreateUser()
@@ -44,13 +51,14 @@ namespace Ecommerce.Service.src.DTO
                 Password = UserPassword,
                 Avatar = UserAvatar,
                 UserRole = UserRole,
+                Addresses = Addresses?.Select(a => a.CreateAddress()).ToList(),
                 CreatedDate = CreatedDate,
                 UpdatedDate = UpdatedDate
             };
         }
     }
 
-    public class UserUpdateDto
+    public class UserUpdateDto : BaseEntity
     {
         public string? UserName { get; set; }
         public string? UserEmail { get; set; }

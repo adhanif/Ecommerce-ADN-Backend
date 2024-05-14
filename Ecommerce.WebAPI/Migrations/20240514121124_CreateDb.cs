@@ -25,7 +25,7 @@ namespace Ecommerce.WebAPI.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "varchar", nullable: false),
                     image = table.Column<string>(type: "varchar", nullable: false),
-                    created_date = table.Column<DateOnly>(type: "date", nullable: true, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    created_date = table.Column<DateOnly>(type: "date", nullable: true),
                     updated_date = table.Column<DateOnly>(type: "date", nullable: true)
                 },
                 constraints: table =>
@@ -44,7 +44,7 @@ namespace Ecommerce.WebAPI.Migrations
                     salt = table.Column<byte[]>(type: "bytea", nullable: false),
                     avatar = table.Column<string>(type: "varchar(255)", nullable: true),
                     user_role = table.Column<UserRole>(type: "user_role", nullable: false),
-                    created_date = table.Column<DateOnly>(type: "date", nullable: true, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    created_date = table.Column<DateOnly>(type: "date", nullable: true),
                     updated_date = table.Column<DateOnly>(type: "date", nullable: true)
                 },
                 constraints: table =>
@@ -62,7 +62,7 @@ namespace Ecommerce.WebAPI.Migrations
                     price = table.Column<int>(type: "integer", nullable: false),
                     category_id = table.Column<Guid>(type: "uuid", nullable: false),
                     inventory = table.Column<int>(type: "integer", nullable: false, defaultValue: 0),
-                    created_date = table.Column<DateOnly>(type: "date", nullable: true, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    created_date = table.Column<DateOnly>(type: "date", nullable: true),
                     updated_date = table.Column<DateOnly>(type: "date", nullable: true)
                 },
                 constraints: table =>
@@ -78,13 +78,39 @@ namespace Ecommerce.WebAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "addresses",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    street = table.Column<string>(type: "varchar", maxLength: 255, nullable: false),
+                    city = table.Column<string>(type: "varchar", maxLength: 255, nullable: false),
+                    country = table.Column<string>(type: "text", nullable: false),
+                    zip_code = table.Column<string>(type: "varchar", nullable: false),
+                    phone_number = table.Column<string>(type: "varchar", maxLength: 255, nullable: false),
+                    user_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    created_date = table.Column<DateOnly>(type: "date", nullable: true),
+                    updated_date = table.Column<DateOnly>(type: "date", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_addresses", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_addresses_users_user_id",
+                        column: x => x.user_id,
+                        principalTable: "users",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "orders",
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     user_id = table.Column<Guid>(type: "uuid", nullable: false),
+                    address_id = table.Column<Guid>(type: "uuid", nullable: false),
                     status = table.Column<OrderStatus>(type: "order_status", nullable: false),
-                    created_date = table.Column<DateOnly>(type: "date", nullable: true, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    created_date = table.Column<DateOnly>(type: "date", nullable: true),
                     updated_date = table.Column<DateOnly>(type: "date", nullable: true)
                 },
                 constraints: table =>
@@ -105,7 +131,7 @@ namespace Ecommerce.WebAPI.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     url = table.Column<string>(type: "varchar", nullable: false),
                     product_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    created_date = table.Column<DateOnly>(type: "date", nullable: true, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    created_date = table.Column<DateOnly>(type: "date", nullable: true),
                     updated_date = table.Column<DateOnly>(type: "date", nullable: true)
                 },
                 constraints: table =>
@@ -128,7 +154,7 @@ namespace Ecommerce.WebAPI.Migrations
                     content = table.Column<string>(type: "text", nullable: true),
                     user_id = table.Column<Guid>(type: "uuid", nullable: false),
                     product_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    created_date = table.Column<DateOnly>(type: "date", nullable: true, defaultValueSql: "CURRENT_TIMESTAMP"),
+                    created_date = table.Column<DateOnly>(type: "date", nullable: true),
                     updated_date = table.Column<DateOnly>(type: "date", nullable: true)
                 },
                 constraints: table =>
@@ -175,28 +201,33 @@ namespace Ecommerce.WebAPI.Migrations
 
             migrationBuilder.InsertData(
                 table: "categories",
-                columns: new[] { "id", "image", "name", "updated_date" },
+                columns: new[] { "id", "created_date", "image", "name", "updated_date" },
                 values: new object[,]
                 {
-                    { new Guid("052e4e70-080e-496a-9d52-a7f7e7033ba9"), "https://picsum.photos/200/?random=5", "Sports", null },
-                    { new Guid("3029c3ac-6439-4a68-81be-a8fae54b3a16"), "https://picsum.photos/200/?random=1", "Clothing", null },
-                    { new Guid("3ed84354-cb1e-4519-b853-548b16bb874b"), "https://picsum.photos/200/?random=2", "Books", null },
-                    { new Guid("8b0392cb-8b34-4e85-89cb-c3bf5e78053b"), "https://picsum.photos/200/?random=5", "Furniture", null },
-                    { new Guid("a1091241-f7ff-4e57-8fec-4c96e6b2a75d"), "https://picsum.photos/200/?random=6", "Toys", null },
-                    { new Guid("c5ccbb3f-6322-4bd0-892e-2812130e7efc"), "https://picsum.photos/200/?random=2", "Electronic", null }
+                    { new Guid("05fcad00-d3e1-4783-a257-11a69f37e06f"), null, "https://picsum.photos/200/?random=6", "Clothing", null },
+                    { new Guid("22187ad3-543f-41c6-b504-0c09e152b85d"), null, "https://picsum.photos/200/?random=8", "Sports", null },
+                    { new Guid("34d1408a-12d8-4ae5-8003-68b156b93a02"), null, "https://picsum.photos/200/?random=5", "Books", null },
+                    { new Guid("6c491835-b99f-45ed-bba9-c874f48a3c05"), null, "https://picsum.photos/200/?random=5", "Toys", null },
+                    { new Guid("b90d5d0f-e803-4238-b444-2a26de6b4ccf"), null, "https://picsum.photos/200/?random=10", "Furniture", null },
+                    { new Guid("e090bbf5-ad1d-45a0-8ed4-85898483d9cb"), null, "https://picsum.photos/200/?random=7", "Electronic", null }
                 });
 
             migrationBuilder.InsertData(
                 table: "users",
-                columns: new[] { "id", "avatar", "email", "name", "password", "salt", "updated_date", "user_role" },
+                columns: new[] { "id", "avatar", "created_date", "email", "name", "password", "salt", "updated_date", "user_role" },
                 values: new object[,]
                 {
-                    { new Guid("8228a9c7-e68f-4532-ad71-f74fd45b0555"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", "customer1@customer.com", "Customer1", "P1leiiBdgTvsoowsAmFZIcYUtJ5PgJddqYR9u4PLCPo=", new byte[] { 159, 180, 130, 176, 184, 163, 10, 29, 91, 182, 166, 70, 10, 201, 179, 233 }, null, UserRole.Admin },
-                    { new Guid("898d0ad0-7ab6-4204-a037-7b1310a46e00"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", "yuanke@admin.com", "Yuanke", "z8kCI8OplfAfOYYeO31KQSJtrTgDqg3jtrEZePxvrVU=", new byte[] { 62, 1, 224, 210, 236, 209, 217, 81, 165, 33, 217, 91, 128, 36, 160, 83 }, null, UserRole.Admin },
-                    { new Guid("8b9a5025-299c-4452-8498-5f69f9f2a6f4"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", "binh@admin.com", "Binh", "sKgxDDdmpFTPyDzDEC3Iu+T5mMY9xEFbVc1KCsCbweA=", new byte[] { 32, 179, 217, 105, 120, 44, 249, 139, 182, 169, 7, 88, 209, 240, 68, 1 }, null, UserRole.Admin },
-                    { new Guid("a46161b4-cf6f-4d86-9714-c619dfeb792e"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", "adnan@admin.com", "Adnan", "7dKW1SbWwFBfZ3e/8Mc2n/7ZNp9vC8Bno5yv3ir4W6Q=", new byte[] { 159, 30, 102, 36, 188, 7, 74, 35, 144, 2, 41, 185, 162, 4, 155, 203 }, null, UserRole.Admin },
-                    { new Guid("e8dc6bfa-f9c1-4049-9471-94e4818f0f1f"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", "john@example.com", "Admin1", "SbHYgcGoopXCfjVR3WAHdZAlcBROJA2nJ6iBAcR4cBI=", new byte[] { 95, 190, 139, 46, 103, 64, 221, 11, 157, 234, 110, 144, 137, 6, 132, 11 }, null, UserRole.Admin }
+                    { new Guid("293c72c3-b5e6-453f-a160-a0680440ad59"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", null, "adnan@admin.com", "Adnan", "op0gm36oatu+I6dib5uAd75hf11IQLZyCJoLdHedKP0=", new byte[] { 53, 84, 177, 137, 18, 191, 18, 84, 55, 100, 87, 234, 224, 213, 6, 53 }, null, UserRole.Admin },
+                    { new Guid("3de2d260-b0dd-4c0c-bb2d-bec7b18e0274"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", null, "binh@admin.com", "Binh", "uigVcGbHUmg0dFsTLYcAMlPXwJWSDAto3ZC89KBS0xU=", new byte[] { 71, 19, 112, 119, 48, 72, 219, 240, 248, 127, 21, 248, 58, 106, 182, 38 }, null, UserRole.Admin },
+                    { new Guid("4e204c78-83db-4151-99f5-b54b2e133cca"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", null, "yuanke@admin.com", "Yuanke", "VD98kz7mcCpqW04z7qr0kw0HZ4ZXZrWDjnpSCVewnvo=", new byte[] { 243, 151, 212, 36, 176, 8, 19, 0, 225, 151, 252, 172, 84, 198, 31, 11 }, null, UserRole.Admin },
+                    { new Guid("5c43d75e-c005-4a30-b241-d2c95fbb319f"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", null, "customer1@customer.com", "Customer1", "rioQzeVg5zjjGTSxdPAPjydGPsG/V30i0Lt+5Pyko1Q=", new byte[] { 219, 110, 19, 221, 253, 57, 20, 20, 33, 116, 157, 210, 107, 12, 63, 192 }, null, UserRole.Admin },
+                    { new Guid("b7bfc0ef-8408-47c8-9cef-28a179ea7f0b"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", null, "john@example.com", "Admin1", "QggVSqhvFgPmAfAjIOb+QK47D9Rxemu8M2TnD1oTetI=", new byte[] { 41, 51, 6, 99, 230, 167, 207, 93, 43, 193, 75, 149, 238, 90, 207, 167 }, null, UserRole.Admin }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "ix_addresses_user_id",
+                table: "addresses",
+                column: "user_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_images_product_id",
@@ -249,6 +280,9 @@ namespace Ecommerce.WebAPI.Migrations
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropTable(
+                name: "addresses");
+
             migrationBuilder.DropTable(
                 name: "images");
 

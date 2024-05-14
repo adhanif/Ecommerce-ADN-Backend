@@ -45,21 +45,24 @@ builder.Services.AddDbContext<AppDbContext>
 
 builder.Services.AddAutoMapper(typeof(MapperProfile));
 
+builder.Services.AddScoped<IProductRepo, ProductRepo>();
 builder.Services.AddScoped<IProductImageRepo, ProductImageRepo>();
 builder.Services.AddScoped<IUserRepo, UserRepo>();
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IProductRepo, ProductRepo>();
-builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
 builder.Services.AddScoped<IOrderRepo, OrderRepo>();
-builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IReviewRepo, ReviewRepo>();
-builder.Services.AddScoped<IReviewService, ReviewService>();
+builder.Services.AddScoped<IAddressRepo, AddressRepo>();
 
+builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IReviewService, ReviewService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IPasswordService, PasswordService>();
+builder.Services.AddScoped<IAddressService, AddressService>();
+
 builder.Services.AddScoped<ExceptionHandlerMiddleware>(serviceProvider =>
 {
   var logger = serviceProvider.GetRequiredService<ILogger<ExceptionHandlerMiddleware>>();

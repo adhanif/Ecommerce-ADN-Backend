@@ -16,6 +16,7 @@ namespace Ecommerce.WebAPI.src.Database
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderProduct> OrderProducts { get; set; }
         public DbSet<Review> Reviews { get; set; }
+        public DbSet<Address> Addresses { get; set; }
         #endregion
 
         #region Constructors
@@ -31,12 +32,22 @@ namespace Ecommerce.WebAPI.src.Database
         }
         #endregion
 
-        #region OnConfiguring
+        // #region OnConfiguring
+        // protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        // {
+        //     base.OnConfiguring(optionsBuilder);
+        // }
+        // #endregion
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            base.OnConfiguring(optionsBuilder);
+            optionsBuilder
+            .AddInterceptors(new TimeStampInterceptor())
+            .EnableSensitiveDataLogging()
+            .EnableDetailedErrors()
+            .UseSnakeCaseNamingConvention();
         }
-        #endregion
+
 
         #region OnModelCreating
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -49,42 +60,47 @@ namespace Ecommerce.WebAPI.src.Database
 
             // Enum columns
             modelBuilder.Entity<User>(entity => entity.Property(u => u.UserRole).HasColumnType("user_role"));
-            modelBuilder.Entity<Order>(entity => entity.Property(o => o.Status).HasColumnType("order_status"));
+
+
 
             // Relationship
             modelBuilder.Entity<OrderProduct>()
                 .HasKey(op => new { op.OrderId, op.ProductId });
-
+            modelBuilder.Entity<Order>(entity => entity.Property(o => o.Status).HasColumnType("order_status"));
             modelBuilder.Entity<Order>()
                 .HasMany(o => o.OrderProducts)
                 .WithOne()
                 .HasForeignKey(op => op.OrderId)
                 .OnDelete(DeleteBehavior.Cascade);
-                
+
+
             // Unique constraint
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email)
                 .IsUnique();
 
             // Automatically set CreatedDate when creating data
-            modelBuilder.Entity<User>()
-                .Property(u => u.CreatedDate)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
-            modelBuilder.Entity<Product>()
-                .Property(p => p.CreatedDate)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
-            modelBuilder.Entity<Category>()
-                .Property(c => c.CreatedDate)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
-            modelBuilder.Entity<ProductImage>()
-                .Property(i => i.CreatedDate)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
-            modelBuilder.Entity<Order>()
-                .Property(o => o.CreatedDate)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
-            modelBuilder.Entity<Review>()
-                .Property(r => r.CreatedDate)
-                .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            // modelBuilder.Entity<User>()
+            //     .Property(u => u.CreatedDate)
+            //     .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            // modelBuilder.Entity<Product>()
+            //     .Property(p => p.CreatedDate)
+            //     .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            // modelBuilder.Entity<Category>()
+            //     .Property(c => c.CreatedDate)
+            //     .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            // modelBuilder.Entity<ProductImage>()
+            //     .Property(i => i.CreatedDate)
+            //     .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            // modelBuilder.Entity<Order>()
+            //     .Property(o => o.CreatedDate)
+            //     .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            // modelBuilder.Entity<Review>()
+            //     .Property(r => r.CreatedDate)
+            //     .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            // modelBuilder.Entity<Address>()
+            // .Property(a => a.CreatedDate)
+            // .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
             // Setting column type
             modelBuilder.Entity<User>(u => u.Property(u => u.Name).HasColumnType("varchar(20)"));
@@ -95,9 +111,9 @@ namespace Ecommerce.WebAPI.src.Database
 
             modelBuilder.Entity<Category>(c => c.Property(c => c.Name).HasColumnType("varchar"));
             modelBuilder.Entity<Category>(c => c.Property(c => c.Image).HasColumnType("varchar"));
-            
+
             modelBuilder.Entity<ProductImage>(i => i.Property(i => i.Url).HasColumnType("varchar"));
-            
+
             // Relationship, column type and constraint of Product
             modelBuilder.Entity<Product>(product =>
             {
@@ -109,7 +125,7 @@ namespace Ecommerce.WebAPI.src.Database
                 product.HasMany(p => p.ProductImages)
                     .WithOne()
                     .OnDelete(DeleteBehavior.Cascade);
-                    
+
                 // Configure column type and constraint of Product
                 product.Property(p => p.Title).IsRequired().HasColumnType("varchar").HasMaxLength(255);
                 product.HasIndex(p => p.Title).IsUnique().HasDatabaseName("title");
@@ -118,6 +134,22 @@ namespace Ecommerce.WebAPI.src.Database
                 product.Property(p => p.Price).IsRequired();
                 product.ToTable(t => t.HasCheckConstraint("product_price_check", "price > 0"));
                 product.Property(p => p.Inventory).HasDefaultValue(0);
+            });
+            // Relationship, column type and constraint of Address
+            modelBuilder.Entity<Address>(address =>
+            {
+                // address.HasOne(a => a.User)
+                
+                //     .WithMany()
+                //     .HasForeignKey(a => a.UserId)
+                //     .OnDelete(DeleteBehavior.Cascade);
+
+                // Configure column type and constraint of Product
+                address.Property(a => a.Street).IsRequired().HasColumnType("varchar").HasMaxLength(255);
+                address.Property(a => a.City).IsRequired().HasColumnType("varchar").HasMaxLength(255);
+                address.Property(a => a.ZipCode).IsRequired().HasColumnType("varchar");
+                address.Property(a => a.PhoneNumber).IsRequired().HasColumnType("varchar").HasMaxLength(255);
+
             });
 
             // Fetch seed data
