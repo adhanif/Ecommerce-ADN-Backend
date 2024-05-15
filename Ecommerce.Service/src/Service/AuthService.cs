@@ -34,9 +34,7 @@ namespace Ecommerce.Service.src.Service
 
         public async Task<string> LogoutAsync()
         {
-
             return await _tokenService.InvalidateTokenAsync();
-
         }
 
         public async Task<UserReadDto> GetCurrentProfileAsync(Guid id)
