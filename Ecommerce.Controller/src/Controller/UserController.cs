@@ -80,5 +80,6 @@ namespace Ecommerce.Controller.src.Controller
             var foundUserProfile = await _userService.GetUserByIdAsync(Guid.Parse(userId));
             return Ok(foundUserProfile);
         }
+        
     }
 }
