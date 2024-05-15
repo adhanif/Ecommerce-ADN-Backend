@@ -26,6 +26,10 @@ namespace Ecommerce.Controller.src.Controller
         public async Task<ActionResult<IEnumerable<UserReadDto>>> GetAllUsersAsync([FromQuery] UserQueryOptions userQueryOptions)
         {
             var users = await _userService.GetAllUsersAsync(userQueryOptions);
+            if (users == null || !users.Any())
+            {
+                return NotFound("No users found.");
+            }
             return Ok(users);
         }
 
@@ -34,6 +38,10 @@ namespace Ecommerce.Controller.src.Controller
         public async Task<ActionResult<UserReadDto>> GetUserByIdAsync([FromRoute] Guid userId)
         {
             var foundUser = await _userService.GetUserByIdAsync(userId);
+            if (foundUser == null)
+            {
+                return NotFound($"User with ID {userId} not found.");
+            }
             return Ok(foundUser);
         }
 
@@ -43,6 +51,10 @@ namespace Ecommerce.Controller.src.Controller
         public async Task<ActionResult<UserReadDto>> CreateUserAsync([FromBody] UserCreateDto userCreateDto)
         {
             var createdUser = await _userService.CreateUserAsync(userCreateDto);
+            if (createdUser == null)
+            {
+                return BadRequest("Failed to create user.");
+            }
             return Ok(createdUser);
         }
 
@@ -53,12 +65,20 @@ namespace Ecommerce.Controller.src.Controller
         public async Task<ActionResult<UserReadDto>> UpdateUserByIdAsync([FromRoute] Guid userId, [FromBody] UserUpdateDto userUpdateDto)
         {
             var user = await _userService.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound($"User with ID {userId} not found.");
+            }
             var authResult = await _authorizationService.AuthorizeAsync(HttpContext.User, user, "ResourceOwner");
             if (!authResult.Succeeded)
             {
                 throw AppException.Unauthorized("No permission.");
             }
             var updatedUser = await _userService.UpdateUserByIdAsync(userId, userUpdateDto);
+            if (updatedUser == null)
+            {
+                return BadRequest("Failed to update user.");
+            }
             return Ok(updatedUser);
         }
 
@@ -66,7 +86,11 @@ namespace Ecommerce.Controller.src.Controller
         [HttpDelete("{userId}")] // endpoint: /users/:user_id
         public async Task<ActionResult<bool>> DeleteUserByIdAsync([FromRoute] Guid userId)
         {
-            await _userService.DeleteUserByIdAsync(userId);
+            var deleted = await _userService.DeleteUserByIdAsync(userId);
+            if (!deleted)
+            {
+                return NotFound($"User with ID {userId} not found.");
+            }
             return Ok(true);
         }
 
@@ -77,9 +101,17 @@ namespace Ecommerce.Controller.src.Controller
         {
             var authenticatedClaims = HttpContext.User;
             var userId = authenticatedClaims.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
+            if (userId == null)
+            {
+                return BadRequest("User ID not found in claims.");
+            }
             var foundUserProfile = await _userService.GetUserByIdAsync(Guid.Parse(userId));
+            if (foundUserProfile == null)
+            {
+                return NotFound($"User with ID {userId} not found.");
+            }
             return Ok(foundUserProfile);
         }
-        
+
     }
 }
