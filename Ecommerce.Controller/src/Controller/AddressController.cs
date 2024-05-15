@@ -18,10 +18,12 @@ namespace Ecommerce.Controller.src.Controller
     public class AddressController : ControllerBase
     {
         private IAddressService _addressService;
+        private IAuthorizationService _authorizationService;
 
-        public AddressController(IAddressService addressService)
+        public AddressController(IAddressService addressService, IAuthorizationService authorizationService)
         {
             _addressService = addressService;
+            _authorizationService = authorizationService;
         }
 
         [Authorize()]
@@ -42,12 +44,15 @@ namespace Ecommerce.Controller.src.Controller
         {
 
             var authenticatedClaims = HttpContext.User;
-            var foundId = authenticatedClaims.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
+            var foundUserId = authenticatedClaims.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
 
-            if (Guid.Parse(foundId) != userId)
+
+            if (Guid.Parse(foundUserId) != userId)
             {
                 return Forbid();
             }
+
+
 
             var addresses = await _addressService.GetAllAddressesOfUserByIdAsync(userId);
             if (addresses == null || !addresses.Any())

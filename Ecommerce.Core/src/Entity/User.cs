@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Ecommerce.Core.src.Validation;
 using Ecommerce.Core.src.ValueObject;
 
 namespace Ecommerce.Core.src.Entity
@@ -11,7 +12,7 @@ namespace Ecommerce.Core.src.Entity
         [EmailAddress(ErrorMessage = "Invalid email address")]
         public string Email { get; set; }
 
-        [StringLength(20, MinimumLength = 6, ErrorMessage = "Password must be between 6 and 20 characters")]
+        [StrongPassword]
         public string Password { get; set; }
         public byte[] Salt { get; set; }
         public string? Avatar { get; set; }

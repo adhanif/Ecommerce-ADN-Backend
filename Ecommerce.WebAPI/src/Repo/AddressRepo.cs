@@ -26,7 +26,6 @@ namespace Ecommerce.WebAPI.src.Repo
         public async Task<IEnumerable<Address>> GetAllAddressesOfUserByIdAsync(Guid userId)
         {
             var addresses = await _address.Where(a => a.UserId == userId).Include(a => a.User).ToListAsync();
-            Console.WriteLine(addresses[0].User);
             return addresses;
         }
 
