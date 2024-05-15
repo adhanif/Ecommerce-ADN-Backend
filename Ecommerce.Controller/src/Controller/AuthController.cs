@@ -23,14 +23,19 @@ namespace Ecommerce.Controller.src.Controller
         }
 
         [HttpPost("login")]
-        public async Task<string> LoginAsync([FromBody] UserCredential userCredential)
+        public async Task<ActionResult<string>> LoginAsync([FromBody] UserCredential userCredential)
         {
-            return await _authService.LoginAsync(userCredential);
+            var token = await _authService.LoginAsync(userCredential);
+            if (token == null)
+            {
+                return Unauthorized("Invalid username or password");
+            }
+            return Ok(token);
         }
 
         [Authorize]
         [HttpPost("logout")]
-        public async Task<IActionResult> LogoutAsync()
+        public async Task<ActionResult> LogoutAsync()
         {
             // Retrieve token from the Authorization header
             var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
@@ -69,7 +74,12 @@ namespace Ecommerce.Controller.src.Controller
                 return Forbid();
             }
 
-            return await _authService.GetCurrentProfileAsync(user.Id);
+            var profile = await _authService.GetCurrentProfileAsync(user.Id);
+            if (profile == null)
+            {
+                return NotFound("Profile not found");
+            }
+            return Ok(profile);
         }
 
     }
