@@ -21,15 +21,25 @@ namespace Ecommerce.Controller.src.Controller
 
         [AllowAnonymous]
         [HttpGet()]
-        public async Task<IEnumerable<ReviewReadDto>> GetAllReviewsAsync([FromQuery] BaseQueryOptions options)
+        public async Task<ActionResult<IEnumerable<ReviewReadDto>>> GetAllReviewsAsync([FromQuery] BaseQueryOptions options)
         {
-            return await _service.GetAllReviewsAsync(options); // Will be modified later
+            var reviews = await _service.GetAllReviewsAsync(options);
+            if (reviews == null || !reviews.Any())
+            {
+                return NotFound("No reviews found.");
+            }
+            return Ok(reviews);
         }
 
         [HttpGet("product/{productId}")]
-        public async Task<IEnumerable<ReviewReadDto>> GetAllReviewsOfProductAsync([FromQuery] Guid productId)
+        public async Task<ActionResult<IEnumerable<ReviewReadDto>>> GetAllReviewsOfProductAsync([FromQuery] Guid productId)
         {
-            return await _service.GetAllReviewsOfProductAsync(productId); // Will be modified later
+            var reviews = await _service.GetAllReviewsOfProductAsync(productId);
+            if (reviews == null || !reviews.Any())
+            {
+                return NotFound($"No reviews found for product with ID {productId}.");
+            }
+            return Ok(reviews);
         }
 
         // Customer auth = CreateAReview's Customer auth or Admin
@@ -39,6 +49,10 @@ namespace Ecommerce.Controller.src.Controller
         {
 
             var review = await _service.GetReviewByIdAsync(reviewId);
+            if (review == null)
+            {
+                return NotFound($"Review with ID {reviewId} not found.");
+            }
             var authResult = await _authorizationService.AuthorizeAsync(HttpContext.User, review, "AdminOrOwnerReview");
 
             if (!authResult.Succeeded)
@@ -56,7 +70,7 @@ namespace Ecommerce.Controller.src.Controller
 
         [Authorize]
         [HttpPost()]
-        public async Task<ReviewReadDto> CreateReviewAsync([FromBody] ReviewCreateDto reviewCreateDto)
+        public async Task<ActionResult<ReviewReadDto>> CreateReviewAsync([FromBody] ReviewCreateDto reviewCreateDto)
         {
             var userId = GetUserIdClaim();
             return await _service.CreateReviewAsync(userId, reviewCreateDto); // Will be modified later
@@ -76,9 +90,14 @@ namespace Ecommerce.Controller.src.Controller
         // Implement for admin first
         [Authorize(Roles = "Admin")]
         [HttpDelete("{reviewId}")]
-        public async Task<bool> DeleteReviewByIdAsync([FromRoute] Guid reviewId)
+        public async Task<ActionResult<bool>> DeleteReviewByIdAsync([FromRoute] Guid reviewId)
         {
-            return await _service.DeleteReviewByIdAsync(reviewId); // Will be modified later
+            var deleted = await _service.DeleteReviewByIdAsync(reviewId);
+            if (!deleted)
+            {
+                return NotFound($"Review with ID {reviewId} not found.");
+            }
+            return Ok(true);
         }
 
         private Guid GetUserIdClaim()
