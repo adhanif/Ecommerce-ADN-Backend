@@ -29,6 +29,10 @@ namespace Ecommerce.Controller.src.Controller
         public async Task<ActionResult<AddressReadDto>> CreateAddressAsync([FromBody] AddressCreateDto addressCreateDto)
         {
             var createdAddress = await _addressService.CreateAddressAsync(addressCreateDto);
+            if (createdAddress == null)
+            {
+                return NotFound("Failed to create address.");
+            }
             return Ok(createdAddress);
         }
 
@@ -46,6 +50,10 @@ namespace Ecommerce.Controller.src.Controller
             }
 
             var addresses = await _addressService.GetAllAddressesOfUserByIdAsync(userId);
+            if (addresses == null || !addresses.Any())
+            {
+                return NotFound("No addresses found for the user.");
+            }
             return Ok(addresses);
         }
 
@@ -57,6 +65,11 @@ namespace Ecommerce.Controller.src.Controller
             var foundId = authenticatedClaims.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
 
             var foundAddress = await _addressService.GetAddressByIdAsync(addressId);
+
+            if (foundAddress == null)
+            {
+                return NotFound("Address not found.");
+            }
 
             if (Guid.Parse(foundId) != foundAddress.UserId)
             {
@@ -73,6 +86,11 @@ namespace Ecommerce.Controller.src.Controller
             var authenticatedClaims = HttpContext.User;
             var foundId = authenticatedClaims.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
             var foundAddress = await _addressService.GetAddressByIdAsync(addressId);
+
+            if (foundAddress == null)
+            {
+                return NotFound("Address not found.");
+            }
 
             if (Guid.Parse(foundId) != foundAddress.UserId)
             {
@@ -102,6 +120,11 @@ namespace Ecommerce.Controller.src.Controller
 
             var foundAddress = await _addressService.GetAddressByIdAsync(addressId);
 
+            if (foundAddress == null)
+            {
+                return NotFound("Address not found.");
+            }
+
             if (Guid.Parse(foundId) != foundAddress.UserId)
             {
                 return Forbid();
@@ -110,7 +133,7 @@ namespace Ecommerce.Controller.src.Controller
 
             if (!deleteResult)
             {
-                return NotFound();
+                return NotFound("Failed to delete address.");
             }
             return Ok(true);
         }
