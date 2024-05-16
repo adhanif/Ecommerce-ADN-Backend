@@ -12,8 +12,11 @@ namespace Ecommerce.Controller.src.Controller
     public class OrderController : ControllerBase
     {
         private IOrderService _orderService;
-        public OrderController(IOrderService orderService)
+        private IUserService _userService;
+
+        public OrderController(IOrderService orderService, IUserService userService)
         {
+            _userService = userService;
             _orderService = orderService;
         }
 
@@ -62,6 +65,28 @@ namespace Ecommerce.Controller.src.Controller
             var deletedOrder = await _orderService.DeleteOrderByIdAsync(orderId);
             return Ok(deletedOrder);
         }
+
+
+        [HttpGet("user/{userId}")]
+        public async Task<ActionResult<OrderReadDto>> GetOrdersByUserIdAsync([FromRoute] Guid userId)
+        {
+            var authenticatedClaims = HttpContext.User;
+            var foundId = authenticatedClaims.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
+            UserReadDto foundUser = await _userService.GetUserByIdAsync(userId);
+            if (foundUser is null)
+            {
+                return NotFound();
+            }
+            if (Guid.Parse(foundId) != foundUser.Id)
+            {
+                return Forbid();
+            }
+
+            var orders = await _orderService.GetOrdersByUserIdAsync(userId);
+            return Ok(orders);
+        }
+
+
 
         private Guid GetUserIdClaim()
         {

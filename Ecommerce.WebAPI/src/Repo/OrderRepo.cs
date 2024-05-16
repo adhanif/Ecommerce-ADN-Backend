@@ -162,5 +162,16 @@ namespace Ecommerce.WebAPI.src.Repo
                 }
             }
         }
+
+
+        public async Task<IEnumerable<Order>> GetOrdersByUserIdAsync(Guid userId)
+        {
+            var query = _orders.AsQueryable();
+            query = query.Include(o => o.OrderProducts)
+                         .ThenInclude(op => op.Product)
+                         .Where(o => o.UserId == userId);
+            var result = await query.ToListAsync();
+            return result;
+        }
     }
 }

@@ -190,6 +190,18 @@ namespace Ecommerce.Service.src.Service
             }
         }
 
+        public async Task<IEnumerable<OrderReadDto>> GetOrdersByUserIdAsync(Guid userId)
+        {
+            var foundUser = _userRepo.GetUserByIdAsync(userId);
+            if (foundUser is null)
+            {
+                throw AppException.NotFound("User not found");
+            }
+            var orders = await _orderRepo.GetOrdersByUserIdAsync(userId);
+            var orderDtos = _mapper.Map<IEnumerable<Order>, IEnumerable<OrderReadDto>>(orders);
+
+            return orderDtos;
+        }
         #endregion
     }
 }
