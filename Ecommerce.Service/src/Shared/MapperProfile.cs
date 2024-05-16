@@ -24,30 +24,29 @@ namespace Ecommerce.Service.src.Shared
                 .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.AddressId));
 
             #region User Mapper:
-            CreateMap<UserCreateDto, User>()
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.UserName))
-                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.UserEmail))
-                .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.UserPassword))
-                .ForMember(dest => dest.Avatar, opt => opt.MapFrom(src => src.UserAvatar))
-                .ForMember(dest => dest.UserRole, opt => opt.MapFrom(src => src.UserRole))
-                 .ForMember(dest => dest.CreatedDate, opt => opt.MapFrom(src => src.CreatedDate))
-                 .ForMember(dest => dest.Addresses, opt => opt.MapFrom(src => src.Addresses));
+            CreateMap<UserCreateDto, User>();
+            // .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.UserName))
+            // .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.UserEmail))
+            // .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.UserPassword))
+            // .ForMember(dest => dest.Avatar, opt => opt.MapFrom(src => src.UserAvatar))
+            // .ForMember(dest => dest.UserRole, opt => opt.MapFrom(src => src.UserRole))
+            //  .ForMember(dest => dest.Addresses, opt => opt.MapFrom(src => src.Addresses));
 
-            CreateMap<User, UserReadDto>()
-                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
-                .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Name))
-                .ForMember(dest => dest.UserEmail, opt => opt.MapFrom(src => src.Email))
-                .ForMember(dest => dest.UserAvatar, opt => opt.MapFrom(src => src.Avatar))
-                .ForMember(dest => dest.UserRole, opt => opt.MapFrom(src => src.UserRole))
-                .ForMember(dest => dest.Addresses, opt => opt.MapFrom(src => src.Addresses));
+            CreateMap<User, UserReadDto>();
+            // .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
+            // .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Name))
+            // .ForMember(dest => dest.UserEmail, opt => opt.MapFrom(src => src.Email))
+            // .ForMember(dest => dest.UserAvatar, opt => opt.MapFrom(src => src.Avatar))
+            // .ForMember(dest => dest.UserRole, opt => opt.MapFrom(src => src.UserRole))
+            // .ForMember(dest => dest.Addresses, opt => opt.MapFrom(src => src.Addresses));
 
 
-            CreateMap<UserUpdateDto, User>()
-                .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.UserName))
-                .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.UserEmail))
-                .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.UserPassword))
-                .ForMember(dest => dest.Avatar, opt => opt.MapFrom(src => src.UserAvatar))
-                .ForMember(dest => dest.UserRole, opt => opt.MapFrom(src => src.UserRole));
+            CreateMap<UserUpdateDto, User>();
+            // .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.UserName))
+            // .ForMember(dest => dest.Email, opt => opt.MapFrom(src => src.UserEmail))
+            // .ForMember(dest => dest.Password, opt => opt.MapFrom(src => src.UserPassword))
+            // .ForMember(dest => dest.Avatar, opt => opt.MapFrom(src => src.UserAvatar))
+            // .ForMember(dest => dest.UserRole, opt => opt.MapFrom(src => src.UserRole));
             #endregion
 
 
@@ -102,18 +101,21 @@ namespace Ecommerce.Service.src.Shared
             #endregion
 
             #region Category Mapper:
-            CreateMap<Category, CategoryReadDto>()
-            .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Id))
-            .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Name))
-            .ForMember(dest => dest.CategoryImage, opt => opt.MapFrom(src => src.Image));
+            CreateMap<Category, CategoryReadDto>();
+            CreateMap<CategoryCreateDto, Category>();
+            CreateMap<CategoryUpdateDto, Category>();
+            // CreateMap<Category, CategoryReadDto>()
+            // .ForMember(dest => dest.CategoryId, opt => opt.MapFrom(src => src.Id))
+            // .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Name))
+            // .ForMember(dest => dest.CategoryImage, opt => opt.MapFrom(src => src.Image));
 
-            CreateMap<CategoryCreateDto, Category>()
-            .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.CategoryName))
-            .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.CategoryImage));
+            // CreateMap<CategoryCreateDto, Category>()
+            // .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.CategoryName))
+            // .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.CategoryImage));
 
-            CreateMap<CategoryUpdateDto, Category>()
-             .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.CategoryName))
-            .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.CategoryImage));
+            // CreateMap<CategoryUpdateDto, Category>()
+            //  .ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.CategoryName))
+            // .ForMember(dest => dest.Image, opt => opt.MapFrom(src => src.CategoryImage));
             #endregion
 
             #region Order Mapper:

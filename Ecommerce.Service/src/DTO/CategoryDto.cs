@@ -2,43 +2,43 @@ using Ecommerce.Core.src.Entity;
 
 namespace Ecommerce.Service.src.DTO
 {
-    public class CategoryReadDto 
+    public class CategoryReadDto
     {
-        public Guid CategoryId { get; set; }
-        public string CategoryName { get; set; }
-        public string CategoryImage { get; set; }
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Image { get; set; }
         public void Transform(Category category)
         {
-            CategoryId = category.Id;
-            CategoryName = category.Name;
-            CategoryImage = category.Image;
+            Id = category.Id;
+            Name = category.Name;
+            Image = category.Image;
         }
     }
 
     public class CategoryCreateDto
     {
-        public string CategoryName { get; set; }
-        public string CategoryImage { get; set; }
+        public string Name { get; set; }
+        public string Image { get; set; }
 
         public Category CreateCategory()
         {
             return new Category
             {
-                Name = CategoryName,
-                Image = CategoryImage,
+                Name = Name,
+                Image = Image,
             };
         }
     }
 
     public class CategoryUpdateDto
     {
-        public string? CategoryName { get; set; }
-        public string? CategoryImage { get; set; }
+        public string? Name { get; set; }
+        public string? Image { get; set; }
 
         public Category UpdateCategory(Category oldCategory)
         {
-            oldCategory.Name = CategoryName ?? oldCategory.Name;
-            oldCategory.Image = CategoryImage ?? oldCategory.Image;
+            oldCategory.Name = Name ?? oldCategory.Name;
+            oldCategory.Image = Image ?? oldCategory.Image;
             return oldCategory;
         }
     }

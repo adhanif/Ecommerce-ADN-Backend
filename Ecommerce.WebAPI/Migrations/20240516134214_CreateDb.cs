@@ -43,7 +43,7 @@ namespace Ecommerce.WebAPI.Migrations
                     password = table.Column<string>(type: "varchar", nullable: false),
                     salt = table.Column<byte[]>(type: "bytea", nullable: false),
                     avatar = table.Column<string>(type: "varchar(255)", nullable: true),
-                    user_role = table.Column<UserRole>(type: "user_role", nullable: false),
+                    role = table.Column<UserRole>(type: "user_role", nullable: false),
                     created_date = table.Column<DateOnly>(type: "date", nullable: true),
                     updated_date = table.Column<DateOnly>(type: "date", nullable: true)
                 },
@@ -205,24 +205,24 @@ namespace Ecommerce.WebAPI.Migrations
                 columns: new[] { "id", "created_date", "image", "name", "updated_date" },
                 values: new object[,]
                 {
-                    { new Guid("0479aa20-cf57-4b08-a500-89cc6fc75147"), null, "https://picsum.photos/200/?random=10", "Toys", null },
-                    { new Guid("5528582e-922d-47f9-a153-7c47fbfe7dd8"), null, "https://picsum.photos/200/?random=8", "Clothing", null },
-                    { new Guid("9087f3b1-23a2-431b-9b8a-7274af08bb06"), null, "https://picsum.photos/200/?random=1", "Books", null },
-                    { new Guid("a405ea01-de84-487e-8a94-3f55bc70f7af"), null, "https://picsum.photos/200/?random=7", "Sports", null },
-                    { new Guid("b71f5426-1b72-4380-bf9d-8580962e4011"), null, "https://picsum.photos/200/?random=8", "Furniture", null },
-                    { new Guid("f93cbfac-7906-4f45-8746-1edce4a132a1"), null, "https://picsum.photos/200/?random=4", "Electronic", null }
+                    { new Guid("94071a05-3856-48ab-a891-452cf286a1cc"), null, "https://picsum.photos/200/?random=9", "Furniture", null },
+                    { new Guid("9aa08bc1-16ad-4ad5-bfcb-8dbc55c1030a"), null, "https://picsum.photos/200/?random=2", "Sports", null },
+                    { new Guid("b23098a9-6fdc-421a-88fb-6b2f68c47e72"), null, "https://picsum.photos/200/?random=5", "Books", null },
+                    { new Guid("b988b38b-cff9-4af7-94fe-8bb6d4a7b5a0"), null, "https://picsum.photos/200/?random=8", "Clothing", null },
+                    { new Guid("c3243973-3d11-43b5-bd6f-547528a5eca0"), null, "https://picsum.photos/200/?random=8", "Toys", null },
+                    { new Guid("e4f09a92-01c0-4d79-ba14-f7ed3c23de3b"), null, "https://picsum.photos/200/?random=8", "Electronic", null }
                 });
 
             migrationBuilder.InsertData(
                 table: "users",
-                columns: new[] { "id", "avatar", "created_date", "email", "name", "password", "salt", "updated_date", "user_role" },
+                columns: new[] { "id", "avatar", "created_date", "email", "name", "password", "role", "salt", "updated_date" },
                 values: new object[,]
                 {
-                    { new Guid("0ded0cc8-d926-49fd-a34c-9ccc36beacdf"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", null, "customer1@customer.com", "Customer1", "eLm/rvl0iUnFpuKfjBOICbeOuXlK0N7ZEYwDd4Cmt04=", new byte[] { 125, 186, 125, 194, 135, 221, 246, 198, 252, 29, 131, 176, 204, 134, 235, 135 }, null, UserRole.Admin },
-                    { new Guid("36fbf5f1-02d7-4f6a-968b-5b568c4b321f"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", null, "john@example.com", "Admin1", "CIZav4IPGJ1sdBT0P9rAdMsCWAemXFxh9oKjRyInuWs=", new byte[] { 234, 38, 44, 244, 60, 32, 99, 188, 37, 47, 139, 95, 35, 203, 250, 29 }, null, UserRole.Admin },
-                    { new Guid("57833293-1435-4077-b425-0e457941d82c"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", null, "binh@admin.com", "Binh", "M0gReXFOh+FMvlpeVIjyNJ79t6qoNkT+74oSFaxHkh0=", new byte[] { 188, 58, 168, 78, 80, 72, 253, 249, 52, 163, 215, 104, 35, 3, 22, 111 }, null, UserRole.Admin },
-                    { new Guid("b8507466-3753-4be7-b4f1-be477982fbe7"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", null, "adnan@admin.com", "Adnan", "wV7W1/6ZMynhnNy3iBQjWm250SpiRV9lF3Uy72RkXYI=", new byte[] { 1, 49, 145, 59, 193, 251, 113, 91, 33, 65, 232, 17, 17, 151, 174, 89 }, null, UserRole.Admin },
-                    { new Guid("c4caa9bd-3ff9-4cb5-826c-9996a72396d7"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", null, "yuanke@admin.com", "Yuanke", "qjRMeDipbGj51JNGTj3H31n70Q/cBDGuRSoHRxfoSfg=", new byte[] { 102, 69, 50, 158, 44, 7, 214, 9, 58, 219, 217, 121, 65, 81, 72, 93 }, null, UserRole.Admin }
+                    { new Guid("52cb5567-aa2a-461e-86df-c508153b487a"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", null, "binh@admin.com", "Binh", "WsZIS+P7bRe11ezaG7Z9kxpis+NbCWDuQRQYZ15Gv8o=", UserRole.Admin, new byte[] { 240, 255, 216, 115, 58, 152, 112, 253, 148, 100, 21, 162, 211, 234, 247, 241 }, null },
+                    { new Guid("8832b1c9-6113-452f-9509-7979d8819cac"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", null, "john@example.com", "Admin1", "BUaaFfLeLTP938mGvdOs7rIk2Ah4JsfZilIK26+3AVA=", UserRole.Admin, new byte[] { 193, 247, 6, 35, 124, 161, 169, 74, 72, 124, 61, 145, 119, 90, 218, 3 }, null },
+                    { new Guid("89f970e3-95d5-44e3-be42-47d68893aa31"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", null, "yuanke@admin.com", "Yuanke", "EOTyIGnALU/Q24pAF5qVG0iiBNM2bNETmuU3zSJ9Pd4=", UserRole.Admin, new byte[] { 63, 119, 208, 73, 161, 250, 165, 111, 82, 209, 21, 211, 50, 178, 168, 205 }, null },
+                    { new Guid("ac6e73b0-be66-4945-bd7e-9d1c6e9d7483"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", null, "customer1@customer.com", "Customer1", "RwNWFBJ4YlapYW0/V10Dm1mWNTnBycWAroAoLehhwoE=", UserRole.Admin, new byte[] { 172, 247, 0, 252, 227, 170, 77, 90, 239, 199, 128, 181, 212, 6, 86, 19 }, null },
+                    { new Guid("df53680f-dc7f-474e-8433-973b61dbb2c1"), "https://picsum.photos/200/?random=System.Func`1[System.Int32]", null, "adnan@admin.com", "Adnan", "cMaxMBoXaJjU1PGQlq1lB5uKr8GqftXYEXqyJ1Lu1WE=", UserRole.Admin, new byte[] { 114, 5, 121, 163, 120, 209, 253, 49, 74, 167, 148, 184, 225, 123, 36, 160 }, null }
                 });
 
             migrationBuilder.CreateIndex(

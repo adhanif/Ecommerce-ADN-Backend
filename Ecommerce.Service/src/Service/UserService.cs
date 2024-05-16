@@ -76,17 +76,17 @@ namespace Ecommerce.Service.src.Service
             try
             {
                 // validation
-                if (string.IsNullOrEmpty(userCreateDto.UserName)) throw AppException.InvalidInputException("User name cannot be empty");
-                if (userCreateDto.UserName.Length > 20) throw AppException.InvalidInputException("User name cannot be longer than 20 characters");
+                if (string.IsNullOrEmpty(userCreateDto.Name)) throw AppException.InvalidInputException("User name cannot be empty");
+                if (userCreateDto.Name.Length > 20) throw AppException.InvalidInputException("User name cannot be longer than 20 characters");
 
                 string emailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
                 // Create Regex object
                 Regex emailRegex = new(emailPattern);
-                if (!emailRegex.IsMatch(userCreateDto.UserEmail)) throw AppException.InvalidInputException("Email is not valid");
+                if (!emailRegex.IsMatch(userCreateDto.Email)) throw AppException.InvalidInputException("Email is not valid");
 
                 string imagePatten = @"^.*\.(jpg|jpeg|png|gif|bmp)$";
                 Regex imageRegex = new(imagePatten);
-                if (userCreateDto.UserAvatar is not null && !imageRegex.IsMatch(userCreateDto.UserAvatar)) throw AppException.InvalidInputException("Avatar can only be jpg|jpeg|png|gif|bmp");
+                if (userCreateDto.Avatar is not null && !imageRegex.IsMatch(userCreateDto.Avatar)) throw AppException.InvalidInputException("Avatar can only be jpg|jpeg|png|gif|bmp");
 
                 // Create a new User entity and populate its properties from the UserCreateDto
 
@@ -116,23 +116,23 @@ namespace Ecommerce.Service.src.Service
             {
                 var foundUser = await _userRepo.GetUserByIdAsync(userId);
                 // validation
-                if (userUpdateDto.UserName is not null && string.IsNullOrEmpty(userUpdateDto.UserName)) throw AppException.InvalidInputException("User name cannot be empty");
-                if (userUpdateDto.UserName is not null && userUpdateDto.UserName.Length > 20) throw AppException.InvalidInputException("User name cannot be longer than 20 characters");
+                if (userUpdateDto.Name is not null && string.IsNullOrEmpty(userUpdateDto.Name)) throw AppException.InvalidInputException("User name cannot be empty");
+                if (userUpdateDto.Name is not null && userUpdateDto.Name.Length > 20) throw AppException.InvalidInputException("User name cannot be longer than 20 characters");
 
                 string emailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
                 // Create Regex object
                 Regex emailRegex = new(emailPattern);
-                if (userUpdateDto.UserEmail is not null && !emailRegex.IsMatch(userUpdateDto.UserEmail)) throw AppException.InvalidInputException("Email is not valid");
+                if (userUpdateDto.Email is not null && !emailRegex.IsMatch(userUpdateDto.Email)) throw AppException.InvalidInputException("Email is not valid");
 
                 string imagePatten = @"^.*\.(jpg|jpeg|png|gif|bmp)$";
                 Regex imageRegex = new(imagePatten);
-                if (userUpdateDto.UserAvatar is not null && !imageRegex.IsMatch(userUpdateDto.UserAvatar)) throw AppException.InvalidInputException("Avatar can only be jpg|jpeg|png|gif|bmp");
+                if (userUpdateDto.Avatar is not null && !imageRegex.IsMatch(userUpdateDto.Avatar)) throw AppException.InvalidInputException("Avatar can only be jpg|jpeg|png|gif|bmp");
 
-                foundUser.Name = userUpdateDto.UserName ?? foundUser.Name;
-                foundUser.Email = userUpdateDto.UserEmail ?? foundUser.Email;
-                foundUser.Password = userUpdateDto.UserPassword ?? foundUser.Password;
-                foundUser.Avatar = userUpdateDto.UserAvatar ?? foundUser.Avatar;
-                foundUser.UserRole = userUpdateDto.UserRole ?? foundUser.UserRole;
+                foundUser.Name = userUpdateDto.Name ?? foundUser.Name;
+                foundUser.Email = userUpdateDto.Email ?? foundUser.Email;
+                foundUser.Password = userUpdateDto.Password ?? foundUser.Password;
+                foundUser.Avatar = userUpdateDto.Avatar ?? foundUser.Avatar;
+                foundUser.Role = userUpdateDto.Role ?? foundUser.Role;
 
                 // Update the user entity with the new values
                 var updateUser = await _userRepo.UpdateUserByIdAsync(foundUser);

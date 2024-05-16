@@ -29,7 +29,7 @@ namespace Ecommerce.WebAPI.src.Repo
                 // Filter by role if provided
                 if (userQueryOptions.SearchRole.HasValue)
                 {
-                    query = query.Where(u => u.UserRole == userQueryOptions.SearchRole.Value);
+                    query = query.Where(u => u.Role == userQueryOptions.SearchRole.Value);
                 }
 
                 // Search by name if provided

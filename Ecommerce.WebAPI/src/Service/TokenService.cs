@@ -26,7 +26,7 @@ namespace Ecommerce.WebAPI.src.Service
             {
                 new Claim(ClaimTypes.Email, foundUser.Email),
                 new Claim(ClaimTypes.NameIdentifier, foundUser.Id.ToString()),
-                new Claim(ClaimTypes.Role, foundUser.UserRole.ToString()),
+                new Claim(ClaimTypes.Role, foundUser.Role.ToString()),
             };
 
             // secret key

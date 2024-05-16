@@ -90,7 +90,7 @@ namespace Ecommerce.WebAPI.src.Database
                     Password = hashedAdminPassword,
                     Salt= adminSalt,
                     Avatar = $"https://picsum.photos/200/?random={GetRandomNumberForImage}",
-                    UserRole = UserRole.Admin,
+                    Role = UserRole.Admin,
                 },
                 new User
                 {
@@ -100,7 +100,7 @@ namespace Ecommerce.WebAPI.src.Database
                     Password = hashedBinhPassword,
                     Salt= binhSalt,
                     Avatar = $"https://picsum.photos/200/?random={GetRandomNumberForImage}",
-                    UserRole = UserRole.Admin,
+                    Role = UserRole.Admin,
                 },
                 new User
                 {
@@ -110,7 +110,7 @@ namespace Ecommerce.WebAPI.src.Database
                     Password = hashedAdnanPassword,
                     Salt= adnanSalt,
                     Avatar = $"https://picsum.photos/200/?random={GetRandomNumberForImage}",
-                    UserRole = UserRole.Admin,
+                    Role = UserRole.Admin,
                 },
                 new User
                 {
@@ -120,7 +120,7 @@ namespace Ecommerce.WebAPI.src.Database
                     Password = hashedYuankePassword,
                     Salt= yuankeSalt,
                     Avatar = $"https://picsum.photos/200/?random={GetRandomNumberForImage}",
-                    UserRole = UserRole.Admin,
+                    Role = UserRole.Admin,
                 },
                 new User
                 {
@@ -130,7 +130,7 @@ namespace Ecommerce.WebAPI.src.Database
                     Password = hashedCustomerPassword,
                     Salt= customerSalt,
                     Avatar = $"https://picsum.photos/200/?random={GetRandomNumberForImage}",
-                    UserRole = UserRole.Admin,
+                    Role = UserRole.Admin,
                 }
             };
         }

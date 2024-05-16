@@ -13,7 +13,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Ecommerce.WebAPI.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240515130137_CreateDb")]
+    [Migration("20240516134214_CreateDb")]
     partial class CreateDb
     {
         /// <inheritdoc />
@@ -117,38 +117,38 @@ namespace Ecommerce.WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("f93cbfac-7906-4f45-8746-1edce4a132a1"),
-                            Image = "https://picsum.photos/200/?random=4",
+                            Id = new Guid("e4f09a92-01c0-4d79-ba14-f7ed3c23de3b"),
+                            Image = "https://picsum.photos/200/?random=8",
                             Name = "Electronic"
                         },
                         new
                         {
-                            Id = new Guid("5528582e-922d-47f9-a153-7c47fbfe7dd8"),
+                            Id = new Guid("b988b38b-cff9-4af7-94fe-8bb6d4a7b5a0"),
                             Image = "https://picsum.photos/200/?random=8",
                             Name = "Clothing"
                         },
                         new
                         {
-                            Id = new Guid("b71f5426-1b72-4380-bf9d-8580962e4011"),
-                            Image = "https://picsum.photos/200/?random=8",
+                            Id = new Guid("94071a05-3856-48ab-a891-452cf286a1cc"),
+                            Image = "https://picsum.photos/200/?random=9",
                             Name = "Furniture"
                         },
                         new
                         {
-                            Id = new Guid("9087f3b1-23a2-431b-9b8a-7274af08bb06"),
-                            Image = "https://picsum.photos/200/?random=1",
+                            Id = new Guid("b23098a9-6fdc-421a-88fb-6b2f68c47e72"),
+                            Image = "https://picsum.photos/200/?random=5",
                             Name = "Books"
                         },
                         new
                         {
-                            Id = new Guid("0479aa20-cf57-4b08-a500-89cc6fc75147"),
-                            Image = "https://picsum.photos/200/?random=10",
+                            Id = new Guid("c3243973-3d11-43b5-bd6f-547528a5eca0"),
+                            Image = "https://picsum.photos/200/?random=8",
                             Name = "Toys"
                         },
                         new
                         {
-                            Id = new Guid("a405ea01-de84-487e-8a94-3f55bc70f7af"),
-                            Image = "https://picsum.photos/200/?random=7",
+                            Id = new Guid("9aa08bc1-16ad-4ad5-bfcb-8dbc55c1030a"),
+                            Image = "https://picsum.photos/200/?random=2",
                             Name = "Sports"
                         });
                 });
@@ -383,6 +383,10 @@ namespace Ecommerce.WebAPI.Migrations
                         .HasColumnType("varchar")
                         .HasColumnName("password");
 
+                    b.Property<UserRole>("Role")
+                        .HasColumnType("user_role")
+                        .HasColumnName("role");
+
                     b.Property<byte[]>("Salt")
                         .IsRequired()
                         .HasColumnType("bytea")
@@ -391,10 +395,6 @@ namespace Ecommerce.WebAPI.Migrations
                     b.Property<DateOnly?>("UpdatedDate")
                         .HasColumnType("date")
                         .HasColumnName("updated_date");
-
-                    b.Property<UserRole>("UserRole")
-                        .HasColumnType("user_role")
-                        .HasColumnName("user_role");
 
                     b.HasKey("Id")
                         .HasName("pk_users");
@@ -408,53 +408,53 @@ namespace Ecommerce.WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("36fbf5f1-02d7-4f6a-968b-5b568c4b321f"),
+                            Id = new Guid("8832b1c9-6113-452f-9509-7979d8819cac"),
                             Avatar = "https://picsum.photos/200/?random=System.Func`1[System.Int32]",
                             Email = "john@example.com",
                             Name = "Admin1",
-                            Password = "CIZav4IPGJ1sdBT0P9rAdMsCWAemXFxh9oKjRyInuWs=",
-                            Salt = new byte[] { 234, 38, 44, 244, 60, 32, 99, 188, 37, 47, 139, 95, 35, 203, 250, 29 },
-                            UserRole = UserRole.Admin
+                            Password = "BUaaFfLeLTP938mGvdOs7rIk2Ah4JsfZilIK26+3AVA=",
+                            Role = UserRole.Admin,
+                            Salt = new byte[] { 193, 247, 6, 35, 124, 161, 169, 74, 72, 124, 61, 145, 119, 90, 218, 3 }
                         },
                         new
                         {
-                            Id = new Guid("57833293-1435-4077-b425-0e457941d82c"),
+                            Id = new Guid("52cb5567-aa2a-461e-86df-c508153b487a"),
                             Avatar = "https://picsum.photos/200/?random=System.Func`1[System.Int32]",
                             Email = "binh@admin.com",
                             Name = "Binh",
-                            Password = "M0gReXFOh+FMvlpeVIjyNJ79t6qoNkT+74oSFaxHkh0=",
-                            Salt = new byte[] { 188, 58, 168, 78, 80, 72, 253, 249, 52, 163, 215, 104, 35, 3, 22, 111 },
-                            UserRole = UserRole.Admin
+                            Password = "WsZIS+P7bRe11ezaG7Z9kxpis+NbCWDuQRQYZ15Gv8o=",
+                            Role = UserRole.Admin,
+                            Salt = new byte[] { 240, 255, 216, 115, 58, 152, 112, 253, 148, 100, 21, 162, 211, 234, 247, 241 }
                         },
                         new
                         {
-                            Id = new Guid("b8507466-3753-4be7-b4f1-be477982fbe7"),
+                            Id = new Guid("df53680f-dc7f-474e-8433-973b61dbb2c1"),
                             Avatar = "https://picsum.photos/200/?random=System.Func`1[System.Int32]",
                             Email = "adnan@admin.com",
                             Name = "Adnan",
-                            Password = "wV7W1/6ZMynhnNy3iBQjWm250SpiRV9lF3Uy72RkXYI=",
-                            Salt = new byte[] { 1, 49, 145, 59, 193, 251, 113, 91, 33, 65, 232, 17, 17, 151, 174, 89 },
-                            UserRole = UserRole.Admin
+                            Password = "cMaxMBoXaJjU1PGQlq1lB5uKr8GqftXYEXqyJ1Lu1WE=",
+                            Role = UserRole.Admin,
+                            Salt = new byte[] { 114, 5, 121, 163, 120, 209, 253, 49, 74, 167, 148, 184, 225, 123, 36, 160 }
                         },
                         new
                         {
-                            Id = new Guid("c4caa9bd-3ff9-4cb5-826c-9996a72396d7"),
+                            Id = new Guid("89f970e3-95d5-44e3-be42-47d68893aa31"),
                             Avatar = "https://picsum.photos/200/?random=System.Func`1[System.Int32]",
                             Email = "yuanke@admin.com",
                             Name = "Yuanke",
-                            Password = "qjRMeDipbGj51JNGTj3H31n70Q/cBDGuRSoHRxfoSfg=",
-                            Salt = new byte[] { 102, 69, 50, 158, 44, 7, 214, 9, 58, 219, 217, 121, 65, 81, 72, 93 },
-                            UserRole = UserRole.Admin
+                            Password = "EOTyIGnALU/Q24pAF5qVG0iiBNM2bNETmuU3zSJ9Pd4=",
+                            Role = UserRole.Admin,
+                            Salt = new byte[] { 63, 119, 208, 73, 161, 250, 165, 111, 82, 209, 21, 211, 50, 178, 168, 205 }
                         },
                         new
                         {
-                            Id = new Guid("0ded0cc8-d926-49fd-a34c-9ccc36beacdf"),
+                            Id = new Guid("ac6e73b0-be66-4945-bd7e-9d1c6e9d7483"),
                             Avatar = "https://picsum.photos/200/?random=System.Func`1[System.Int32]",
                             Email = "customer1@customer.com",
                             Name = "Customer1",
-                            Password = "eLm/rvl0iUnFpuKfjBOICbeOuXlK0N7ZEYwDd4Cmt04=",
-                            Salt = new byte[] { 125, 186, 125, 194, 135, 221, 246, 198, 252, 29, 131, 176, 204, 134, 235, 135 },
-                            UserRole = UserRole.Admin
+                            Password = "RwNWFBJ4YlapYW0/V10Dm1mWNTnBycWAroAoLehhwoE=",
+                            Role = UserRole.Admin,
+                            Salt = new byte[] { 172, 247, 0, 252, 227, 170, 77, 90, 239, 199, 128, 181, 212, 6, 86, 19 }
                         });
                 });
 

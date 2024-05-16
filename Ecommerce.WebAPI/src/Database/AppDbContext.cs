@@ -59,7 +59,7 @@ namespace Ecommerce.WebAPI.src.Database
             base.OnModelCreating(modelBuilder);
 
             // Enum columns
-            modelBuilder.Entity<User>(entity => entity.Property(u => u.UserRole).HasColumnType("user_role"));
+            modelBuilder.Entity<User>(entity => entity.Property(u => u.Role).HasColumnType("user_role"));
 
 
 
@@ -139,7 +139,7 @@ namespace Ecommerce.WebAPI.src.Database
             modelBuilder.Entity<Address>(address =>
             {
                 // address.HasOne(a => a.User)
-                
+
                 //     .WithMany()
                 //     .HasForeignKey(a => a.UserId)
                 //     .OnDelete(DeleteBehavior.Cascade);

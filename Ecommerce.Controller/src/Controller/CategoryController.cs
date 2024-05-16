@@ -17,11 +17,11 @@ namespace Ecommerce.Controller.src.Controller
         }
 
         [HttpGet]
-        public async Task<IEnumerable<CategoryReadDto>> GetAllCategoriesAsync() // endpoint: /categories
+        public async Task<ActionResult<IEnumerable<CategoryReadDto>>> GetAllCategoriesAsync() // endpoint: /categories
         {
 
-            return await _categoryService.GetAllCategoriesAsync();
-
+            var categories = await _categoryService.GetAllCategoriesAsync();
+            return Ok(categories);
         }
 
         [HttpGet("{categoryId}")] // endpoint: /categories/:category_id
