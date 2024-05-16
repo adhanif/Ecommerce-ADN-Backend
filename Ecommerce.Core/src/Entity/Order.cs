@@ -9,9 +9,11 @@ namespace Ecommerce.Core.src.Entity
         public Guid UserId { get; set; }
         public User User { get; set; }
 
-        [ForeignKey("AddressId")]
-        public Guid AddressId { get; set; }
-        public OrderStatus Status { get; set; } = OrderStatus.Pending;
+        [Column(TypeName = "varchar")]
+        public string Address { get; set; }
+        // public OrderStatus Status { get; set; } = OrderStatus.Pending;
         public IEnumerable<OrderProduct> OrderProducts { get; set; }
     }
+
+    
 }

@@ -150,7 +150,7 @@ namespace Ecommerce.WebAPI.src.Database
                     Password = hashedCustomerPassword,
                     Salt= customerSalt,
                     Avatar = $"https://picsum.photos/200/?random={GetRandomNumberForImage}",
-                    Role = UserRole.Admin,
+                    Role = UserRole.Customer,
                     CreatedDate = DateOnly.FromDateTime(DateTime.Now),
                     UpdatedDate = DateOnly.FromDateTime(DateTime.Now)
                 }

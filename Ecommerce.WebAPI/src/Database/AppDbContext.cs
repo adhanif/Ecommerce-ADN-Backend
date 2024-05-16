@@ -66,7 +66,7 @@ namespace Ecommerce.WebAPI.src.Database
             // Relationship
             modelBuilder.Entity<OrderProduct>()
                 .HasKey(op => new { op.OrderId, op.ProductId });
-            modelBuilder.Entity<Order>(entity => entity.Property(o => o.Status).HasColumnType("order_status"));
+            // modelBuilder.Entity<Order>(entity => entity.Property(o => o.Status).HasColumnType("order_status"));
             modelBuilder.Entity<Order>()
                 .HasMany(o => o.OrderProducts)
                 .WithOne()
@@ -134,6 +134,7 @@ namespace Ecommerce.WebAPI.src.Database
                 product.Property(p => p.Price).IsRequired();
                 product.ToTable(t => t.HasCheckConstraint("product_price_check", "price > 0"));
                 product.Property(p => p.Inventory).HasDefaultValue(0);
+                product.ToTable(t => t.HasCheckConstraint("product_inventory_check", "inventory >= 0"));
             });
             // Relationship, column type and constraint of Address
             modelBuilder.Entity<Address>(address =>

@@ -37,6 +37,7 @@ namespace Ecommerce.Service.src.Service
             foreach (var orderProductDto in orderCreateDto.OrderProducts)
             {
                 var foundProduct = await _productRepo.GetProductByIdAsync(orderProductDto.ProductId);
+                // foundProduct.Inventory -= orderProductDto.Quantity;
                 if (foundProduct is null)
                 {
                     throw AppException.NotFound("Product not found");
@@ -48,7 +49,6 @@ namespace Ecommerce.Service.src.Service
                 });
             }
             order.OrderProducts = newOrderProducts;
-            order.Status = OrderStatus.Pending;
 
             var createdOrder = await _orderRepo.CreateOrderAsync(order);
             var orderReadDto = _mapper.Map<OrderReadDto>(createdOrder);
@@ -91,6 +91,7 @@ namespace Ecommerce.Service.src.Service
             return orderDtos;
         }
 
+        //getOrderbyID
         public async Task<OrderReadDto> GetOrderByIdAsync(Guid orderId)
         {
             if (orderId == Guid.Empty)
@@ -104,11 +105,12 @@ namespace Ecommerce.Service.src.Service
                 {
                     throw AppException.NotFound("Order not found");
                 }
-                var orderDto = _mapper.Map<OrderReadDto>(foundOrder);
+                var orderDto = await MapOrderToDTO(foundOrder);
+                // var orderDto = _mapper.Map<OrderReadDto>(foundOrder);
                 var user = await _userRepo.GetUserByIdAsync(foundOrder.UserId);
                 orderDto.User = _mapper.Map<UserReadDto>(user);
-                orderDto.OrderProducts = _mapper.Map<IEnumerable<OrderProductReadDto>>(orderDto.OrderProducts);
                 return orderDto;
+
             }
             catch (Exception)
             {
@@ -129,21 +131,25 @@ namespace Ecommerce.Service.src.Service
                 throw AppException.NotFound($"Order not found");
             }
 
-            // Update order status and date
-            foundOrder.Status = orderUpdateDto.OrderStatus;
-            foundOrder.UpdatedDate = DateOnly.FromDateTime(DateTime.Now);
 
+            foundOrder.Address = orderUpdateDto.Address ?? foundOrder.Address;
+            // Update order products quantity if provided
+            foreach (var orderProduct in foundOrder.OrderProducts)
+            {
+                var productUpdate = orderUpdateDto.OrderProducts.FirstOrDefault(p => p.ProductId == orderProduct.ProductId);
+                if (productUpdate != null)
+                {
+                    orderProduct.Quantity = productUpdate.Quantity ?? orderProduct.Quantity;
+                    orderProduct.Product.Title = productUpdate.Title ?? orderProduct.Product.Title;
+                    orderProduct.Product.Price = productUpdate.Price ?? orderProduct.Product.Price;
+
+                }
+            }
             // Save changes
             var updatedOrder = await _orderRepo.UpdateOrderByIdAsync(foundOrder);
-
-            // Fetch user information
-            var user = await _userRepo.GetUserByIdAsync(updatedOrder.UserId);
-
             var orderDto = _mapper.Map<OrderReadUpdateDto>(updatedOrder);
-            orderDto.User = _mapper.Map<UserReadDto>(user);
-            orderDto.OrderStatus = orderUpdateDto.OrderStatus;
-
             return orderDto;
+
         }
 
         #region Helper class
@@ -174,8 +180,8 @@ namespace Ecommerce.Service.src.Service
                     var productDTO = _mapper.Map<ProductReadDto>(product);
 
                     var orderProductDto = _mapper.Map<OrderProductReadDto>(orderProduct);
-                    orderProductDto.ProductTitle = productDTO.Title;
-                    orderProductDto.ProductPrice = productDTO.Price;
+                    orderProductDto.Title = productDTO.Title;
+                    orderProductDto.Price = productDTO.Price;
 
                     orderProductDtos.Add(orderProductDto);
                 }
