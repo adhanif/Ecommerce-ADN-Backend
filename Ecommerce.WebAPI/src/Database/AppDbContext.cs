@@ -122,7 +122,7 @@ namespace Ecommerce.WebAPI.src.Database
                     .WithMany()
                     .HasForeignKey(p => p.CategoryId)
                     .OnDelete(DeleteBehavior.SetNull);
-                product.HasMany(p => p.ProductImages)
+                product.HasMany(p => p.Images)
                     .WithOne()
                     .OnDelete(DeleteBehavior.Cascade);
 

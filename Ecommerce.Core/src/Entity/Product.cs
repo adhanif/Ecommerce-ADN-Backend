@@ -23,7 +23,7 @@ namespace Ecommerce.Core.src.Entity
         [Required, Range(0, int.MaxValue, ErrorMessage = "Inventory should not be negative number")]
         public int Inventory { get; set; } = 0;
 
-        public ICollection<ProductImage> ProductImages { get; set; } = new List<ProductImage>();
+        public ICollection<ProductImage> Images { get; set; } = new List<ProductImage>();
 
         override public string ToString()
         {

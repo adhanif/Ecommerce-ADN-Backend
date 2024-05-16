@@ -174,8 +174,8 @@ namespace Ecommerce.Service.src.Service
                     var productDTO = _mapper.Map<ProductReadDto>(product);
 
                     var orderProductDto = _mapper.Map<OrderProductReadDto>(orderProduct);
-                    orderProductDto.ProductTitle = productDTO.ProductTitle;
-                    orderProductDto.ProductPrice = productDTO.ProductPrice;
+                    orderProductDto.ProductTitle = productDTO.Title;
+                    orderProductDto.ProductPrice = productDTO.Price;
 
                     orderProductDtos.Add(orderProductDto);
                 }

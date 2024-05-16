@@ -7,25 +7,25 @@ namespace Ecommerce.Service.src.DTO
     public class ProductReadDto : BaseEntity
     {
 
-        public string ProductTitle { get; set; }
-        public string ProductDescription { get; set; }
-        public int ProductPrice { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public int Price { get; set; }
         [JsonIgnore]
         public Guid CategoryId { get; set; } //  foreign key navigate to category
-        public int ProductInventory { get; set; }
-        public IEnumerable<ProductImageReadDto>? ProductImages { get; set; }
+        public int Inventory { get; set; }
+        public IEnumerable<ProductImageReadDto>? Images { get; set; }
         public CategoryReadDto Category { get; set; }
 
         public void Transform(Product product, CategoryReadDto categoryDto)
         {
-            ProductTitle = product.Title;
-            ProductDescription = product.Description;
-            ProductPrice = product.Price;
+            Title = product.Title;
+            Description = product.Description;
+            Price = product.Price;
             CategoryId = product.CategoryId;
-            ProductInventory = product.Inventory;
+            Inventory = product.Inventory;
             CreatedDate = product.CreatedDate;
             UpdatedDate = product.UpdatedDate;
-            ProductImages = product.ProductImages.Select(image => new ProductImageReadDto
+            Images = product.Images.Select(image => new ProductImageReadDto
             {
                 Id = image.Id,
                 Url = image.Url
@@ -36,17 +36,17 @@ namespace Ecommerce.Service.src.DTO
 
     public class ProductCreateDto
     {
-        public string ProductTitle { get; set; }
-        public string ProductDescription { get; set; }
-        public int ProductPrice { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public int Price { get; set; }
         public Guid CategoryId { get; set; }
-        public int ProductInventory { get; set; }
-        public IEnumerable<ProductImageCreateDto>? ProductImages { get; set; }
+        public int Inventory { get; set; }
+        public IEnumerable<ProductImageCreateDto>? Images { get; set; }
 
         public Product CreateProduct()
         {
             // Map Images from ImageCreateDto to Image entities
-            var ProductImagesDto = ProductImages?.Select(imageDto => new ProductImage
+            var ImagesDto = Images?.Select(imageDto => new ProductImage
             {
                 Id = Guid.NewGuid(),
                 Url = imageDto.Url
@@ -54,12 +54,12 @@ namespace Ecommerce.Service.src.DTO
 
             return new Product
             {
-                Title = ProductTitle,
-                Description = ProductDescription,
-                Price = ProductPrice,
+                Title = Title,
+                Description = Description,
+                Price = Price,
                 CategoryId = CategoryId,
-                Inventory = ProductInventory,
-                ProductImages = ProductImagesDto,
+                Inventory = Inventory,
+                Images = ImagesDto,
             };
         }
     }
@@ -68,32 +68,32 @@ namespace Ecommerce.Service.src.DTO
     public class ProductUpdateDto
     {
         public Guid Id { get; set; }
-        public string? ProductTitle { get; set; }
-        public string? ProductDescription { get; set; }
-        public int? ProductPrice { get; set; }
+        public string? Title { get; set; }
+        public string? Description { get; set; }
+        public int? Price { get; set; }
         public Guid? CategoryId { get; set; }
-        public int? ProductInventory { get; set; }
+        public int? Inventory { get; set; }
         public IEnumerable<ProductImageUpdateDto>? ImagesToUpdate { get; set; }
 
 
         public void UpdateProduct(Product oldproduct)
         {
-            if (ProductTitle != null)
-                oldproduct.Title = ProductTitle;
-            if (ProductDescription != null)
-                oldproduct.Description = ProductDescription;
-            if (ProductPrice.HasValue)
-                oldproduct.Price = ProductPrice.Value;
+            if (Title != null)
+                oldproduct.Title = Title;
+            if (Description != null)
+                oldproduct.Description = Description;
+            if (Price.HasValue)
+                oldproduct.Price = Price.Value;
             if (CategoryId.HasValue)
                 oldproduct.CategoryId = CategoryId.Value;
-            if (ProductInventory.HasValue)
-                oldproduct.Inventory = ProductInventory.Value;
+            if (Inventory.HasValue)
+                oldproduct.Inventory = Inventory.Value;
             if (ImagesToUpdate != null)
             {
                 // Map and update each Image in the ImagesToUpdate list
                 foreach (var imageDto in ImagesToUpdate)
                 {
-                    var imageToUpdate = oldproduct.ProductImages.FirstOrDefault(img => img.Id == imageDto.Id);
+                    var imageToUpdate = oldproduct.Images.FirstOrDefault(img => img.Id == imageDto.Id);
                     if (imageToUpdate != null)
                     {
                         imageToUpdate.Url = imageDto.Url;
@@ -105,9 +105,9 @@ namespace Ecommerce.Service.src.DTO
 
     public class ProductReviewReadDto
     {
-        public string ProductTitle { get; set; }
-        public string ProductDescription { get; set; }
-        public int ProductPrice { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
+        public int Price { get; set; }
         public Guid CategoryId { get; set; }
     }
 }

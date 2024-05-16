@@ -91,22 +91,22 @@ namespace Ecommerce.Service.src.Service
                     throw new ArgumentNullException(nameof(newProduct), "ProductC cannot be null");
                 }
                 // Check if the product name is provided
-                if (string.IsNullOrWhiteSpace(newProduct.ProductTitle))
+                if (string.IsNullOrWhiteSpace(newProduct.Title))
                 {
                     throw AppException.InvalidInputException("Product name cannot be empty");
                 }
 
                 // Check if the price is greater than zero
-                if (newProduct.ProductPrice <= 0)
+                if (newProduct.Price <= 0)
                 {
                     throw AppException.InvalidInputException("Price should be greated than zero.");
                 }
 
                 // Validate image URLs
-                if (newProduct.ProductImages is not null)
+                if (newProduct.Images is not null)
                 {
 
-                    foreach (var image in newProduct.ProductImages)
+                    foreach (var image in newProduct.Images)
                     {
                         // Check if the URL is provided
                         if (string.IsNullOrWhiteSpace(image.Url))
@@ -128,7 +128,7 @@ namespace Ecommerce.Service.src.Service
                     throw AppException.NotFound("Category not found");
                 }
                 var productEntity = _mapper.Map<Product>(newProduct);
-                productEntity.ProductImages = _mapper.Map<List<ProductImage>>(newProduct.ProductImages);
+                productEntity.Images = _mapper.Map<List<ProductImage>>(newProduct.Images);
                 var createdProduct = await _productRepo.CreateProductAsync(productEntity);
 
                 var productReadDto = _mapper.Map<ProductReadDto>(createdProduct);
@@ -183,19 +183,19 @@ namespace Ecommerce.Service.src.Service
                 var foundProduct = await _productRepo.GetProductByIdAsync(productId);
 
 
-                foundProduct.Title = productUpdateDto.ProductTitle ?? foundProduct.Title;
-                foundProduct.Description = productUpdateDto.ProductDescription ?? foundProduct.Description;
+                foundProduct.Title = productUpdateDto.Title ?? foundProduct.Title;
+                foundProduct.Description = productUpdateDto.Description ?? foundProduct.Description;
                 foundProduct.CategoryId = productUpdateDto.CategoryId ?? foundProduct.CategoryId;
 
-                foundProduct.Price = productUpdateDto.ProductPrice ?? foundProduct.Price;
+                foundProduct.Price = productUpdateDto.Price ?? foundProduct.Price;
                 // Update inventory by adding the new inventory value
-                if (productUpdateDto.ProductInventory.HasValue)
+                if (productUpdateDto.Inventory.HasValue)
                 {
-                    foundProduct.Inventory += productUpdateDto.ProductInventory.Value;
+                    foundProduct.Inventory += productUpdateDto.Inventory.Value;
                 }
 
                 // Find product images
-                var productImages = await _productImageRepo.GetProductImagesByProductIdAsync(productId);
+                var Images = await _productImageRepo.GetProductImagesByProductIdAsync(productId);
 
 
                 // Update product images
@@ -204,7 +204,7 @@ namespace Ecommerce.Service.src.Service
                     foreach (var imageDto in productUpdateDto.ImagesToUpdate)
                     {
                         // Find the image to update by URL
-                        var imageToUpdate = productImages.FirstOrDefault(img => img.Url == imageDto.Url);
+                        var imageToUpdate = Images.FirstOrDefault(img => img.Url == imageDto.Url);
 
                         if (imageToUpdate is not null)
                         {
@@ -238,8 +238,8 @@ namespace Ecommerce.Service.src.Service
                 var categoryDto = _mapper.Map<CategoryReadDto>(category);
                 // Map the updated product entity to ProductReadDto
                 var updatedProductDto = _mapper.Map<Product, ProductReadDto>(updatedProduct);
-                // Update the productInventory value in the returned DTO
-                updatedProductDto.ProductInventory = foundProduct.Inventory;
+                // Update the Inventory value in the returned DTO
+                updatedProductDto.Inventory = foundProduct.Inventory;
                 // Set the category property in the updated product DTO
                 updatedProductDto.Category = categoryDto;
                 return updatedProductDto;
