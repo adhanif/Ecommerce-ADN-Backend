@@ -52,8 +52,6 @@ namespace Ecommerce.Controller.src.Controller
                 return Forbid();
             }
 
-
-
             var addresses = await _addressService.GetAllAddressesOfUserByIdAsync(userId);
             if (addresses == null || !addresses.Any())
             {
@@ -90,29 +88,13 @@ namespace Ecommerce.Controller.src.Controller
 
             var authenticatedClaims = HttpContext.User;
             var foundId = authenticatedClaims.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
-            var foundAddress = await _addressService.GetAddressByIdAsync(addressId);
 
-            if (foundAddress == null)
-            {
-                return NotFound("Address not found.");
-            }
-
-            if (Guid.Parse(foundId) != foundAddress.UserId)
+            if (Guid.Parse(foundId) != addressUpdateDto.UserId)
             {
                 return Forbid();
             }
 
-            var address = new Address
-            {
-                Id = addressId,
-                Street = addressUpdateDto.Street,
-                City = addressUpdateDto.City,
-                Country = addressUpdateDto.Country,
-                ZipCode = addressUpdateDto.ZipCode,
-                PhoneNumber = addressUpdateDto.PhoneNumber
-            };
-
-            var updatedAddress = await _addressService.UpdateAddressAsync(address);
+            var updatedAddress = await _addressService.UpdateAddressAsync(addressId, addressUpdateDto);
             return Ok(updatedAddress);
         }
 

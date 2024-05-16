@@ -60,6 +60,7 @@ namespace Ecommerce.Service.src.Service
             try
             {
                 var address = await _addressRepo.GetAddressByIdAsync(addressId);
+                
                 var addressReadDto = new AddressReadDto();
                 addressReadDto.Transform(address);
                 return addressReadDto;
@@ -85,11 +86,20 @@ namespace Ecommerce.Service.src.Service
         }
 
 
-        public async Task<AddressReadDto> UpdateAddressAsync(Address address)
+        public async Task<AddressReadDto> UpdateAddressAsync(Guid addressId, AddressUpdateDto address)
         {
+            var addressFound = await _addressRepo.GetAddressByIdAsync(addressId);
+
             try
             {
-                var updatedAddress = await _addressRepo.UpdateAddressAsync(address);
+                addressFound.Street = address.Street ?? addressFound.Street;
+                addressFound.City = address.City ?? addressFound.City;
+                addressFound.Country = address.Country ?? addressFound.Country;
+                addressFound.PhoneNumber = address.PhoneNumber ?? addressFound.PhoneNumber;
+                addressFound.ZipCode = address.ZipCode ?? addressFound.ZipCode;
+                // addressFound.UpdatedDate = DateTime.UtcNow;
+
+                var updatedAddress = await _addressRepo.UpdateAddressAsync(addressFound);
                 var addressReadDto = new AddressReadDto();
                 addressReadDto.Transform(updatedAddress);
                 return addressReadDto;

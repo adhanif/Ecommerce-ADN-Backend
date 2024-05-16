@@ -10,8 +10,6 @@ using Ecommerce.Core.src.Common;
 
 // need to test:
 
-//GetAllUsersAsync_WithRoleFilter_ShouldReturnCorrectSubset
-//GetAllUsersAsync_WithNameSearch_ShouldReturnCorrectSubset
 
 namespace Ecommerce.Test.src.Service
 {

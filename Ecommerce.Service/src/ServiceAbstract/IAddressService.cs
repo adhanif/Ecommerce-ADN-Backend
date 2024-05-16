@@ -7,7 +7,7 @@ namespace Ecommerce.Service.src.ServiceAbstract
     {
         Task<AddressReadDto> GetAddressByIdAsync(Guid addressId);
         Task<AddressReadDto> CreateAddressAsync(AddressCreateDto addressCreateDto);
-        Task<AddressReadDto> UpdateAddressAsync(Address address);
+        Task<AddressReadDto> UpdateAddressAsync(Guid addressId, AddressUpdateDto address);
         Task<bool> DeleteAddressAsync(Guid addressId);
         Task<IEnumerable<AddressReadDto>> GetAllAddressesOfUserByIdAsync(Guid userID);
     }

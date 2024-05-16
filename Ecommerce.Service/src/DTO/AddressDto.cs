@@ -3,9 +3,8 @@ using Ecommerce.Core.src.Entity;
 
 namespace Ecommerce.Service.src.DTO
 {
-    public class AddressReadDto
+    public class AddressReadDto : BaseEntity
     {
-        public Guid AddressId { get; set; }
         public string Street { get; set; }
         public string City { get; set; }
         public string Country { get; set; }
@@ -17,12 +16,14 @@ namespace Ecommerce.Service.src.DTO
         public void Transform(Address address)
         {
             {
-                AddressId = address.Id;
+                Id = address.Id;
                 Street = address.Street;
                 City = address.City;
                 Country = address.Country;
                 ZipCode = address.ZipCode;
                 PhoneNumber = address.PhoneNumber;
+                CreatedDate = address.CreatedDate;
+                UpdatedDate = address.UpdatedDate;
                 UserId = address.UserId;
             }
         }
@@ -34,7 +35,7 @@ namespace Ecommerce.Service.src.DTO
         public string Country { get; set; }
         public string ZipCode { get; set; }
         public string PhoneNumber { get; set; }
-        public Guid UserId { get; set; } // foreign key navigate to user
+        public Guid UserId { get; set; }
 
         public Address CreateAddress()
         {
@@ -45,7 +46,7 @@ namespace Ecommerce.Service.src.DTO
                 Country = Country,
                 ZipCode = ZipCode,
                 PhoneNumber = PhoneNumber,
-                UserId = UserId
+                UserId = UserId,
             };
         }
     }
@@ -53,32 +54,34 @@ namespace Ecommerce.Service.src.DTO
     public class AddressUpdateDto
     {
         public Guid AddressId { get; set; }
-        public string Street { get; set; }
-        public string City { get; set; }
-        public string Country { get; set; }
-        public string ZipCode { get; set; }
-        public string PhoneNumber { get; set; }
+        public string? Street { get; set; }
+        public string? City { get; set; }
+        public string? Country { get; set; }
+        public string? ZipCode { get; set; }
+        public string? PhoneNumber { get; set; }
+        public Guid UserId { get; set; }
 
-        public Address UpdateAddress(Address address)
+        public Address UpdateAddress(Address oldAddress)
         {
-            if (address != null)
+
             {
                 if (Street != null)
-                    address.Street = Street;
+                    oldAddress.Street = Street;
 
                 if (City != null)
-                    address.City = City;
+                    oldAddress.City = City;
 
                 if (Country != null)
-                    address.Country = Country;
+                    oldAddress.Country = Country;
 
                 if (ZipCode != null)
-                    address.ZipCode = ZipCode;
+                    oldAddress.ZipCode = ZipCode;
 
                 if (PhoneNumber != null)
-                    address.PhoneNumber = PhoneNumber;
+                    oldAddress.PhoneNumber = PhoneNumber;
+
+                return oldAddress;
             }
-            return address;
         }
     }
 }

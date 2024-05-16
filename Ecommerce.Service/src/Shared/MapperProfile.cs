@@ -16,7 +16,7 @@ namespace Ecommerce.Service.src.Shared
 
             // Address mappings
             CreateMap<Address, AddressReadDto>()
-                .ForMember(dest => dest.AddressId, opt => opt.MapFrom(src => src.Id))
+                .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
                 .ForMember(dest => dest.User, opt => opt.Ignore()); // Ignore User to prevent circular reference
             CreateMap<AddressCreateDto, Address>()
                 .ForMember(dest => dest.Id, opt => opt.Ignore()); // Ignore Id, as it will be generated
