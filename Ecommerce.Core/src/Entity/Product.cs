@@ -14,7 +14,6 @@ namespace Ecommerce.Core.src.Entity
         public string Description { get; set; }
 
         [Required]
-        [Column(TypeName = "decimal(18,2)")]
         public int Price { get; set; }
 
         [ForeignKey("CategoryId")]

@@ -138,12 +138,6 @@ namespace Ecommerce.WebAPI.src.Database
             // Relationship, column type and constraint of Address
             modelBuilder.Entity<Address>(address =>
             {
-                // address.HasOne(a => a.User)
-
-                //     .WithMany()
-                //     .HasForeignKey(a => a.UserId)
-                //     .OnDelete(DeleteBehavior.Cascade);
-
                 // Configure column type and constraint of Product
                 address.Property(a => a.Street).IsRequired().HasColumnType("varchar").HasMaxLength(255);
                 address.Property(a => a.City).IsRequired().HasColumnType("varchar").HasMaxLength(255);
@@ -180,6 +174,17 @@ namespace Ecommerce.WebAPI.src.Database
 
             var users = SeedingData.GetUsers();
             modelBuilder.Entity<User>().HasData(users);
+
+            var products = SeedingData.GetProducts();
+            modelBuilder.Entity<Product>().HasData(products);
+
+            var productImages = new List<ProductImage>();
+            foreach (var product in products)
+            {
+                var imagesForProduct = SeedingData.GetProductImagesForProduct(product.Id);
+                productImages.AddRange(imagesForProduct);
+            }
+            modelBuilder.Entity<ProductImage>().HasData(productImages);
 
         }
         #endregion
