@@ -118,39 +118,6 @@ namespace Ecommerce.Service.src.Service
             }
         }
 
-        public async Task<OrderReadUpdateDto> UpdateOrderByIdAsync(Guid orderId, OrderUpdateDto orderUpdateDto)
-        {
-            var foundOrder = await _orderRepo.GetOrderByIdAsync(orderId);
-
-            if (orderId == Guid.Empty)
-            {
-                throw AppException.BadRequest("Order id is required");
-            }
-            if (foundOrder is null)
-            {
-                throw AppException.NotFound($"Order not found");
-            }
-
-
-            foundOrder.Address = orderUpdateDto.Address ?? foundOrder.Address;
-            // Update order products quantity if provided
-            foreach (var orderProduct in foundOrder.OrderProducts)
-            {
-                var productUpdate = orderUpdateDto.OrderProducts.FirstOrDefault(p => p.ProductId == orderProduct.ProductId);
-                if (productUpdate != null)
-                {
-                    orderProduct.Quantity = productUpdate.Quantity ?? orderProduct.Quantity;
-                    orderProduct.Product.Title = productUpdate.Title ?? orderProduct.Product.Title;
-                    orderProduct.Product.Price = productUpdate.Price ?? orderProduct.Product.Price;
-
-                }
-            }
-            // Save changes
-            var updatedOrder = await _orderRepo.UpdateOrderByIdAsync(foundOrder);
-            var orderDto = _mapper.Map<OrderReadUpdateDto>(updatedOrder);
-            return orderDto;
-
-        }
 
         #region Helper class
         private async Task<OrderReadDto> MapOrderToDTO(Order order)

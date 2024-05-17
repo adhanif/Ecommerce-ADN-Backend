@@ -117,53 +117,6 @@ namespace Ecommerce.WebAPI.src.Repo
             return foundOrder;
         }
 
-        public async Task<Order> UpdateOrderByIdAsync(Order updatedOrder)
-        {
-            // var foundOrder = _orders.Update(updatedOrder) ?? throw AppException.NotFound("Order not found"); ;
-            // await _context.SaveChangesAsync();
-            // return updatedOrder;
-
-            var foundOrder = await _orders.FindAsync(updatedOrder.Id);
-            if (foundOrder == null)
-            {
-                throw AppException.NotFound($"Order not found for ID: {updatedOrder.Id}");
-            }
-
-            using (var transaction = _context.Database.BeginTransaction())
-            {
-                try
-                {
-                    // Update order properties
-                    foundOrder.Address = updatedOrder.Address;
-
-                    // Update order products quantity
-                    foreach (var updatedOrderProduct in updatedOrder.OrderProducts)
-                    {
-                        var existingOrderProduct = foundOrder.OrderProducts.FirstOrDefault(op => op.OrderId == updatedOrderProduct.OrderId);
-                        if (existingOrderProduct != null)
-                        {
-                            existingOrderProduct.Quantity = updatedOrderProduct.Quantity;
-                        }
-                        else
-                        {
-                            foundOrder.OrderProducts.Append(updatedOrderProduct);
-                        }
-                    }
-
-                    await _context.SaveChangesAsync();
-                    transaction.Commit();
-                    return foundOrder;
-                }
-                catch (Exception e)
-                {
-                    System.Console.WriteLine(e.Message);
-                    transaction.Rollback();
-                    throw;
-                }
-            }
-        }
-
-
         public async Task<IEnumerable<Order>> GetOrdersByUserIdAsync(Guid userId)
         {
             var query = _orders.AsQueryable();

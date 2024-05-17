@@ -49,14 +49,6 @@ namespace Ecommerce.Controller.src.Controller
 
 
 
-        [Authorize(Roles = "Admin")]
-        [HttpPatch("{orderId}")]
-        public async Task<ActionResult<OrderReadUpdateDto>> UpdateOrderByIdAsync([FromRoute] Guid orderId, [FromBody] OrderUpdateDto orderUpdateDto)
-        {
-            orderUpdateDto.OrderId = orderId; // If order is found...
-            var updatedOrder = await _orderService.UpdateOrderByIdAsync(orderId, orderUpdateDto);
-            return Ok(updatedOrder);
-        }
 
         [Authorize(Roles = "Admin")]
         [HttpDelete("{orderId}")]
@@ -85,7 +77,6 @@ namespace Ecommerce.Controller.src.Controller
             var orders = await _orderService.GetOrdersByUserIdAsync(userId);
             return Ok(orders);
         }
-
 
 
         private Guid GetUserIdClaim()
