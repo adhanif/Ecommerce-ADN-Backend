@@ -82,53 +82,58 @@ namespace Ecommerce.Service.src.Service
         }
 
 
-        public async Task<ProductReadDto> CreateProductAsync(ProductCreateDto newProduct)
+        public async Task<ProductReadDto> CreateProductAsync(ProductCreateDto productCreateDto)
         {
             try
             {
-                if (newProduct == null)
+                if (productCreateDto == null)
                 {
-                    throw new ArgumentNullException(nameof(newProduct), "ProductC cannot be null");
+                    throw new ArgumentNullException(nameof(productCreateDto), "ProductC cannot be null");
                 }
                 // Check if the product name is provided
-                if (string.IsNullOrWhiteSpace(newProduct.Title))
+                if (string.IsNullOrWhiteSpace(productCreateDto.Title))
                 {
                     throw AppException.InvalidInputException("Product name cannot be empty");
                 }
 
                 // Check if the price is greater than zero
-                if (newProduct.Price <= 0)
+                if (productCreateDto.Price <= 0)
                 {
                     throw AppException.InvalidInputException("Price should be greated than zero.");
                 }
 
-                // Validate image URLs
-                if (newProduct.Images is not null)
-                {
+                // // Validate image URLs
+                // if (productCreateDto.Images is not null)
+                // {
 
-                    foreach (var image in newProduct.Images)
-                    {
-                        // Check if the URL is provided
-                        if (string.IsNullOrWhiteSpace(image.Url))
-                        {
-                            throw AppException.InvalidInputException("Image URL cannot be empty");
-                        }
+                //     foreach (var image in productCreateDto.Images)
+                //     {
+                //         // Check if the URL is provided
+                //         if (string.IsNullOrWhiteSpace(image.Url))
+                //         {
+                //             throw AppException.InvalidInputException("Image URL cannot be empty");
+                //         }
 
-                        // Check if the URL points to a valid image format 
-                        if (!IsImageUrlValid(image.Url))
-                        {
-                            throw AppException.InvalidInputException("Invalid image format");
-                        }
-                    }
-                }
+                //         // Check if the URL points to a valid image format 
+                //         if (!IsImageUrlValid(image.Url))
+                //         {
+                //             throw AppException.InvalidInputException("Invalid image format");
+                //         }
+                //     }
+                // }
                 // Check if the specified category ID exists
-                var category = await _categoryRepo.GetCategoryByIdAsync(newProduct.CategoryId);
+                var category = await _categoryRepo.GetCategoryByIdAsync(productCreateDto.CategoryId);
                 if (category == null)
                 {
                     throw AppException.NotFound("Category not found");
                 }
-                var productEntity = _mapper.Map<Product>(newProduct);
-                productEntity.Images = _mapper.Map<List<ProductImage>>(newProduct.Images);
+
+                var productEntity = _mapper.Map<Product>(productCreateDto);
+                // productEntity.Images = _mapper.Map<List<ProductImage>>(productCreateDto.Images);
+                productEntity.Images = productCreateDto.ImageData.Select(imageData => new ProductImage { Data = imageData, ProductId = productEntity.Id }).ToList();
+
+
+
                 var createdProduct = await _productRepo.CreateProductAsync(productEntity);
 
                 var productReadDto = _mapper.Map<ProductReadDto>(createdProduct);
@@ -199,35 +204,35 @@ namespace Ecommerce.Service.src.Service
 
 
                 // Update product images
-                if (productUpdateDto.ImagesToUpdate is not null && productUpdateDto.ImagesToUpdate.Any())
-                {
-                    foreach (var imageDto in productUpdateDto.ImagesToUpdate)
-                    {
-                        // Find the image to update by URL
-                        var imageToUpdate = Images.FirstOrDefault(img => img.Url == imageDto.Url);
+                // if (productUpdateDto.ImagesToUpdate is not null && productUpdateDto.ImagesToUpdate.Any())
+                // {
+                //     foreach (var imageDto in productUpdateDto.ImagesToUpdate)
+                //     {
+                //         // Find the image to update by URL
+                //         var imageToUpdate = Images.FirstOrDefault(img => img.Url == imageDto.Url);
 
-                        if (imageToUpdate is not null)
-                        {
-                            // Update image URL if it has changed
-                            if (imageToUpdate.Url != imageDto.Url)
-                            {
-                                // Update the image URL using the repository method
-                                var updateResult = _productImageRepo.UpdateImageUrlAsync(imageToUpdate.Id, imageDto.Url);
-                            }
-                        }
-                        else
-                        {
-                            // Handle the case where the image URL from the DTO doesn't match any existing images
-                            throw new Exception($"Image with URL {imageDto.Url} not found.");
-                        }
+                //         if (imageToUpdate is not null)
+                //         {
+                //             // Update image URL if it has changed
+                //             if (imageToUpdate.Url != imageDto.Url)
+                //             {
+                //                 // Update the image URL using the repository method
+                //                 var updateResult = _productImageRepo.UpdateImageUrlAsync(imageToUpdate.Id, imageDto.Url);
+                //             }
+                //         }
+                //         else
+                //         {
+                //             // Handle the case where the image URL from the DTO doesn't match any existing images
+                //             throw new Exception($"Image with URL {imageDto.Url} not found.");
+                //         }
 
-                        // Validate image URL
-                        if (!IsImageUrlValid(imageDto.Url))
-                        {
-                            throw AppException.InvalidInputException("Invalid image URL format");
-                        }
-                    }
-                }
+                //         // Validate image URL
+                //         if (!IsImageUrlValid(imageDto.Url))
+                //         {
+                //             throw AppException.InvalidInputException("Invalid image URL format");
+                //         }
+                //     }
+                // }
 
 
                 // Save changes to the database

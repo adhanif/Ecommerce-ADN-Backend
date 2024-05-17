@@ -34,20 +34,20 @@ namespace Ecommerce.WebAPI.src.Repo
             // Retrieve the image by its ID
             var image = await GetImageByIdAsync(imageId);
 
-            // Check if the image is found
-            if (image != null)
-            {
-                // Update the image URL with the new one
-                image.Url = newUrl;
+            // // Check if the image is found
+            // if (image != null)
+            // {
+            //     // Update the image URL with the new one
+            //     image.Url = newUrl;
 
-                // Save the changes to the database
-                await _context.SaveChangesAsync();
-            }
-            else
-            {
-                // Handle the case where the image is not found
-                throw new ArgumentException("Image not found", nameof(imageId));
-            }
+            //     // Save the changes to the database
+            //     await _context.SaveChangesAsync();
+            // }
+            // else
+            // {
+            //     // Handle the case where the image is not found
+            //     throw new ArgumentException("Image not found", nameof(imageId));
+            // }
         }
     }
 }
