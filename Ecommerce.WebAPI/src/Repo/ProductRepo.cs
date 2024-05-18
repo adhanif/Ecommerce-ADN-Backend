@@ -108,24 +108,22 @@ namespace Ecommerce.WebAPI.src.Repo
             return products;
         }
 
-        public async Task<IEnumerable<Product>> GetMostPurchasedProductsAsync(int topNumber)
+        public async Task<IEnumerable<Product>> GetProductsByCategoryAsync(Guid categoryId)
         {
-            var parameters = new List<object> { topNumber };
-
-            var mostPurchasedProducts = await _products
-                .FromSqlRaw("SELECT * FROM public.get_most_purchased_products({0})", parameters.ToArray())
-                .ToListAsync();
-
-            return mostPurchasedProducts;
+            var products = await _products
+            .Include(p => p.Images)
+            .Where(p => p.CategoryId == categoryId).ToListAsync();
+            return products;
         }
+
 
 
         public async Task<Product> GetProductByIdAsync(Guid productId)
         {
-            var foundproduct = await _context.Products.FindAsync(productId);
+            var foundproduct = await _context.Products.Include(p => p.Images).FirstOrDefaultAsync(p => p.Id == productId);
             if (foundproduct is null)
             {
-                throw AppException.NotFound("Product not found, Product ID: " + productId);
+                throw AppException.NotFound("Product not found");
             }
             return foundproduct;
         }

@@ -6,10 +6,10 @@ namespace Ecommerce.Service.src.ServiceAbstract
     public interface IProductService
     {
         Task<IEnumerable<ProductReadDto>> GetAllProductsAsync(ProductQueryOptions? options);
-        Task<IEnumerable<ProductReadDto>> GetMostPurchasedProductsAsync(int topNumber);
         Task<ProductReadDto> GetProductByIdAsync(Guid productId);
         Task<ProductReadDto> CreateProductAsync(ProductCreateDto productCreateDto);
-        Task<ProductReadDto> UpdateProductByIdAsync(Guid id, ProductUpdateDto productUpdateDto);
+        Task<ProductReadDto> UpdateProductByIdAsync(Guid productId, ProductUpdateDto productUpdateDto);
         Task<bool> DeleteProductByIdAsync(Guid productId);
+        Task<IEnumerable<ProductReadDto>> GetProductsByCategoryAsync(Guid categoryId);
     }
 }

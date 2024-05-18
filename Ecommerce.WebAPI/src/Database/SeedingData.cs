@@ -184,10 +184,10 @@ namespace Ecommerce.WebAPI.src.Database
         public static List<Product> GetProducts()
         {
             var products = new List<Product>();
-            products.AddRange(GenerateProductsForCategory(category1, 2));
-            products.AddRange(GenerateProductsForCategory(category2, 2));
-            products.AddRange(GenerateProductsForCategory(category3, 2));
-            products.AddRange(GenerateProductsForCategory(category4, 2));
+            products.AddRange(GenerateProductsForCategory(category1, 1));
+            products.AddRange(GenerateProductsForCategory(category2, 1));
+            products.AddRange(GenerateProductsForCategory(category3, 1));
+            products.AddRange(GenerateProductsForCategory(category4, 1));
             return products;
         }
 

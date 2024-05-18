@@ -75,7 +75,7 @@ namespace Ecommerce.Service.src.DTO
         public Guid? CategoryId { get; set; }
         public int? Inventory { get; set; }
         public IEnumerable<ProductImageUpdateDto>? ImagesToUpdate { get; set; }
-
+        public List<byte[]> ImageData { get; set; }
 
         public void UpdateProduct(Product oldproduct)
         {

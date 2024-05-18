@@ -60,25 +60,39 @@ builder.Services.AddDbContext<AppDbContext>
 // service registration -> automatically create all instances of dependencies
 
 
-builder.Services.AddAutoMapper(typeof(MapperProfile));
+builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
 
-builder.Services.AddScoped<IProductRepo, ProductRepo>();
-builder.Services.AddScoped<IProductImageRepo, ProductImageRepo>();
-builder.Services.AddScoped<IUserRepo, UserRepo>();
-builder.Services.AddScoped<ICategoryRepo, CategoryRepo>();
-builder.Services.AddScoped<IOrderRepo, OrderRepo>();
-builder.Services.AddScoped<IReviewRepo, ReviewRepo>();
-builder.Services.AddScoped<IAddressRepo, AddressRepo>();
 
-builder.Services.AddScoped<IUserService, UserService>();
-builder.Services.AddScoped<IProductService, ProductService>();
-builder.Services.AddScoped<ICategoryService, CategoryService>();
-builder.Services.AddScoped<IOrderService, OrderService>();
-builder.Services.AddScoped<IReviewService, ReviewService>();
-builder.Services.AddScoped<IAuthService, AuthService>();
-builder.Services.AddScoped<ITokenService, TokenService>();
-builder.Services.AddScoped<IPasswordService, PasswordService>();
-builder.Services.AddScoped<IAddressService, AddressService>();
+// add DI services
+builder.Services
+.AddScoped<IProductRepo, ProductRepo>()
+.AddScoped<IProductImageRepo, ProductImageRepo>()
+.AddScoped<IUserRepo, UserRepo>()
+.AddScoped<ICategoryRepo, CategoryRepo>()
+.AddScoped<IOrderRepo, OrderRepo>()
+.AddScoped<IReviewRepo, ReviewRepo>()
+.AddScoped<IAddressRepo, AddressRepo>();
+
+
+builder.Services.AddScoped<IUserService, UserService>()
+.AddScoped<IProductService, ProductService>()
+.AddScoped<ICategoryService, CategoryService>()
+.AddScoped<IOrderService, OrderService>()
+.AddScoped<IReviewService, ReviewService>()
+.AddScoped<IAuthService, AuthService>()
+.AddScoped<ITokenService, TokenService>()
+.AddScoped<IPasswordService, PasswordService>()
+.AddScoped<IAddressService, AddressService>();
+
+
+
+// add DI custom authorization services
+builder.Services.AddSingleton<IAuthorizationHandler, VerifyResourceOwnerHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, AdminOrOwnerAccountHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, AdminOrOwnerOrderHandler>();
+builder.Services.AddSingleton<IAuthorizationHandler, AdminOrOwnerReviewHandler>();
+
+
 
 builder.Services.AddScoped<ExceptionHandlerMiddleware>(serviceProvider =>
 {
@@ -90,11 +104,7 @@ builder.Services.AddScoped<ExceptionHandlerMiddleware>(serviceProvider =>
   }, logger);
 }); // Catching database exception
 
-// Register authorization handler
-builder.Services.AddSingleton<IAuthorizationHandler, VerifyResourceOwnerHandler>();
-builder.Services.AddSingleton<IAuthorizationHandler, AdminOrOwnerAccountHandler>();
-builder.Services.AddSingleton<IAuthorizationHandler, AdminOrOwnerOrderHandler>();
-builder.Services.AddSingleton<IAuthorizationHandler, AdminOrOwnerReviewHandler>();
+
 
 // add authentication instructions
 builder.Services.AddMemoryCache();
@@ -133,15 +143,20 @@ var app = builder.Build();
 
 
 app.UseSwagger();
-app.UseSwaggerUI();
+app.UseSwaggerUI(options =>
+{
+  options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
+  // options.RoutePrefix = string.Empty; // "/swagger/index.html"
+});
 
+
+
+app.UseCors(options => options.AllowAnyOrigin());
+app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
-
-app.UseMiddleware<ExceptionHandlerMiddleware>();
-
-app.UseHttpsRedirection();
-
 app.MapControllers();
+
 
 app.Run();
