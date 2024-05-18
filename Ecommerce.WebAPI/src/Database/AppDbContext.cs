@@ -79,28 +79,7 @@ namespace Ecommerce.WebAPI.src.Database
                 .HasIndex(u => u.Email)
                 .IsUnique();
 
-            // Automatically set CreatedDate when creating data
-            // modelBuilder.Entity<User>()
-            //     .Property(u => u.CreatedDate)
-            //     .HasDefaultValueSql("CURRENT_TIMESTAMP");
-            // modelBuilder.Entity<Product>()
-            //     .Property(p => p.CreatedDate)
-            //     .HasDefaultValueSql("CURRENT_TIMESTAMP");
-            // modelBuilder.Entity<Category>()
-            //     .Property(c => c.CreatedDate)
-            //     .HasDefaultValueSql("CURRENT_TIMESTAMP");
-            // modelBuilder.Entity<ProductImage>()
-            //     .Property(i => i.CreatedDate)
-            //     .HasDefaultValueSql("CURRENT_TIMESTAMP");
-            // modelBuilder.Entity<Order>()
-            //     .Property(o => o.CreatedDate)
-            //     .HasDefaultValueSql("CURRENT_TIMESTAMP");
-            // modelBuilder.Entity<Review>()
-            //     .Property(r => r.CreatedDate)
-            //     .HasDefaultValueSql("CURRENT_TIMESTAMP");
-            // modelBuilder.Entity<Address>()
-            // .Property(a => a.CreatedDate)
-            // .HasDefaultValueSql("CURRENT_TIMESTAMP");
+            
 
             // Setting column type
             modelBuilder.Entity<User>(u => u.Property(u => u.Name).HasColumnType("varchar(20)"));
@@ -112,8 +91,7 @@ namespace Ecommerce.WebAPI.src.Database
             modelBuilder.Entity<Category>(c => c.Property(c => c.Name).HasColumnType("varchar"));
             modelBuilder.Entity<Category>(c => c.Property(c => c.Image).HasColumnType("varchar"));
 
-            modelBuilder.Entity<ProductImage>(i => i.Property(i => i.Url).HasColumnType("varchar"));
-
+          
             // Relationship, column type and constraint of Product
             modelBuilder.Entity<Product>(product =>
             {

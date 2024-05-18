@@ -68,7 +68,6 @@ namespace Ecommerce.Controller.src.Controller
             var authenticatedClaims = HttpContext.User;
             var foundId = authenticatedClaims.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
 
-
             var updatedUser = await _userService.UpdateUserByIdAsync(Guid.Parse(foundId), userUpdateDto);
             if (updatedUser == null)
             {

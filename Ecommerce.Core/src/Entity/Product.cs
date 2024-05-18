@@ -22,15 +22,12 @@ namespace Ecommerce.Core.src.Entity
         [Required, Range(0, int.MaxValue, ErrorMessage = "Inventory should not be negative number")]
         public int Inventory { get; set; } = 0;
 
+        [Required]
         public ICollection<ProductImage> Images { get; set; } = new List<ProductImage>();
 
         override public string ToString()
         {
             return $"Product Title: {Title}, Product Description: {Description}, Product Price: {Price},Product CategoryId: {CategoryId}, Inventory:{Inventory} ";
         }
-    }
-
-    internal class DecimalPrecisionAttribute : Attribute
-    {
     }
 }

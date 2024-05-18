@@ -6,6 +6,6 @@ namespace Ecommerce.Core.src.RepoAbstract
     {
         Task<IEnumerable<ProductImage>> GetProductImagesByProductIdAsync(Guid productId);
         Task<ProductImage> GetImageByIdAsync(Guid imageId);
-        Task  UpdateImageUrlAsync(Guid imageId, string newUrl);
+        Task<bool> DeleteProductImagesByProductIdAsync(Guid productId);
     }
 }
