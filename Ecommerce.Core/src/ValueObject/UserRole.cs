@@ -5,6 +5,6 @@ namespace Ecommerce.Core.src.ValueObject
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum UserRole
     {
-        Admin, Customer
+        Customer, Admin
     }
 }

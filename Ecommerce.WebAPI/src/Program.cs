@@ -20,6 +20,23 @@ using Swashbuckle.AspNetCore.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+
+
+// Add CORS services
+builder.Services.AddCors(options =>
+{
+  options.AddPolicy("AllowAllOrigins",
+    builder =>
+    {
+      builder
+        .AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader();
+    });
+});
+
+
 // Add services to the container.
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -39,6 +56,8 @@ builder.Services.AddSwaggerGen(
       options.OperationFilter<SecurityRequirementsOperationFilter>();
     }
 );
+
+
 
 // add all controllers
 builder.Services.AddControllers();
@@ -151,7 +170,7 @@ app.UseSwaggerUI(options =>
 
 
 
-app.UseCors(options => options.AllowAnyOrigin());
+app.UseCors("AllowAllOrigins");
 app.UseHttpsRedirection();
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 app.UseAuthentication();

@@ -38,7 +38,7 @@ namespace Ecommerce.Service.src.DTO
         public string Email { get; set; }
         public string Password { get; set; }
         public string? Avatar { get; set; }
-        public UserRole Role { get; set; }
+        // public UserRole? Role { get; set; } = UserRole.Customer;
         public IEnumerable<AddressCreateDto>? Addresses { get; set; } = new List<AddressCreateDto>();
 
 
@@ -50,7 +50,7 @@ namespace Ecommerce.Service.src.DTO
                 Email = Email,
                 Password = Password,
                 Avatar = Avatar,
-                Role = Role,
+                Role = UserRole.Customer,
                 Addresses = Addresses?.Select(a => a.CreateAddress()).ToList(),
             };
         }
