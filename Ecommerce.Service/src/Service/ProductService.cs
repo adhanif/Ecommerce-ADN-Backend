@@ -165,7 +165,7 @@ namespace Ecommerce.Service.src.Service
                 // Update inventory by adding the new inventory value
                 if (productUpdateDto.Inventory.HasValue)
                 {
-                    foundProduct.Inventory += productUpdateDto.Inventory.Value;
+                    foundProduct.Inventory = productUpdateDto.Inventory.Value;
                 }
 
                 // Save changes to the product

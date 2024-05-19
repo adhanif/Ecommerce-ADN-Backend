@@ -56,10 +56,9 @@ namespace Ecommerce.Controller.src.Controller
 
         [Authorize(Roles = "Admin")]
         [Consumes("multipart/form-data")]
-        [HttpPut("form-update")]
+        [HttpPatch("form-update")]
         public async Task<ActionResult<ProductReadDto>> UpdateFromFormAsync(Guid productId, [FromForm] ProductForm productForm)
         {
-
             var imageList = new List<byte[]>();
             if (productForm.Images is not null)
             {
@@ -149,7 +148,7 @@ namespace Ecommerce.Controller.src.Controller
         public int Price { get; set; }
         public Guid CategoryId { get; set; }
         public int Inventory { get; set; }
-        public required List<IFormFile> Images { get; set; }
+        public required List<IFormFile>? Images { get; set; }
 
     }
 }
