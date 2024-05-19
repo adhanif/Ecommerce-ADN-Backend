@@ -133,13 +133,13 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     {
       options.TokenValidationParameters = new TokenValidationParameters
       {
+        ValidIssuer = builder.Configuration["Secrets:Issuer"],
         ValidAudience = builder.Configuration["Jwt:Audience"],
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Secrets:JwtKey"]!)),
         ValidateIssuer = true,
         ValidateAudience = false,
         ValidateLifetime = true, // make sure it's not expired
         ValidateIssuerSigningKey = true,
-        ValidIssuer = builder.Configuration["Secrets:Issuer"],
       };
     }
 );

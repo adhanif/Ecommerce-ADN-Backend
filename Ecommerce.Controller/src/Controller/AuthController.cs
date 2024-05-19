@@ -25,7 +25,7 @@ namespace Ecommerce.Controller.src.Controller
         [HttpPost("login")]
         public async Task<ActionResult<string>> LoginAsync([FromBody] UserCredential userCredential)
         {
-            var token = await _authService.LoginAsync(userCredential);
+            var token = await _authService.LoginAsync(userCredential); 
             if (token == null)
             {
                 return Unauthorized("Invalid username or password");

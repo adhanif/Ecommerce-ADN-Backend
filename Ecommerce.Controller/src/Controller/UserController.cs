@@ -61,7 +61,7 @@ namespace Ecommerce.Controller.src.Controller
         // only user itself can update the user info
         // resource-based authorization : data need to retrived from data resource to be verified
         [Authorize(/* Policy = "ResourceOwner" */)]
-        [HttpPut("profile")] // endpoint: /users/:user_id
+        [HttpPatch("profile")] // endpoint: /users/:user_id
         public async Task<ActionResult<UserReadDto>> UpdateProfileAsync([FromBody] UserUpdateDto userUpdateDto)
         {
 

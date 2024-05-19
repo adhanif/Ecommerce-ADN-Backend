@@ -21,10 +21,11 @@ namespace Ecommerce.Service.src.Service
         {
             var foundUser = await _userRepo.GetUserByEmailAsync(userCredential.Email) ?? throw AppException.NotFound("Email is not registered");
 
+
             var isMatch = _passwordService.VerifyPassword(userCredential.Password, foundUser.Password, foundUser.Salt);
             if (isMatch)
             {
-                return _tokenService.GetToken(foundUser);
+                return  _tokenService.GetToken(foundUser);
             }
             else
             {
