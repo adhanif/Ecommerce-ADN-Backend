@@ -25,7 +25,7 @@ namespace Ecommerce.Controller.src.Controller
         [HttpPost("login")]
         public async Task<ActionResult<string>> LoginAsync([FromBody] UserCredential userCredential)
         {
-            var token = await _authService.LoginAsync(userCredential); 
+            var token = await _authService.LoginAsync(userCredential);
             if (token == null)
             {
                 return Unauthorized("Invalid username or password");
@@ -39,7 +39,7 @@ namespace Ecommerce.Controller.src.Controller
         {
             // Retrieve token from the Authorization header
             var token = HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-            // Console.WriteLine(token);
+            Console.WriteLine(token);
 
             // Check if the token exists
             if (string.IsNullOrEmpty(token))
@@ -49,13 +49,14 @@ namespace Ecommerce.Controller.src.Controller
 
             // Call the logout method
             var result = await _authService.LogoutAsync();
+
             if (result == "removed")
             {
-                return Ok("Logged out successfully");
+                return Ok(new { message = "Logged out successfully" });
             }
             else
             {
-                return Ok("User already logout");
+                return Ok(new { message = "User already logged out" });
             }
 
         }

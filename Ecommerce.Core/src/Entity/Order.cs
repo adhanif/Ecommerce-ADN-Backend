@@ -11,6 +11,8 @@ namespace Ecommerce.Core.src.Entity
 
         [Column(TypeName = "varchar")]
         public string Address { get; set; }
+        public int Total { get; set; }
+       
         // public OrderStatus Status { get; set; } = OrderStatus.Pending;
         public IEnumerable<OrderProduct> OrderProducts { get; set; }
     }

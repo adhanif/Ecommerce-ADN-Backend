@@ -8,6 +8,7 @@ namespace Ecommerce.Service.src.DTO
         public UserReadDto User { get; set; } // User information
         public IEnumerable<OrderProductReadDto> OrderProducts { get; set; }
         public string Address { get; set; }
+        public int Total { get; set; }
         // public OrderStatus OrderStatus { get; set; } = OrderStatus.Pending;
     }
 
@@ -15,6 +16,7 @@ namespace Ecommerce.Service.src.DTO
     {
         public IEnumerable<OrderProductCreateDto> OrderProducts { get; set; }
         public string Address { get; set; }
+        public int Total { get; set; }
         // public OrderStatus OrderStatus { get; set; } = OrderStatus.Pending;
     }
 
@@ -30,5 +32,6 @@ namespace Ecommerce.Service.src.DTO
         // public UserReadDto User { get; set; } // User information
         public IEnumerable<OrderProductReadDto> OrderProducts { get; set; } // Order products list
         public string Address { get; set; }
+        public int Total { get; set; }
     }
 }
