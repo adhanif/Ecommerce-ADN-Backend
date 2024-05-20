@@ -37,10 +37,11 @@ namespace Ecommerce.WebAPI.src.Repo
                 {
                     query = query.Where(u => u.Name.Contains(userQueryOptions.SearchName));
                 }
-
-                if (userQueryOptions.Offset >= 0 && userQueryOptions.Limit > 0)
+                if (userQueryOptions.Offset != null && userQueryOptions.Limit != null)
                 {
-                    query = query.Skip(userQueryOptions.Offset).Take(userQueryOptions.Limit);
+                    int offset = userQueryOptions.Offset.Value;
+                    int limit = userQueryOptions.Limit.Value;
+                    query = query.Skip(offset).Take(limit);
                 }
 
             }

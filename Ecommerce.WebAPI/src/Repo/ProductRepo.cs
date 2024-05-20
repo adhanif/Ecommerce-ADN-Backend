@@ -100,7 +100,12 @@ namespace Ecommerce.WebAPI.src.Repo
                 }
 
                 // Pagination
-                query = query.Skip(options.Offset).Take(options.Limit);
+                if (options.Offset != null && options.Limit != null)
+                {
+                    int offset = options.Offset.Value;
+                    int limit = options.Limit.Value;
+                    query = query.Skip(offset).Take(limit);
+                }
             }
 
             // Execute the query

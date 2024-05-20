@@ -56,7 +56,7 @@ namespace Ecommerce.Controller.src.Controller
 
         [Authorize(Roles = "Admin")]
         [Consumes("multipart/form-data")]
-        [HttpPatch("form-update")]
+        [HttpPatch("{productId}/form-update")]
         public async Task<ActionResult<ProductReadDto>> UpdateFromFormAsync(Guid productId, [FromForm] ProductForm productForm)
         {
             var imageList = new List<byte[]>();

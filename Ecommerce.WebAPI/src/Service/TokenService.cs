@@ -22,8 +22,6 @@ namespace Ecommerce.WebAPI.src.Service
 
         public string GetToken(User foundUser)
         {
-
-            var issuer = _configuration.GetSection("Secrets:Issuer").Value;
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Email, foundUser.Email),
@@ -32,8 +30,6 @@ namespace Ecommerce.WebAPI.src.Service
             };
 
             // secret key
-            var audience = _configuration.GetSection("Jwt:Audience").Value;
-
             var jwtKey = _configuration["Secrets:JwtKey"];
             if (jwtKey is null)
             {
@@ -45,18 +41,14 @@ namespace Ecommerce.WebAPI.src.Service
             var tokenHandler = new JwtSecurityTokenHandler();
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Issuer = issuer,
-                Audience = audience,
                 Subject = new ClaimsIdentity(claims),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = securityKey,
-                // Issuer = _configuration["Secrets:Issuer"], // Who generate the token: webdemo
-
+                Issuer = _configuration["Secrets:Issuer"], // Who generate the token: webdemo
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);
-
             // Store the token with a consistent key
-            _cache.Set("JwtToken", token); 
+            _cache.Set("JwtToken", token);
             return tokenHandler.WriteToken(token);
         }
 

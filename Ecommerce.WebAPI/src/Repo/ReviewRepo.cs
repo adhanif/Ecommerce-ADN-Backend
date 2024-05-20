@@ -45,9 +45,9 @@ namespace Ecommerce.WebAPI.src.Repo
             {
                 query = query.OrderBy(r => r.CreatedDate)
                              .Include(r => r.Product)
-                             .Include(r => r.User)
-                             .Skip(options.Offset)
-                             .Take(options.Limit);
+                             .Include(r => r.User);
+                            //  .Skip(options.Offset)
+                            //  .Take(options.Limit);
             }
 
             var reviews = await query.ToListAsync();
