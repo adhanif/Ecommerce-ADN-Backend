@@ -12,5 +12,6 @@ namespace Ecommerce.Service.src.ServiceAbstract
         Task<UserReadDto> CreateUserAsync(UserCreateDto userCreateDto);
         Task<UserReadDto> UpdateUserByIdAsync(Guid userID, UserUpdateDto userUpdateDto);
         Task<bool> DeleteUserByIdAsync(Guid userId);
+        Task<UserReadDto> UpdateUserByAdminAsync(Guid userID, UserUpdateDto userUpdateDto);
     }
 }

@@ -90,6 +90,20 @@ namespace Ecommerce.WebAPI.src.Repo
             return updatedUser;
         }
 
+        public async Task<User> UpdateUserByAdminAsync(User updatedUser)
+        {
+            // check if user exist
+            var foundUser = await _users.FirstOrDefaultAsync(user => user.Id == updatedUser.Id) ?? throw AppException.NotFound("User not found");
+
+            // check if the new email is duplicated
+            var duplicatedUser = await _users.FirstOrDefaultAsync(u => u.Email == updatedUser.Email && u.Id != updatedUser.Id);
+            if (duplicatedUser is not null) throw AppException.DuplicateEmailException();
+
+            _users.Update(updatedUser);
+            await _context.SaveChangesAsync();
+            return updatedUser;
+        }
+
         public async Task<bool> DeleteUserByIdAsync(Guid userId)
         {
             var user = await _users.FindAsync(userId) ?? throw AppException.NotFound("user not found");

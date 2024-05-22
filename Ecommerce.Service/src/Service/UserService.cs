@@ -116,18 +116,12 @@ namespace Ecommerce.Service.src.Service
             try
             {
                 var foundUser = await _userRepo.GetUserByIdAsync(userId);
-                // validation
-                // if (userUpdateDto.Name is not null && string.IsNullOrEmpty(userUpdateDto.Name)) throw AppException.InvalidInputException("User name cannot be empty");
                 if (userUpdateDto.Name is not null && userUpdateDto.Name.Length > 20) throw AppException.InvalidInputException("User name cannot be longer than 20 characters");
 
                 string emailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
                 // Create Regex object
                 Regex emailRegex = new(emailPattern);
                 if (userUpdateDto.Email is not null && !emailRegex.IsMatch(userUpdateDto.Email)) throw AppException.InvalidInputException("Email is not valid");
-
-                // string imagePatten = @"^.*\.(jpg|jpeg|png|gif|bmp)$";
-                // Regex imageRegex = new(imagePatten);
-                // if (userUpdateDto.Avatar is not null && !imageRegex.IsMatch(userUpdateDto.Avatar)) throw AppException.InvalidInputException("Avatar can only be jpg|jpeg|png|gif|bmp");
 
                 // Update fields only if they are provided in userUpdateDto
                 if (userUpdateDto.Name != null)
@@ -161,6 +155,58 @@ namespace Ecommerce.Service.src.Service
                 throw;
             }
         }
+
+        public async Task<UserReadDto> UpdateUserByAdminAsync(Guid userId, UserUpdateDto userUpdateDto)
+        {
+
+            try
+            {
+                var foundUser = await _userRepo.GetUserByIdAsync(userId);
+                if (userUpdateDto.Name is not null && userUpdateDto.Name.Length > 20) throw AppException.InvalidInputException("User name cannot be longer than 20 characters");
+
+                string emailPattern = @"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$";
+                // Create Regex object
+                Regex emailRegex = new(emailPattern);
+                if (userUpdateDto.Email is not null && !emailRegex.IsMatch(userUpdateDto.Email)) throw AppException.InvalidInputException("Email is not valid");
+
+                // Update fields only if they are provided in userUpdateDto
+                if (userUpdateDto.Name != null)
+                {
+                    foundUser.Name = userUpdateDto.Name;
+                }
+                if (userUpdateDto.Email != null)
+                {
+                    foundUser.Email = userUpdateDto.Email;
+                }
+                if (userUpdateDto.Password != null)
+                {
+                    foundUser.Password = _passwordService.HashPassword(userUpdateDto.Password, out byte[] salt);
+                    foundUser.Salt = salt;
+                }
+                if (userUpdateDto.Avatar != null)
+                {
+                    foundUser.Avatar = userUpdateDto.Avatar;
+                }
+
+                if (userUpdateDto.Role != null)
+                {
+                    foundUser.Role = (Core.src.ValueObject.UserRole)userUpdateDto.Role;
+                }
+
+                // Update the user entity with the new values
+                var updateUser = await _userRepo.UpdateUserByAdminAsync(foundUser);
+
+                // Map the updated user entity back to a UserReadDto
+                var updatedUserDto = _mapper.Map<User, UserReadDto>(updateUser);
+
+                return updatedUserDto;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
 
         public async Task<bool> DeleteUserByIdAsync(Guid userId)
         {

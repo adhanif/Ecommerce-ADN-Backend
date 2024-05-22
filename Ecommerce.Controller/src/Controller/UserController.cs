@@ -76,6 +76,26 @@ namespace Ecommerce.Controller.src.Controller
             return Ok(updatedUser);
         }
 
+
+        [Authorize(Roles = "Admin")]
+        [HttpPatch("{userId}")] // endpoint: /users/:user_id
+        public async Task<ActionResult<UserReadDto>> UpdateUserByAdminAsync([FromRoute] Guid userId, [FromBody] UserUpdateDto userUpdateDto)
+        {
+
+            // var authenticatedClaims = HttpContext.User;
+            // var foundId = authenticatedClaims.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
+
+            var updatedUser = await _userService.UpdateUserByAdminAsync(userId, userUpdateDto);
+            if (updatedUser == null)
+            {
+                return BadRequest("Failed to update user.");
+            }
+            return Ok(updatedUser);
+        }
+
+
+
+
         [Authorize(Roles = "Admin")]
         [HttpDelete("{userId}")] // endpoint: /users/:user_id
         public async Task<ActionResult<bool>> DeleteUserByIdAsync([FromRoute] Guid userId)
