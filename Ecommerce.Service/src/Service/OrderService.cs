@@ -159,7 +159,7 @@ namespace Ecommerce.Service.src.Service
 
         public async Task<IEnumerable<OrderReadDto>> GetOrdersByUserIdAsync(Guid userId)
         {
-            var foundUser = _userRepo.GetUserByIdAsync(userId);
+            var foundUser = await _userRepo.GetUserByIdAsync(userId);
             if (foundUser is null)
             {
                 throw AppException.NotFound("User not found");

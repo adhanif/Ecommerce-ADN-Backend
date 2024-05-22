@@ -15,6 +15,7 @@ namespace Ecommerce.Core.src.Entity
         [StrongPassword]
         public string Password { get; set; }
         public byte[] Salt { get; set; }
+        
         public string? Avatar { get; set; }
         public UserRole Role { get; set; }
         public IEnumerable<Address> Addresses { get; set; }

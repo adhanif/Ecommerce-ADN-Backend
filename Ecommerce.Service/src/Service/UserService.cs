@@ -112,6 +112,7 @@ namespace Ecommerce.Service.src.Service
 
         public async Task<UserReadDto> UpdateUserByIdAsync(Guid userId, UserUpdateDto userUpdateDto)
         {
+            
             try
             {
                 var foundUser = await _userRepo.GetUserByIdAsync(userId);
@@ -124,9 +125,9 @@ namespace Ecommerce.Service.src.Service
                 Regex emailRegex = new(emailPattern);
                 if (userUpdateDto.Email is not null && !emailRegex.IsMatch(userUpdateDto.Email)) throw AppException.InvalidInputException("Email is not valid");
 
-                string imagePatten = @"^.*\.(jpg|jpeg|png|gif|bmp)$";
-                Regex imageRegex = new(imagePatten);
-                if (userUpdateDto.Avatar is not null && !imageRegex.IsMatch(userUpdateDto.Avatar)) throw AppException.InvalidInputException("Avatar can only be jpg|jpeg|png|gif|bmp");
+                // string imagePatten = @"^.*\.(jpg|jpeg|png|gif|bmp)$";
+                // Regex imageRegex = new(imagePatten);
+                // if (userUpdateDto.Avatar is not null && !imageRegex.IsMatch(userUpdateDto.Avatar)) throw AppException.InvalidInputException("Avatar can only be jpg|jpeg|png|gif|bmp");
 
                 foundUser.Name = userUpdateDto.Name ?? foundUser.Name;
                 foundUser.Email = userUpdateDto.Email ?? foundUser.Email;
