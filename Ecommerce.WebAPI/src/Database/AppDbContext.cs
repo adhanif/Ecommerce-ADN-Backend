@@ -85,7 +85,7 @@ namespace Ecommerce.WebAPI.src.Database
             modelBuilder.Entity<User>(u => u.Property(u => u.Name).HasColumnType("varchar(20)"));
             modelBuilder.Entity<User>(u => u.Property(u => u.Password).HasColumnType("varchar"));
             modelBuilder.Entity<User>(u => u.Property(u => u.Email).HasColumnType("varchar(50)"));
-            modelBuilder.Entity<User>(u => u.Property(u => u.Avatar).HasColumnType("varchar(1024)"));
+            modelBuilder.Entity<User>(u => u.Property(u => u.Avatar).HasColumnType("varchar(10485760)"));
             modelBuilder.Entity<User>(u => u.Property(u => u.Salt).HasColumnType("bytea"));
 
             modelBuilder.Entity<Category>(c => c.Property(c => c.Name).HasColumnType("varchar"));
