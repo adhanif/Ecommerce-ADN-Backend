@@ -22,9 +22,9 @@ This project involves creating a Fullstack e-commerce platform with a cutting-ed
 
 1. [Technologies and Libraries](#technologies-and-libraries)
 2. [Getting Started](#getting-started)
-3. [Folder Structure](#folder-structure)
-4. [Clean Architecture Overview](#clean-architecture-overview)
-5. [Relational Database Design](#relational-database-design)
+3. [Relational Database Design](#relational-database-design)
+4. [Folder Structure](#folder-structure)
+5. [Clean Architecture Overview](#clean-architecture-overview)
 6. [API Documentation](#api-documentation)
 7. [Features](#features)
 8. [Testing](#testing)
@@ -124,6 +124,10 @@ Navigate to the WebAPI layer directory and run the following command to start th
 ```bash
 dotnet watch
 ```
+
+## Relational database design
+
+![App Screenshot](/images/erd.png)
 
 ## Folder Structure
 
@@ -295,10 +299,6 @@ The **Testing Layer** houses unit tests that validate the functionality of the c
 
 This architectural approach provides a well-structured, maintainable, and scalable codebase. It promotes efficient development and facilitates the seamless integration of new features and improvements into the application.
 
-## Relational database design
-
-![App Screenshot](/images/erd.png)
-
 ## API Documentation
 
 All the endpoints of the API are documented and can be tested directly on the generated Swagger page. From there, you can view each endpoint URL, their HTTP methods, request body structures, and authorization requirements.
@@ -313,7 +313,6 @@ Click the button above to explore and test the API endpoints using Swagger.
 ![App Screenshot](/images/swagger2.png)
 ![App Screenshot](/images/swagger3.png)
 ![App Screenshot](/images/swagger4.png)
-
 
 ## Features
 
