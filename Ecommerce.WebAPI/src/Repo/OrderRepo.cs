@@ -31,9 +31,12 @@ namespace Ecommerce.WebAPI.src.Repo
 
                     foreach (var orderProduct in createdOrder.OrderProducts)
                     {
-                        var foundProduct = _products.FirstOrDefault(product => product == orderProduct.Product);
+                        var foundProduct = _products.FirstOrDefault(p => p.Id == orderProduct.Product.Id);
+                        Console.WriteLine(foundProduct);
+
                         if (foundProduct.Inventory >= orderProduct.Quantity)
                         {
+
                             foundProduct.Inventory -= orderProduct.Quantity;
                             _context.Products.Update(foundProduct);
                             foundProduct.UpdatedDate = DateOnly.FromDateTime(DateTime.Now);
@@ -63,19 +66,28 @@ namespace Ecommerce.WebAPI.src.Repo
         public async Task<bool> DeleteOrderByIdAsync(Guid orderId)
         {
             var foundOrder = await _orders.FindAsync(orderId);
-            if (foundOrder is null)
+            if (foundOrder == null)
             {
-                throw AppException.NotFound("Order not found for ID: " + orderId);
+                throw AppException.NotFound("Order not found ");
             }
+
             using (var transaction = _context.Database.BeginTransaction())
             {
                 try
                 {
+                    // Ensure OrderProducts is loaded
+                    await _context.Entry(foundOrder).Collection(o => o.OrderProducts).LoadAsync();
+
                     foreach (var orderProduct in foundOrder.OrderProducts)
                     {
-                        var foundProduct = orderProduct.Product;
-                        foundProduct.Inventory += orderProduct.Quantity;
-                        _context.Products.Update(foundProduct);
+                        // Ensure Product is loaded
+                        await _context.Entry(orderProduct).Reference(op => op.Product).LoadAsync();
+
+                        if (orderProduct.Product != null)
+                        {
+                            orderProduct.Product.Inventory += orderProduct.Quantity;
+                            _context.Products.Update(orderProduct.Product);
+                        }
                     }
 
                     _orders.Remove(foundOrder);
@@ -91,6 +103,7 @@ namespace Ecommerce.WebAPI.src.Repo
                 }
             }
         }
+
 
         public async Task<IEnumerable<Order>> GetAllOrdersAsync(BaseQueryOptions? options)
         {

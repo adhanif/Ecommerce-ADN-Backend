@@ -53,10 +53,6 @@ namespace Ecommerce.Controller.src.Controller
             }
 
             var addresses = await _addressService.GetAllAddressesOfUserByIdAsync(userId);
-            if (addresses == null || !addresses.Any())
-            {
-                return NotFound("No addresses found for the user.");
-            }
             return Ok(addresses);
         }
 
@@ -106,11 +102,6 @@ namespace Ecommerce.Controller.src.Controller
             var foundId = authenticatedClaims.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
 
             var foundAddress = await _addressService.GetAddressByIdAsync(addressId);
-
-            if (foundAddress == null)
-            {
-                return NotFound("Address not found.");
-            }
 
             if (Guid.Parse(foundId) != foundAddress.UserId)
             {
