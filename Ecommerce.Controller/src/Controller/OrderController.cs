@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using Ecommerce.Core.src.Common;
+using Ecommerce.Core.src.ValueObject;
 using Ecommerce.Service.src.DTO;
 using Ecommerce.Service.src.ServiceAbstract;
 using Microsoft.AspNetCore.Authorization;
@@ -56,6 +57,15 @@ namespace Ecommerce.Controller.src.Controller
         {
             var deletedOrder = await _orderService.DeleteOrderByIdAsync(orderId);
             return Ok(deletedOrder);
+        }
+
+        [Authorize(Roles = "Admin")]
+        [HttpPatch("{orderId}")]
+        public async Task<ActionResult<OrderUpdateDto>> UpdateOrderStatusAsync([FromRoute] Guid orderId, [FromBody] OrderUpdateDto orderUpdateDto)
+        {
+
+            var updatedOrder = await _orderService.UpdateOrderAsync(orderId, orderUpdateDto.OrderStatus.Value);
+            return Ok(updatedOrder);
         }
 
 

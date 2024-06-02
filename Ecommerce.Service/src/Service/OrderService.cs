@@ -49,9 +49,12 @@ namespace Ecommerce.Service.src.Service
                 });
             }
             order.OrderProducts = newOrderProducts;
+            order.Status = OrderStatus.Pending;
 
             var createdOrder = await _orderRepo.CreateOrderAsync(order);
             var orderReadDto = _mapper.Map<OrderReadDto>(createdOrder);
+            Console.WriteLine(orderReadDto);
+
             return orderReadDto;
         }
 
@@ -119,6 +122,36 @@ namespace Ecommerce.Service.src.Service
         }
 
 
+        public async Task<IEnumerable<OrderReadDto>> GetOrdersByUserIdAsync(Guid userId)
+        {
+            var foundUser = await _userRepo.GetUserByIdAsync(userId);
+            if (foundUser is null)
+            {
+                throw AppException.NotFound("User not found");
+            }
+            var orders = await _orderRepo.GetOrdersByUserIdAsync(userId);
+            var orderDtos = _mapper.Map<IEnumerable<Order>, IEnumerable<OrderReadDto>>(orders);
+
+            return orderDtos;
+        }
+
+        public async Task<OrderReadDto> UpdateOrderAsync(Guid orderId, OrderStatus newStatus)
+        {
+            var foundOrder = await _orderRepo.GetOrderByIdAsync(orderId);
+            if (foundOrder == null)
+            {
+                throw AppException.NotFound("Order not found");
+            }
+            foundOrder.Status = newStatus;
+            var updatedOrder = await _orderRepo.UpdateOrderAsync(foundOrder);
+            Console.WriteLine(updatedOrder);
+            var updatedOrderDto = _mapper.Map<OrderReadDto>(updatedOrder);
+            return updatedOrderDto;
+        }
+
+
+        //
+
         #region Helper class
         private async Task<OrderReadDto> MapOrderToDTO(Order order)
         {
@@ -155,19 +188,6 @@ namespace Ecommerce.Service.src.Service
 
                 orderDto.OrderProducts = orderProductDtos;
             }
-        }
-
-        public async Task<IEnumerable<OrderReadDto>> GetOrdersByUserIdAsync(Guid userId)
-        {
-            var foundUser = await _userRepo.GetUserByIdAsync(userId);
-            if (foundUser is null)
-            {
-                throw AppException.NotFound("User not found");
-            }
-            var orders = await _orderRepo.GetOrdersByUserIdAsync(userId);
-            var orderDtos = _mapper.Map<IEnumerable<Order>, IEnumerable<OrderReadDto>>(orders);
-
-            return orderDtos;
         }
         #endregion
     }

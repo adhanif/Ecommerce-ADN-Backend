@@ -114,51 +114,51 @@ namespace Ecommerce.WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("d409c004-cf79-4198-bff4-47901850c581"),
-                            CreatedDate = new DateOnly(2024, 5, 22),
-                            Image = "https://picsum.photos/200/?random=6",
+                            Id = new Guid("167c2dfb-4437-4bd6-835d-c585cfeb2bd9"),
+                            CreatedDate = new DateOnly(2024, 6, 2),
+                            Image = "https://picsum.photos/200/?random=4",
                             Name = "Electronic",
-                            UpdatedDate = new DateOnly(2024, 5, 22)
+                            UpdatedDate = new DateOnly(2024, 6, 2)
                         },
                         new
                         {
-                            Id = new Guid("19a1b81c-6982-4579-9690-5e01004cc5a0"),
-                            CreatedDate = new DateOnly(2024, 5, 22),
+                            Id = new Guid("790e367c-d46b-4d35-b990-2b2515919fc5"),
+                            CreatedDate = new DateOnly(2024, 6, 2),
                             Image = "https://picsum.photos/200/?random=1",
                             Name = "Clothing",
-                            UpdatedDate = new DateOnly(2024, 5, 22)
+                            UpdatedDate = new DateOnly(2024, 6, 2)
                         },
                         new
                         {
-                            Id = new Guid("c8ce938c-1128-4925-99d9-244558d03378"),
-                            CreatedDate = new DateOnly(2024, 5, 22),
-                            Image = "https://picsum.photos/200/?random=1",
-                            Name = "Furniture",
-                            UpdatedDate = new DateOnly(2024, 5, 22)
-                        },
-                        new
-                        {
-                            Id = new Guid("029f17c3-11fb-46a4-ac76-f2271dca62c7"),
-                            CreatedDate = new DateOnly(2024, 5, 22),
-                            Image = "https://picsum.photos/200/?random=2",
-                            Name = "Books",
-                            UpdatedDate = new DateOnly(2024, 5, 22)
-                        },
-                        new
-                        {
-                            Id = new Guid("054f0d6c-ef43-4114-b6b3-6331c6d93c95"),
-                            CreatedDate = new DateOnly(2024, 5, 22),
-                            Image = "https://picsum.photos/200/?random=5",
-                            Name = "Toys",
-                            UpdatedDate = new DateOnly(2024, 5, 22)
-                        },
-                        new
-                        {
-                            Id = new Guid("5b4bd1d1-df4c-439b-9aff-2f15d291b59d"),
-                            CreatedDate = new DateOnly(2024, 5, 22),
+                            Id = new Guid("1b0e93d9-7393-42be-b269-aee91220134c"),
+                            CreatedDate = new DateOnly(2024, 6, 2),
                             Image = "https://picsum.photos/200/?random=9",
+                            Name = "Furniture",
+                            UpdatedDate = new DateOnly(2024, 6, 2)
+                        },
+                        new
+                        {
+                            Id = new Guid("70326099-ba93-464e-b2da-d844e55e3048"),
+                            CreatedDate = new DateOnly(2024, 6, 2),
+                            Image = "https://picsum.photos/200/?random=5",
+                            Name = "Books",
+                            UpdatedDate = new DateOnly(2024, 6, 2)
+                        },
+                        new
+                        {
+                            Id = new Guid("ad1c229a-5b4a-451a-b921-f24d24c4ce8e"),
+                            CreatedDate = new DateOnly(2024, 6, 2),
+                            Image = "https://picsum.photos/200/?random=8",
+                            Name = "Toys",
+                            UpdatedDate = new DateOnly(2024, 6, 2)
+                        },
+                        new
+                        {
+                            Id = new Guid("24635f81-9ad8-440c-9222-89cb4f587f36"),
+                            CreatedDate = new DateOnly(2024, 6, 2),
+                            Image = "https://picsum.photos/200/?random=3",
                             Name = "Sports",
-                            UpdatedDate = new DateOnly(2024, 5, 22)
+                            UpdatedDate = new DateOnly(2024, 6, 2)
                         });
                 });
 
@@ -177,6 +177,10 @@ namespace Ecommerce.WebAPI.Migrations
                     b.Property<DateOnly?>("CreatedDate")
                         .HasColumnType("date")
                         .HasColumnName("created_date");
+
+                    b.Property<OrderStatus>("Status")
+                        .HasColumnType("order_status")
+                        .HasColumnName("status");
 
                     b.Property<int>("Total")
                         .HasColumnType("integer")
@@ -285,47 +289,47 @@ namespace Ecommerce.WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("35e09e82-f8c1-481e-bc38-e2e82abc21e2"),
-                            CategoryId = new Guid("d409c004-cf79-4198-bff4-47901850c581"),
-                            CreatedDate = new DateOnly(2024, 5, 22),
+                            Id = new Guid("7516a148-f681-4d3f-a851-717536f0591a"),
+                            CategoryId = new Guid("167c2dfb-4437-4bd6-835d-c585cfeb2bd9"),
+                            CreatedDate = new DateOnly(2024, 6, 2),
                             Description = "Description for Electronic Product 1",
                             Inventory = 100,
-                            Price = 200,
+                            Price = 700,
                             Title = "Electronic Product 1",
-                            UpdatedDate = new DateOnly(2024, 5, 22)
+                            UpdatedDate = new DateOnly(2024, 6, 2)
                         },
                         new
                         {
-                            Id = new Guid("8f5a76a5-7b3c-4006-925f-bf326f729e91"),
-                            CategoryId = new Guid("19a1b81c-6982-4579-9690-5e01004cc5a0"),
-                            CreatedDate = new DateOnly(2024, 5, 22),
+                            Id = new Guid("cf2f8e22-eeb0-4743-beee-9c2dfde39f11"),
+                            CategoryId = new Guid("790e367c-d46b-4d35-b990-2b2515919fc5"),
+                            CreatedDate = new DateOnly(2024, 6, 2),
                             Description = "Description for Clothing Product 1",
                             Inventory = 100,
-                            Price = 400,
+                            Price = 700,
                             Title = "Clothing Product 1",
-                            UpdatedDate = new DateOnly(2024, 5, 22)
+                            UpdatedDate = new DateOnly(2024, 6, 2)
                         },
                         new
                         {
-                            Id = new Guid("cd016f01-fe89-4e68-901c-4282727a2bbf"),
-                            CategoryId = new Guid("c8ce938c-1128-4925-99d9-244558d03378"),
-                            CreatedDate = new DateOnly(2024, 5, 22),
+                            Id = new Guid("d140ddb7-0f4b-49c6-ad3b-97cb8e473aeb"),
+                            CategoryId = new Guid("1b0e93d9-7393-42be-b269-aee91220134c"),
+                            CreatedDate = new DateOnly(2024, 6, 2),
                             Description = "Description for Furniture Product 1",
                             Inventory = 100,
-                            Price = 1000,
+                            Price = 600,
                             Title = "Furniture Product 1",
-                            UpdatedDate = new DateOnly(2024, 5, 22)
+                            UpdatedDate = new DateOnly(2024, 6, 2)
                         },
                         new
                         {
-                            Id = new Guid("50b0be44-c149-4bd1-8f35-6d8445910b00"),
-                            CategoryId = new Guid("029f17c3-11fb-46a4-ac76-f2271dca62c7"),
-                            CreatedDate = new DateOnly(2024, 5, 22),
+                            Id = new Guid("665b2ab2-9a0d-44ce-bde4-5c6ee804bb18"),
+                            CategoryId = new Guid("70326099-ba93-464e-b2da-d844e55e3048"),
+                            CreatedDate = new DateOnly(2024, 6, 2),
                             Description = "Description for Books Product 1",
                             Inventory = 100,
-                            Price = 600,
+                            Price = 400,
                             Title = "Books Product 1",
-                            UpdatedDate = new DateOnly(2024, 5, 22)
+                            UpdatedDate = new DateOnly(2024, 6, 2)
                         });
                 });
 
@@ -364,99 +368,99 @@ namespace Ecommerce.WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("0b10f017-aa0f-4518-b0bc-4b3682b9c863"),
-                            CreatedDate = new DateOnly(2024, 5, 22),
-                            Data = new byte[] { 137, 175, 10, 117, 217, 158, 50, 58, 248, 23, 44, 221, 19, 41, 122, 170, 217, 111, 227, 30, 117, 73, 69, 41, 216, 76, 63, 111, 87, 19, 210, 130, 15, 225, 76, 114, 65, 255, 183, 142, 88, 132, 151, 113, 3, 137, 132, 223, 221, 28, 175, 225, 50, 137, 13, 130, 165, 220, 112, 99, 117, 152, 226, 64, 97, 239, 253, 24, 195, 254, 184, 186, 168, 55, 95, 153, 11, 197, 11, 168, 230, 251, 64, 159, 241, 48, 212, 85, 4, 128, 8, 209, 180, 35, 169, 207, 157, 32, 47, 148 },
-                            ProductId = new Guid("35e09e82-f8c1-481e-bc38-e2e82abc21e2"),
-                            UpdatedDate = new DateOnly(2024, 5, 22)
+                            Id = new Guid("5ac12e7e-ae89-4754-9bc2-c33410f9bd56"),
+                            CreatedDate = new DateOnly(2024, 6, 2),
+                            Data = new byte[] { 9, 102, 81, 166, 97, 189, 67, 211, 151, 78, 10, 176, 133, 137, 180, 230, 30, 191, 76, 207, 228, 203, 247, 139, 209, 229, 33, 181, 112, 8, 190, 158, 193, 83, 104, 179, 93, 202, 154, 206, 224, 188, 173, 175, 106, 252, 172, 68, 119, 146, 92, 232, 245, 29, 108, 15, 206, 91, 7, 149, 55, 212, 127, 207, 155, 6, 161, 58, 96, 149, 111, 217, 154, 39, 200, 77, 126, 147, 246, 204, 239, 59, 208, 160, 144, 192, 222, 81, 178, 151, 47, 191, 236, 53, 63, 221, 156, 188, 100, 95 },
+                            ProductId = new Guid("7516a148-f681-4d3f-a851-717536f0591a"),
+                            UpdatedDate = new DateOnly(2024, 6, 2)
                         },
                         new
                         {
-                            Id = new Guid("eb9eec9d-619c-4f92-a9bd-7c7ec6a285a7"),
-                            CreatedDate = new DateOnly(2024, 5, 22),
-                            Data = new byte[] { 100, 216, 242, 55, 231, 163, 71, 182, 85, 241, 69, 71, 9, 67, 73, 63, 173, 183, 53, 206, 179, 42, 197, 30, 68, 212, 9, 238, 83, 251, 219, 93, 149, 156, 219, 225, 95, 28, 18, 156, 114, 133, 49, 48, 83, 250, 200, 12, 155, 35, 101, 58, 85, 205, 119, 255, 156, 43, 238, 125, 3, 62, 113, 115, 130, 101, 153, 71, 202, 211, 54, 56, 132, 52, 243, 198, 10, 151, 99, 184, 84, 253, 253, 11, 9, 235, 33, 243, 148, 248, 153, 55, 76, 143, 231, 21, 243, 100, 72, 150 },
-                            ProductId = new Guid("35e09e82-f8c1-481e-bc38-e2e82abc21e2"),
-                            UpdatedDate = new DateOnly(2024, 5, 22)
+                            Id = new Guid("6e20ac84-d1c4-401c-a869-e8efec084a06"),
+                            CreatedDate = new DateOnly(2024, 6, 2),
+                            Data = new byte[] { 240, 106, 136, 163, 74, 70, 163, 115, 32, 27, 234, 250, 167, 205, 133, 101, 150, 155, 10, 168, 51, 13, 255, 11, 189, 221, 92, 163, 141, 160, 72, 57, 249, 101, 68, 51, 63, 7, 93, 173, 15, 167, 154, 252, 44, 202, 39, 204, 40, 68, 144, 231, 50, 251, 153, 48, 165, 159, 148, 162, 3, 182, 33, 191, 125, 40, 176, 204, 143, 172, 150, 31, 63, 41, 64, 133, 111, 12, 198, 119, 110, 66, 109, 198, 105, 54, 193, 118, 202, 5, 35, 27, 167, 26, 168, 208, 187, 208, 144, 207 },
+                            ProductId = new Guid("7516a148-f681-4d3f-a851-717536f0591a"),
+                            UpdatedDate = new DateOnly(2024, 6, 2)
                         },
                         new
                         {
-                            Id = new Guid("aea8608c-48ed-4304-af46-f2912190a1f3"),
-                            CreatedDate = new DateOnly(2024, 5, 22),
-                            Data = new byte[] { 12, 236, 122, 202, 204, 241, 8, 35, 106, 148, 94, 201, 47, 157, 192, 192, 69, 82, 35, 88, 36, 222, 212, 166, 45, 113, 212, 104, 23, 113, 47, 18, 212, 24, 125, 55, 200, 141, 247, 135, 6, 203, 7, 35, 96, 11, 47, 18, 245, 39, 234, 60, 237, 175, 106, 119, 119, 60, 253, 136, 107, 154, 158, 247, 177, 140, 255, 200, 185, 58, 147, 167, 162, 80, 23, 231, 119, 7, 209, 51, 102, 17, 83, 106, 122, 175, 64, 103, 233, 230, 121, 138, 165, 98, 102, 28, 195, 3, 86, 125 },
-                            ProductId = new Guid("35e09e82-f8c1-481e-bc38-e2e82abc21e2"),
-                            UpdatedDate = new DateOnly(2024, 5, 22)
+                            Id = new Guid("537799c6-cab2-448c-998c-a1ac10890dca"),
+                            CreatedDate = new DateOnly(2024, 6, 2),
+                            Data = new byte[] { 142, 184, 12, 141, 68, 136, 80, 10, 211, 150, 120, 236, 180, 91, 33, 251, 176, 157, 239, 96, 98, 22, 237, 143, 68, 57, 45, 21, 198, 33, 157, 80, 180, 95, 117, 14, 28, 199, 38, 71, 123, 93, 0, 198, 74, 42, 150, 154, 33, 167, 131, 29, 191, 116, 94, 83, 159, 172, 148, 136, 207, 73, 239, 153, 206, 69, 180, 44, 182, 202, 116, 208, 72, 89, 120, 52, 237, 37, 174, 33, 63, 30, 255, 97, 116, 96, 68, 90, 129, 250, 97, 201, 31, 205, 32, 89, 23, 216, 17, 65 },
+                            ProductId = new Guid("7516a148-f681-4d3f-a851-717536f0591a"),
+                            UpdatedDate = new DateOnly(2024, 6, 2)
                         },
                         new
                         {
-                            Id = new Guid("e2bb3e58-b822-48fa-b9a8-68ed17f17fad"),
-                            CreatedDate = new DateOnly(2024, 5, 22),
-                            Data = new byte[] { 69, 223, 109, 144, 174, 28, 150, 211, 35, 51, 251, 155, 72, 199, 83, 123, 213, 161, 147, 156, 185, 215, 205, 150, 230, 93, 13, 200, 102, 235, 53, 231, 208, 245, 213, 249, 177, 19, 112, 52, 139, 221, 0, 215, 97, 203, 112, 122, 162, 220, 11, 48, 175, 0, 30, 114, 55, 167, 62, 52, 178, 144, 24, 223, 90, 25, 8, 112, 249, 34, 110, 183, 254, 4, 144, 18, 6, 216, 78, 17, 236, 197, 106, 143, 238, 66, 95, 230, 138, 245, 213, 23, 47, 205, 210, 128, 131, 71, 183, 78 },
-                            ProductId = new Guid("8f5a76a5-7b3c-4006-925f-bf326f729e91"),
-                            UpdatedDate = new DateOnly(2024, 5, 22)
+                            Id = new Guid("394d8531-e84e-4c9f-b1e6-10e08875d710"),
+                            CreatedDate = new DateOnly(2024, 6, 2),
+                            Data = new byte[] { 179, 160, 19, 18, 11, 153, 144, 40, 13, 127, 116, 78, 36, 130, 253, 13, 81, 169, 202, 236, 0, 201, 218, 181, 137, 77, 82, 102, 121, 205, 2, 139, 161, 190, 169, 64, 110, 250, 169, 236, 184, 111, 232, 141, 175, 185, 240, 116, 154, 97, 72, 193, 180, 200, 117, 185, 185, 218, 128, 129, 226, 235, 247, 11, 40, 7, 206, 182, 44, 51, 157, 33, 51, 171, 97, 222, 253, 29, 147, 200, 216, 171, 65, 246, 42, 148, 124, 162, 71, 89, 210, 118, 221, 59, 20, 27, 133, 196, 83, 51 },
+                            ProductId = new Guid("cf2f8e22-eeb0-4743-beee-9c2dfde39f11"),
+                            UpdatedDate = new DateOnly(2024, 6, 2)
                         },
                         new
                         {
-                            Id = new Guid("e4e8f1b2-3716-4dd7-87bd-58b04ca9e0d6"),
-                            CreatedDate = new DateOnly(2024, 5, 22),
-                            Data = new byte[] { 240, 73, 157, 153, 62, 103, 132, 163, 103, 110, 162, 229, 187, 68, 142, 169, 170, 33, 165, 108, 236, 206, 48, 118, 111, 242, 38, 199, 123, 87, 141, 199, 187, 250, 138, 225, 183, 4, 56, 48, 170, 147, 73, 211, 186, 249, 228, 141, 255, 227, 138, 88, 126, 51, 239, 71, 251, 59, 85, 129, 71, 207, 32, 216, 155, 57, 43, 138, 41, 164, 56, 190, 164, 167, 141, 188, 100, 9, 97, 211, 230, 130, 150, 171, 214, 35, 151, 197, 2, 94, 73, 135, 198, 224, 115, 118, 45, 81, 162, 210 },
-                            ProductId = new Guid("8f5a76a5-7b3c-4006-925f-bf326f729e91"),
-                            UpdatedDate = new DateOnly(2024, 5, 22)
+                            Id = new Guid("3c7cad8b-e696-4405-a672-b40a62804b13"),
+                            CreatedDate = new DateOnly(2024, 6, 2),
+                            Data = new byte[] { 140, 8, 128, 107, 122, 150, 128, 177, 85, 202, 108, 67, 255, 142, 82, 39, 222, 50, 250, 114, 205, 224, 223, 176, 31, 172, 95, 40, 147, 130, 67, 80, 189, 249, 65, 133, 7, 162, 233, 199, 77, 35, 204, 56, 131, 3, 141, 183, 141, 71, 89, 192, 142, 103, 99, 0, 59, 160, 135, 121, 18, 98, 241, 146, 176, 24, 155, 109, 122, 95, 58, 99, 233, 165, 101, 103, 203, 151, 0, 130, 151, 130, 8, 83, 136, 175, 61, 238, 57, 215, 150, 143, 96, 189, 64, 4, 224, 10, 65, 254 },
+                            ProductId = new Guid("cf2f8e22-eeb0-4743-beee-9c2dfde39f11"),
+                            UpdatedDate = new DateOnly(2024, 6, 2)
                         },
                         new
                         {
-                            Id = new Guid("91873563-3623-42ba-b7a8-e6f7abfd4026"),
-                            CreatedDate = new DateOnly(2024, 5, 22),
-                            Data = new byte[] { 27, 43, 17, 70, 129, 171, 82, 221, 115, 118, 86, 57, 139, 226, 231, 5, 14, 169, 191, 72, 76, 211, 118, 38, 152, 89, 91, 51, 239, 135, 68, 168, 45, 109, 194, 164, 101, 72, 72, 199, 229, 248, 219, 153, 172, 178, 35, 118, 101, 49, 14, 17, 132, 25, 48, 122, 87, 175, 178, 222, 184, 170, 2, 216, 17, 28, 52, 128, 212, 1, 11, 70, 50, 109, 128, 204, 235, 33, 214, 122, 1, 157, 61, 124, 25, 200, 102, 120, 53, 201, 143, 52, 241, 173, 70, 41, 151, 33, 14, 148 },
-                            ProductId = new Guid("8f5a76a5-7b3c-4006-925f-bf326f729e91"),
-                            UpdatedDate = new DateOnly(2024, 5, 22)
+                            Id = new Guid("28577d37-e262-4d3c-9c46-7cc459a92df5"),
+                            CreatedDate = new DateOnly(2024, 6, 2),
+                            Data = new byte[] { 17, 220, 244, 86, 228, 102, 29, 141, 101, 114, 231, 198, 222, 103, 29, 228, 0, 191, 150, 215, 160, 186, 170, 76, 135, 204, 138, 223, 219, 234, 75, 151, 223, 225, 58, 39, 62, 216, 232, 6, 253, 212, 83, 130, 130, 3, 152, 185, 92, 224, 159, 168, 176, 153, 88, 57, 38, 86, 155, 98, 200, 228, 40, 63, 150, 2, 69, 145, 157, 233, 204, 136, 121, 185, 173, 108, 108, 130, 99, 223, 201, 219, 148, 90, 216, 194, 189, 0, 131, 24, 249, 154, 211, 98, 137, 19, 169, 46, 25, 87 },
+                            ProductId = new Guid("cf2f8e22-eeb0-4743-beee-9c2dfde39f11"),
+                            UpdatedDate = new DateOnly(2024, 6, 2)
                         },
                         new
                         {
-                            Id = new Guid("e6fbc2d7-9169-4cc0-a455-8b017047e0e5"),
-                            CreatedDate = new DateOnly(2024, 5, 22),
-                            Data = new byte[] { 254, 248, 156, 42, 80, 63, 207, 80, 224, 54, 29, 224, 40, 62, 40, 173, 181, 193, 108, 124, 51, 5, 254, 192, 181, 115, 75, 174, 83, 26, 199, 113, 168, 214, 167, 101, 240, 16, 100, 106, 30, 26, 250, 119, 158, 113, 40, 90, 151, 80, 78, 218, 22, 130, 25, 50, 74, 145, 10, 174, 142, 90, 102, 162, 115, 219, 38, 220, 175, 11, 153, 50, 132, 228, 116, 229, 215, 244, 196, 243, 165, 10, 76, 212, 1, 233, 133, 25, 75, 205, 90, 27, 60, 192, 67, 5, 114, 149, 241, 96 },
-                            ProductId = new Guid("cd016f01-fe89-4e68-901c-4282727a2bbf"),
-                            UpdatedDate = new DateOnly(2024, 5, 22)
+                            Id = new Guid("08c6c250-c0f3-462b-bba2-15c14abbb2e6"),
+                            CreatedDate = new DateOnly(2024, 6, 2),
+                            Data = new byte[] { 169, 141, 183, 18, 52, 69, 242, 11, 26, 45, 117, 7, 59, 202, 140, 240, 17, 193, 71, 206, 144, 208, 177, 122, 11, 128, 232, 201, 4, 188, 70, 41, 143, 235, 91, 205, 158, 139, 71, 217, 83, 168, 148, 131, 27, 86, 230, 229, 225, 72, 66, 58, 38, 186, 253, 140, 162, 8, 144, 199, 218, 19, 54, 211, 44, 176, 195, 135, 68, 21, 238, 42, 132, 229, 84, 197, 21, 98, 151, 187, 228, 84, 17, 228, 201, 254, 106, 147, 0, 8, 5, 247, 188, 208, 27, 74, 188, 56, 76, 177 },
+                            ProductId = new Guid("d140ddb7-0f4b-49c6-ad3b-97cb8e473aeb"),
+                            UpdatedDate = new DateOnly(2024, 6, 2)
                         },
                         new
                         {
-                            Id = new Guid("ba113946-16e2-4b6d-8dd9-8c17fc29ee91"),
-                            CreatedDate = new DateOnly(2024, 5, 22),
-                            Data = new byte[] { 220, 40, 97, 192, 199, 139, 86, 229, 64, 182, 245, 253, 141, 111, 171, 9, 118, 13, 244, 158, 102, 209, 234, 213, 168, 38, 121, 38, 112, 3, 242, 190, 24, 37, 187, 125, 176, 177, 76, 43, 117, 4, 158, 183, 105, 187, 241, 130, 195, 104, 169, 254, 198, 167, 22, 60, 32, 84, 171, 2, 255, 185, 174, 116, 145, 232, 177, 75, 50, 10, 217, 22, 181, 90, 233, 215, 137, 116, 122, 49, 99, 77, 250, 16, 139, 247, 224, 11, 112, 51, 15, 62, 170, 246, 94, 220, 47, 164, 125, 220 },
-                            ProductId = new Guid("cd016f01-fe89-4e68-901c-4282727a2bbf"),
-                            UpdatedDate = new DateOnly(2024, 5, 22)
+                            Id = new Guid("02c52d03-5fec-4e97-957a-640a8ef8eeb1"),
+                            CreatedDate = new DateOnly(2024, 6, 2),
+                            Data = new byte[] { 117, 242, 231, 229, 102, 103, 219, 6, 224, 172, 107, 255, 142, 119, 248, 104, 51, 204, 167, 152, 42, 126, 74, 149, 15, 129, 53, 147, 101, 108, 95, 248, 108, 209, 103, 174, 168, 20, 228, 64, 0, 98, 162, 226, 98, 129, 204, 234, 41, 109, 21, 59, 17, 197, 40, 131, 120, 148, 241, 252, 70, 88, 164, 25, 198, 217, 88, 166, 82, 85, 16, 58, 49, 106, 14, 228, 68, 183, 195, 251, 61, 103, 112, 15, 170, 119, 31, 197, 183, 223, 29, 89, 149, 164, 175, 43, 68, 233, 223, 240 },
+                            ProductId = new Guid("d140ddb7-0f4b-49c6-ad3b-97cb8e473aeb"),
+                            UpdatedDate = new DateOnly(2024, 6, 2)
                         },
                         new
                         {
-                            Id = new Guid("ec5132fd-af00-410e-a4d2-999be7c81940"),
-                            CreatedDate = new DateOnly(2024, 5, 22),
-                            Data = new byte[] { 204, 217, 174, 163, 71, 98, 83, 216, 56, 131, 122, 178, 143, 251, 59, 99, 20, 56, 132, 216, 26, 5, 210, 35, 84, 219, 8, 156, 34, 248, 206, 227, 143, 242, 254, 142, 100, 208, 75, 226, 3, 72, 177, 216, 172, 47, 229, 47, 52, 194, 163, 244, 185, 4, 122, 219, 83, 213, 92, 170, 130, 73, 222, 234, 116, 59, 219, 218, 44, 1, 199, 40, 237, 127, 232, 196, 132, 92, 100, 49, 246, 176, 47, 104, 66, 142, 80, 40, 181, 144, 191, 3, 234, 19, 150, 188, 182, 13, 132, 82 },
-                            ProductId = new Guid("cd016f01-fe89-4e68-901c-4282727a2bbf"),
-                            UpdatedDate = new DateOnly(2024, 5, 22)
+                            Id = new Guid("a0aba926-6c13-4d70-a4ed-a66be7c98e23"),
+                            CreatedDate = new DateOnly(2024, 6, 2),
+                            Data = new byte[] { 37, 238, 12, 48, 168, 168, 219, 49, 134, 99, 171, 107, 234, 244, 139, 6, 124, 53, 217, 190, 46, 240, 47, 0, 150, 81, 118, 70, 27, 11, 248, 191, 71, 65, 158, 95, 203, 185, 126, 11, 94, 228, 94, 158, 113, 78, 91, 0, 199, 157, 213, 55, 241, 106, 119, 169, 30, 234, 72, 230, 30, 25, 160, 233, 168, 111, 17, 93, 114, 194, 66, 150, 133, 20, 125, 59, 21, 182, 223, 15, 14, 127, 214, 20, 4, 228, 11, 75, 109, 230, 24, 219, 50, 203, 107, 151, 66, 19, 80, 67 },
+                            ProductId = new Guid("d140ddb7-0f4b-49c6-ad3b-97cb8e473aeb"),
+                            UpdatedDate = new DateOnly(2024, 6, 2)
                         },
                         new
                         {
-                            Id = new Guid("203d02f4-6dff-4f61-bacb-5850e7250dd5"),
-                            CreatedDate = new DateOnly(2024, 5, 22),
-                            Data = new byte[] { 226, 16, 110, 161, 90, 89, 4, 123, 127, 253, 50, 100, 153, 211, 187, 222, 153, 244, 51, 133, 125, 44, 124, 86, 17, 118, 251, 208, 6, 44, 97, 38, 180, 5, 241, 30, 117, 106, 108, 186, 179, 182, 29, 152, 87, 44, 8, 162, 43, 35, 241, 229, 214, 107, 36, 162, 224, 27, 142, 15, 136, 211, 197, 134, 109, 213, 58, 25, 154, 107, 195, 80, 210, 59, 205, 172, 7, 48, 47, 168, 56, 240, 216, 237, 228, 158, 59, 163, 3, 105, 133, 227, 218, 204, 90, 244, 168, 27, 4, 115 },
-                            ProductId = new Guid("50b0be44-c149-4bd1-8f35-6d8445910b00"),
-                            UpdatedDate = new DateOnly(2024, 5, 22)
+                            Id = new Guid("6a423516-4b60-4d11-ba7c-afcc3960f863"),
+                            CreatedDate = new DateOnly(2024, 6, 2),
+                            Data = new byte[] { 234, 206, 98, 198, 25, 227, 23, 132, 144, 23, 68, 226, 40, 14, 138, 254, 96, 20, 223, 126, 82, 48, 21, 253, 122, 182, 31, 65, 178, 252, 25, 56, 149, 17, 9, 183, 111, 88, 28, 210, 161, 140, 216, 231, 143, 6, 52, 90, 76, 41, 56, 163, 37, 36, 150, 241, 201, 33, 16, 194, 169, 225, 182, 15, 0, 199, 151, 255, 192, 94, 43, 202, 84, 182, 174, 135, 130, 216, 35, 150, 117, 177, 81, 249, 79, 231, 59, 233, 193, 160, 117, 126, 252, 210, 194, 64, 92, 204, 96, 239 },
+                            ProductId = new Guid("665b2ab2-9a0d-44ce-bde4-5c6ee804bb18"),
+                            UpdatedDate = new DateOnly(2024, 6, 2)
                         },
                         new
                         {
-                            Id = new Guid("f557376d-b0c2-4fb3-91a8-ea4ae1d1db34"),
-                            CreatedDate = new DateOnly(2024, 5, 22),
-                            Data = new byte[] { 0, 175, 95, 0, 96, 248, 16, 72, 52, 148, 1, 152, 82, 36, 66, 60, 27, 197, 45, 205, 20, 225, 231, 172, 23, 102, 191, 203, 45, 28, 13, 66, 75, 31, 116, 72, 254, 79, 211, 164, 106, 49, 222, 214, 210, 160, 108, 34, 193, 6, 175, 199, 225, 140, 128, 3, 14, 19, 162, 19, 234, 234, 91, 139, 96, 127, 51, 89, 147, 138, 171, 62, 221, 15, 27, 249, 155, 202, 103, 47, 241, 254, 28, 200, 1, 155, 62, 203, 179, 244, 98, 225, 198, 99, 145, 72, 196, 112, 12, 4 },
-                            ProductId = new Guid("50b0be44-c149-4bd1-8f35-6d8445910b00"),
-                            UpdatedDate = new DateOnly(2024, 5, 22)
+                            Id = new Guid("c8d54e8a-abae-44d9-ba8f-d038bc790f41"),
+                            CreatedDate = new DateOnly(2024, 6, 2),
+                            Data = new byte[] { 145, 1, 121, 182, 83, 95, 117, 94, 58, 28, 25, 34, 116, 191, 251, 5, 240, 169, 213, 113, 54, 113, 6, 34, 152, 38, 231, 238, 120, 4, 141, 152, 70, 21, 147, 95, 123, 46, 146, 223, 42, 138, 38, 12, 27, 46, 249, 241, 157, 168, 62, 222, 11, 157, 58, 62, 18, 156, 164, 135, 3, 179, 198, 118, 236, 100, 84, 186, 233, 63, 171, 210, 200, 242, 43, 212, 190, 163, 97, 253, 114, 149, 185, 182, 34, 30, 241, 208, 242, 51, 45, 71, 241, 212, 29, 82, 152, 4, 108, 116 },
+                            ProductId = new Guid("665b2ab2-9a0d-44ce-bde4-5c6ee804bb18"),
+                            UpdatedDate = new DateOnly(2024, 6, 2)
                         },
                         new
                         {
-                            Id = new Guid("bd494cbc-e783-4522-bd3e-088655f867ea"),
-                            CreatedDate = new DateOnly(2024, 5, 22),
-                            Data = new byte[] { 199, 54, 13, 189, 175, 139, 45, 66, 1, 243, 67, 14, 193, 7, 132, 176, 197, 207, 83, 149, 235, 177, 147, 51, 193, 220, 14, 23, 4, 104, 201, 86, 80, 85, 1, 26, 195, 53, 31, 211, 98, 83, 82, 38, 86, 110, 117, 228, 188, 94, 10, 136, 55, 139, 145, 33, 86, 142, 146, 149, 215, 216, 234, 202, 140, 141, 131, 69, 140, 4, 162, 83, 51, 162, 104, 8, 35, 254, 246, 217, 67, 131, 214, 99, 188, 38, 107, 188, 16, 212, 32, 144, 207, 175, 15, 217, 109, 166, 255, 78 },
-                            ProductId = new Guid("50b0be44-c149-4bd1-8f35-6d8445910b00"),
-                            UpdatedDate = new DateOnly(2024, 5, 22)
+                            Id = new Guid("05ab684a-f3ed-42a1-955a-b6569fc14263"),
+                            CreatedDate = new DateOnly(2024, 6, 2),
+                            Data = new byte[] { 43, 199, 103, 214, 54, 108, 145, 185, 210, 26, 222, 240, 76, 167, 194, 1, 112, 217, 74, 253, 170, 207, 219, 71, 182, 41, 247, 124, 2, 57, 15, 174, 221, 180, 53, 122, 201, 27, 20, 187, 148, 196, 37, 191, 157, 109, 234, 233, 23, 195, 147, 20, 135, 211, 0, 188, 203, 75, 95, 37, 239, 60, 116, 152, 39, 43, 139, 205, 85, 191, 21, 119, 123, 68, 89, 107, 103, 93, 118, 41, 84, 175, 186, 222, 77, 0, 18, 222, 138, 36, 12, 62, 155, 202, 128, 43, 252, 245, 81, 148 },
+                            ProductId = new Guid("665b2ab2-9a0d-44ce-bde4-5c6ee804bb18"),
+                            UpdatedDate = new DateOnly(2024, 6, 2)
                         });
                 });
 
@@ -559,63 +563,63 @@ namespace Ecommerce.WebAPI.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("7a95e0aa-7c6b-4018-92ef-a15be47cd311"),
+                            Id = new Guid("da0389a8-1ab2-4c3d-89ab-5a81aaa8afe8"),
                             Avatar = "https://picsum.photos/200/?random=System.Func`1[System.Int32]",
-                            CreatedDate = new DateOnly(2024, 5, 22),
+                            CreatedDate = new DateOnly(2024, 6, 2),
                             Email = "john@example.com",
                             Name = "Admin1",
-                            Password = "hJ3ym2lDQX7Ggs7veqkXGR37v8MiruC+BxM6lJYVNAg=",
+                            Password = "NFb2GSH6LDbiN0eCVTp5lTtZD2xyyAc0SJFF+OP/1/I=",
                             Role = UserRole.Admin,
-                            Salt = new byte[] { 124, 167, 241, 90, 150, 218, 53, 35, 235, 247, 62, 114, 66, 159, 181, 89 },
-                            UpdatedDate = new DateOnly(2024, 5, 22)
+                            Salt = new byte[] { 139, 197, 38, 246, 105, 44, 187, 96, 211, 51, 172, 156, 62, 253, 225, 17 },
+                            UpdatedDate = new DateOnly(2024, 6, 2)
                         },
                         new
                         {
-                            Id = new Guid("ad884e12-4ed0-4001-8d2e-bd75939327ed"),
+                            Id = new Guid("35f470a5-4c64-477b-b62c-28aa4207977d"),
                             Avatar = "https://picsum.photos/200/?random=System.Func`1[System.Int32]",
-                            CreatedDate = new DateOnly(2024, 5, 22),
+                            CreatedDate = new DateOnly(2024, 6, 2),
                             Email = "binh@admin.com",
                             Name = "Binh",
-                            Password = "Lqx7DdFDrYeDyg5Fdc4RkXYjeBBMe5An8PUcxzYy19w=",
+                            Password = "C7/E/ngNfDBALu4EHI2EpXNOTfn2nA1D01F5wCqEabU=",
                             Role = UserRole.Admin,
-                            Salt = new byte[] { 21, 206, 135, 133, 100, 6, 9, 40, 180, 231, 96, 2, 79, 88, 113, 175 },
-                            UpdatedDate = new DateOnly(2024, 5, 22)
+                            Salt = new byte[] { 55, 213, 188, 127, 9, 49, 107, 82, 131, 8, 75, 180, 112, 58, 73, 121 },
+                            UpdatedDate = new DateOnly(2024, 6, 2)
                         },
                         new
                         {
-                            Id = new Guid("fccfe50f-1991-4e55-b2ff-45bc21aa53d8"),
+                            Id = new Guid("1eaf5f98-8b7f-45b6-b3e0-4f9e9dfe0d2a"),
                             Avatar = "https://picsum.photos/200/?random=System.Func`1[System.Int32]",
-                            CreatedDate = new DateOnly(2024, 5, 22),
+                            CreatedDate = new DateOnly(2024, 6, 2),
                             Email = "adnan@admin.com",
                             Name = "Adnan",
-                            Password = "ddzEptxJ/J+XwY2Cj7egOKk6HniPz+b3CDTIDBWYtyo=",
+                            Password = "aTOP+hAkD0/Z2mYp1QCfcq+Npbn61orRNFjICr+0X5o=",
                             Role = UserRole.Admin,
-                            Salt = new byte[] { 135, 13, 130, 160, 31, 227, 244, 174, 6, 151, 211, 238, 17, 148, 124, 248 },
-                            UpdatedDate = new DateOnly(2024, 5, 22)
+                            Salt = new byte[] { 50, 13, 241, 243, 68, 133, 4, 67, 4, 29, 255, 81, 77, 226, 156, 22 },
+                            UpdatedDate = new DateOnly(2024, 6, 2)
                         },
                         new
                         {
-                            Id = new Guid("12354e22-a4c9-44e8-b7ea-b94f5b65b0ce"),
+                            Id = new Guid("a50fd241-ddb6-4448-a18e-7348ea9de55b"),
                             Avatar = "https://picsum.photos/200/?random=System.Func`1[System.Int32]",
-                            CreatedDate = new DateOnly(2024, 5, 22),
+                            CreatedDate = new DateOnly(2024, 6, 2),
                             Email = "yuanke@admin.com",
                             Name = "Yuanke",
-                            Password = "xhqfhjpc+GjtcBWekUObuwmZ88XagBnrG78gTG+kLxA=",
+                            Password = "xX9Ti1Z9yiDXKG8TpfMQND5Gft8jGlivpCH7i8tPsLI=",
                             Role = UserRole.Admin,
-                            Salt = new byte[] { 229, 114, 205, 227, 11, 194, 175, 95, 202, 180, 221, 147, 154, 23, 218, 107 },
-                            UpdatedDate = new DateOnly(2024, 5, 22)
+                            Salt = new byte[] { 253, 105, 195, 244, 162, 47, 144, 34, 47, 121, 156, 80, 132, 160, 11, 94 },
+                            UpdatedDate = new DateOnly(2024, 6, 2)
                         },
                         new
                         {
-                            Id = new Guid("4fac147c-a3e2-4bd7-ac92-32886cb512d4"),
+                            Id = new Guid("72369aa7-6f65-4520-bdc0-fe091af6b0e6"),
                             Avatar = "https://picsum.photos/200/?random=System.Func`1[System.Int32]",
-                            CreatedDate = new DateOnly(2024, 5, 22),
+                            CreatedDate = new DateOnly(2024, 6, 2),
                             Email = "customer1@customer.com",
                             Name = "Customer1",
-                            Password = "d+qvivdK6GSeYNMD7Izpv/sps7EzdgF9y8gzB8dQThI=",
+                            Password = "SYBO6WtjJ8oREBdxTkCzXBe2wLx/Y0fzNceQxhp3c4M=",
                             Role = UserRole.Customer,
-                            Salt = new byte[] { 48, 77, 218, 165, 62, 199, 18, 141, 92, 157, 255, 120, 202, 94, 107, 213 },
-                            UpdatedDate = new DateOnly(2024, 5, 22)
+                            Salt = new byte[] { 168, 83, 85, 44, 210, 26, 193, 27, 176, 29, 122, 76, 200, 208, 65, 131 },
+                            UpdatedDate = new DateOnly(2024, 6, 2)
                         });
                 });
 

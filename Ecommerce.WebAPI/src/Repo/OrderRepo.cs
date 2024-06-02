@@ -32,7 +32,6 @@ namespace Ecommerce.WebAPI.src.Repo
                     foreach (var orderProduct in createdOrder.OrderProducts)
                     {
                         var foundProduct = _products.FirstOrDefault(p => p.Id == orderProduct.Product.Id);
-                        Console.WriteLine(foundProduct);
 
                         if (foundProduct.Inventory >= orderProduct.Quantity)
                         {
@@ -144,6 +143,13 @@ namespace Ecommerce.WebAPI.src.Repo
                          .Where(o => o.UserId == userId);
             var result = await query.ToListAsync();
             return result;
+        }
+
+        public async Task<Order> UpdateOrderAsync(Order updatedOrder)
+        {
+            _orders.Update(updatedOrder);
+            await _context.SaveChangesAsync();
+            return updatedOrder;
         }
     }
 }

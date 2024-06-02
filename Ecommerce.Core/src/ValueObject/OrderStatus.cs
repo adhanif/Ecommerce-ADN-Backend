@@ -5,8 +5,8 @@ namespace Ecommerce.Core.src.ValueObject
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum OrderStatus
     {
-        Shipped,
         Pending,
+        Shipped,
         AwaitingPayment,
         Processing,
         Shipping,
