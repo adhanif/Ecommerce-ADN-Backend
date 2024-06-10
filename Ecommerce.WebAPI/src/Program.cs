@@ -63,8 +63,8 @@ builder.Services.AddSwaggerGen(
 builder.Services.AddControllers();
 
 // adding db context into project
-var dataSourceBuilder = new NpgsqlDataSourceBuilder(builder.Configuration.GetConnectionString("Localhost"));
-// var dataSourceBuilder = new NpgsqlDataSourceBuilder(builder.Configuration.GetConnectionString("Remote"));
+// var dataSourceBuilder = new NpgsqlDataSourceBuilder(builder.Configuration.GetConnectionString("Localhost"));
+var dataSourceBuilder = new NpgsqlDataSourceBuilder(builder.Configuration.GetConnectionString("Remote"));
 dataSourceBuilder.MapEnum<UserRole>();
 dataSourceBuilder.MapEnum<OrderStatus>();
 var dataSource = dataSourceBuilder.Build();
@@ -166,7 +166,7 @@ app.UseSwagger();
 app.UseSwaggerUI(options =>
 {
   options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1");
-  // options.RoutePrefix = string.Empty; // "/swagger/index.html"
+  options.RoutePrefix = string.Empty; // "/swagger/index.html"
 });
 
 

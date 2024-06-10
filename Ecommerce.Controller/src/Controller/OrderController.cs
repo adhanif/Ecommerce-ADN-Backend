@@ -29,7 +29,7 @@ namespace Ecommerce.Controller.src.Controller
             return Ok(orders);
         }
 
-        [Authorize(Roles = "User")]
+        [Authorize]
         [HttpPost()]
         public async Task<ActionResult<OrderReadDto>> CreateOrderAsync([FromBody] OrderCreateDto orderCreateDto)
         {
