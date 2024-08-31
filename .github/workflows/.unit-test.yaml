@@ -1,0 +1,16 @@
+# NAme of the workflow
+name: 'Run unit test when push'
+
+#Events that trigger the run
+on: ['push']
+
+# Job definitions
+jobs:
+  unit-test:
+    name: unit-test
+    runs-on: ubuntu-latest
+    steps:
+      - name: RPrint a message
+        run: echo "Here is the just message"
+      - name: Run unit test
+        run: npm test
