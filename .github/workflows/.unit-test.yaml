@@ -10,6 +10,8 @@ jobs:
     name: unit-test
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout githzb repo
+        uses: actions/checkout@v4
       - name: RPrint a message
         run: echo "Here is the just message"
       - name: Run unit test
