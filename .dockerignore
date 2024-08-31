@@ -1,0 +1,8 @@
+bin/
+obj/
+.vscode/
+.get/
+.gethub/
+Http/
+images/
+publish/
