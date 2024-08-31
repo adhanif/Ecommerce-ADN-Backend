@@ -13,4 +13,4 @@ jobs:
       - name: RPrint a message
         run: echo "Here is the just message"
       - name: Run unit test
-        run: npm test
+        run: dotnet test
