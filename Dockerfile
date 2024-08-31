@@ -7,7 +7,6 @@ COPY *.sln .
 COPY Ecommerce.Controller/Ecommerce.Controller.csproj Ecommerce.Controller/
 COPY Ecommerce.Core/Ecommerce.Core.csproj Ecommerce.Core/
 COPY Ecommerce.Service/Ecommerce.Service.csproj Ecommerce.Service/
-COPY Ecommerce.Test/Ecommerce.Test.csproj Ecommerce.Test/
 COPY Ecommerce.WebAPI/Ecommerce.WebAPI.csproj Ecommerce.WebAPI/
 RUN dotnet restore
 
@@ -15,10 +14,9 @@ RUN dotnet restore
 COPY Ecommerce.Controller/ Ecommerce.Controller/
 COPY Ecommerce.Core/ Ecommerce.Core/
 COPY Ecommerce.Service/ Ecommerce.Service/
-COPY Ecommerce.Test/ Ecommerce.Test/
 COPY Ecommerce.WebAPI/ Ecommerce.WebAPI/
 WORKDIR /source/Ecommerce.WebAPI
-RUN dotnet publish -c release -o /app --no-restore
+RUN dotnet publish -c release -o /app
 ### 
 
 
@@ -27,4 +25,5 @@ RUN dotnet publish -c release -o /app --no-restore
 FROM mcr.microsoft.com/dotnet/aspnet:8.0
 WORKDIR /app
 COPY --from=first-stage /app ./
-ENTRYPOINT ["dotnet", "aspnetapp.dll"]
+EXPOSE 8080
+CMD ["dotnet", "Ecommerce.WebAPI.dll"]
