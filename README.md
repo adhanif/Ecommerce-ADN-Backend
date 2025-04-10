@@ -1,18 +1,12 @@
 # Fullstack Ecommerce Fashion ADN
 
-![TypeScript](https://img.shields.io/badge/TypeScript-v.4-green)
-![SASS](https://img.shields.io/badge/SASS-v.4-hotpink)
-![React](https://img.shields.io/badge/React-v.18-blue)
-![Redux toolkit](https://img.shields.io/badge/Redux-v.1.9-brown)
-![.NET Core](https://img.shields.io/badge/.NET%20Core-v.8-purple)
-![EF Core](https://img.shields.io/badge/EF%20Core-v.8-cyan)
-![PostgreSQL](https://img.shields.io/badge/PostgreSQL-v.16-drakblue)
+![TypeScript](https://img.shields.io/badge/TypeScript-v.4-green) ![SASS](https://img.shields.io/badge/SASS-v.4-hotpink) ![React](https://img.shields.io/badge/React-v.18-blue) ![Redux toolkit](https://img.shields.io/badge/Redux-v.1.9-brown) ![.NET Core](https://img.shields.io/badge/.NET%20Core-v.8-purple) ![EF Core](https://img.shields.io/badge/EF%20Core-v.8-cyan) ![PostgreSQL](https://img.shields.io/badge/PostgreSQL-v.16-drakblue)
 
 This project involves creating a Fullstack e-commerce platform with a cutting-edge frontend built on TypeScript, React, and Redux Toolkit. The backend is powered by ASP.NET Core 7, utilizing Entity Framework Core for database operations with PostgreSQL. The goal is to deliver a seamless shopping experience for users and provide a robust management system for administrators.
 
 - **Frontend:** TypeScript, React, Redux Toolkit, React Router, Material UI, Jest, React-Hook-Form
 
-  - **Repository:** You can find the frontend project repository [![Frontend Repository](https://img.shields.io/badge/Frontend_Repository-000000?style=for-the-badge&logo=github)](https://github.com/Integrify-Finland/fs17-Frontend-project)
+  - **Repository:** You can find the frontend project repository [![Frontend Repository](https://img.shields.io/badge/Frontend_Repository-000000?style=for-the-badge&logo=github)](https://github.com/adhanif/Ecommerce-ADN)
 
   - **Live Demo:** Experience the innovation firsthand by exploring our live demo at [![Ecommerce Fashion ADN](https://img.shields.io/badge/Ecommerce_Fashion_ADN-006400?style=for-the-badge&logo=google-chrome&logoColor=000000)](https://ecommerce-fashion-adn.netlify.app/).
 
@@ -33,19 +27,19 @@ This project involves creating a Fullstack e-commerce platform with a cutting-ed
 
 This section outlines the core technologies and essential libraries used in the backend of my e-commerce application, explaining their functions and significance in the overall architecture.
 
-| Technology            | Function                                                                                | Version       |
-| --------------------- | --------------------------------------------------------------------------------------- | ------------- |
-| ASP.NET Core          | Primary framework for server-side logic, routing, middleware, and dependency management | .NET Core 8.0 |
-| Entity Framework Core | ORM (Object-Relational Mapper) for database operations, simplifying SQL queries         | 8.0.4         |
-| PostgreSQL            | Relational database management system for storing application data                      | 16            |
+| Technology | Function | Version |
+| --- | --- | --- |
+| ASP.NET Core | Primary framework for server-side logic, routing, middleware, and dependency management | .NET Core 8.0 |
+| Entity Framework Core | ORM (Object-Relational Mapper) for database operations, simplifying SQL queries | 8.0.4 |
+| PostgreSQL | Relational database management system for storing application data | 16 |
 
-| Library                       | Function                                                                     | Version |
-| ----------------------------- | ---------------------------------------------------------------------------- | ------- |
-| AutoMapper                    | Automates mapping of data entities to DTOs, reducing manual coding           | 10.3.0  |
-| Microsoft.AspNetCore.Identity | Manages user authentication, security, password hashing, and role management | 6.0.0   |
-| JWT Bearer Authentication     | Implements token-based authentication for securing API endpoints             | 6.0.0   |
-| xUnit                         | Framework for unit testing, ensuring components work correctly in isolation  | 2.4.1   |
-| Moq                           | Mocking library used with xUnit to simulate dependencies during testing      | 4.16.1  |
+| Library | Function | Version |
+| --- | --- | --- |
+| AutoMapper | Automates mapping of data entities to DTOs, reducing manual coding | 10.3.0 |
+| Microsoft.AspNetCore.Identity | Manages user authentication, security, password hashing, and role management | 6.0.0 |
+| JWT Bearer Authentication | Implements token-based authentication for securing API endpoints | 6.0.0 |
+| xUnit | Framework for unit testing, ensuring components work correctly in isolation | 2.4.1 |
+| Moq | Mocking library used with xUnit to simulate dependencies during testing | 4.16.1 |
 
 ## Getting Started
 
@@ -275,6 +269,8 @@ fs17_CSharp_FullStack
 
 This project adheres to Clean Architecture principles, emphasizing separation of concerns and modularity.
 
+![App Screenshot](/images/clean.png)
+
 ### Core Domain Layer (Ecommerce.Core)
 
 The **Core Domain Layer** serves as the central repository for core domain logic and entities. It encapsulates essential functionalities, including repository abstractions and value objects. By centralizing these core components, it ensures that the business logic remains focused and independent of external concerns.
@@ -309,22 +305,19 @@ All the endpoints of the API are documented and can be tested directly on the ge
 
 Click the button above to explore and test the API endpoints using Swagger.
 
-![App Screenshot](/images/swagger1.png)
-![App Screenshot](/images/swagger2.png)
-![App Screenshot](/images/swagger3.png)
-![App Screenshot](/images/swagger4.png)
+![App Screenshot](/images/swagger1.png) ![App Screenshot](/images/swagger2.png) ![App Screenshot](/images/swagger3.png) ![App Screenshot](/images/swagger4.png)
 
 ## Features
 
-| Feature                               | Description                                                                                                             |
-| ------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| User Authentication and Authorization | Implements secure user registration, login, and role-based access control using JWT tokens.                             |
-| Password Hashing                      | Ensures sensitive user password information is securely hashed to protect against unauthorized access.                  |
-| Product Management                    | Provides comprehensive management functionalities including creation, update, deletion, and viewing of product details. |
-| Order Processing                      | Manages the full lifecycle of orders from creation, payment processing, to order fulfillment.                           |
-| Search and Filtering                  | Implements advanced search and filtering capabilities to facilitate quick product discovery by users.                   |
-| Admin Dashboard                       | Provides an administrative interface for managing users, orders, products, and other administrative tasks.              |
-| Unit Testing                          | Ensures comprehensive test coverage using xUnit and Moq to maintain code quality and reliability.                       |
+| Feature | Description |
+| --- | --- |
+| User Authentication and Authorization | Implements secure user registration, login, and role-based access control using JWT tokens. |
+| Password Hashing | Ensures sensitive user password information is securely hashed to protect against unauthorized access. |
+| Product Management | Provides comprehensive management functionalities including creation, update, deletion, and viewing of product details. |
+| Order Processing | Manages the full lifecycle of orders from creation, payment processing, to order fulfillment. |
+| Search and Filtering | Implements advanced search and filtering capabilities to facilitate quick product discovery by users. |
+| Admin Dashboard | Provides an administrative interface for managing users, orders, products, and other administrative tasks. |
+| Unit Testing | Ensures comprehensive test coverage using xUnit and Moq to maintain code quality and reliability. |
 
 ## Testing
 
